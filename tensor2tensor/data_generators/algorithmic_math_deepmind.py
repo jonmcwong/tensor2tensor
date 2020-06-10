@@ -69,16 +69,17 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
     Yields:
       The data examples.
     """
-    # Create directories if needed.
-    if not tf.gfile.Exists(tmp_dir):
-      tf.gfile.MakeDirs(tmp_dir)
-    if not tf.gfile.Exists(data_dir):
-      tf.gfile.MakeDirs(data_dir)
+    # # Create directories if needed.
+    # if not tf.gfile.Exists(tmp_dir):
+    #   tf.gfile.MakeDirs(tmp_dir)
+    # if not tf.gfile.Exists(data_dir):
+    #   tf.gfile.MakeDirs(data_dir)
 
-    # Download and extract the data.
-    filename = os.path.basename(_URL)
-    path = generator_utils.maybe_download(tmp_dir, filename, _URL)
-    tarfile.open(path, "r:gz").extractall(tmp_dir)
+    # # Download and extract the data.
+    # filename = os.path.basename(_URL)
+    # path = generator_utils.maybe_download(tmp_dir, filename, _URL)
+    # print("PATH: ", path)
+    # tarfile.open(path, "r:gz").extractall(tmp_dir)
 
     # Create the list of directories with data files.
     train_dirs = ["v1.0/train-easy", "v1.0/train-medium", "v1.0/train-hard"]
