@@ -99,7 +99,9 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
         with tf.gfile.Open(fname, "rb") as f:
           for line in f:
             if cur_input is None:
-              cur_input = line.strip()
+              # cur_input = line.strip()
+              cur_input = line
             else:
-              yield {"inputs": cur_input, "targets": line.strip()}
+              yield {"inputs": cur_input, "targets": line}
+              # yield {"inputs": cur_input, "targets": line.strip()}
               cur_input = None
