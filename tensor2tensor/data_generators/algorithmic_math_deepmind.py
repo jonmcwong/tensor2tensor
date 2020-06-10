@@ -82,8 +82,8 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
     # tarfile.open(path, "r:gz").extractall(tmp_dir)
 
     # Create the list of directories with data files.
-    train_dirs = ["v1.0/train-easy", "v1.0/train-medium", "v1.0/train-hard"]
-    eval_dirs = ["v1.0/interpolate", "v1.0/extrapolate"]
+    train_dirs = ["mathematics_dataset-v1.0/train-easy", "mathematics_dataset-v1.0/train-medium", "mathematics_dataset-v1.0/train-hard"]
+    eval_dirs = ["mathematics_dataset-v1.0/interpolate", "mathematics_dataset-v1.0/extrapolate"]
     dirs = eval_dirs
     if dataset_split == problem.DatasetSplit.TRAIN:
       dirs = train_dirs
