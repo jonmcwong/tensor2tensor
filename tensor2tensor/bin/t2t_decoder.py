@@ -110,7 +110,66 @@ def decode(estimator, hparams, decode_hp):
         checkpoint_path=FLAGS.checkpoint_path)
 
 
-def score_file(filename):
+# def score_file(filename):
+#   """Score each line in a file and return the scores."""
+#   # Prepare model.
+#   hparams = create_hparams()
+#   encoders = registry.problem(FLAGS.problem).feature_encoders(FLAGS.data_dir)
+#   has_inputs = "inputs" in encoders
+
+#   # Prepare features for feeding into the model.
+#   if has_inputs:
+#     inputs_ph = tf.placeholder(dtype=tf.int32)  # Just length dimension.
+#     batch_inputs = tf.reshape(inputs_ph, [1, -1, 1, 1])  # Make it 4D.
+#   targets_ph = tf.placeholder(dtype=tf.int32)  # Just length dimension.
+#   batch_targets = tf.reshape(targets_ph, [1, -1, 1, 1])  # Make it 4D.
+#   if has_inputs:
+#     features = {"inputs": batch_inputs, "targets": batch_targets}
+#   else:
+#     features = {"targets": batch_targets}
+
+#   # Prepare the model and the graph when model runs on features.
+#   model = registry.model(FLAGS.model)(hparams, tf.estimator.ModeKeys.EVAL)
+#   _, losses = model(features)
+#   saver = tf.train.Saver()
+
+#   with tf.Session() as sess:
+#     # Load weights from checkpoint.
+#     if FLAGS.checkpoint_path is None:
+#       ckpts = tf.train.get_checkpoint_state(FLAGS.output_dir)
+#       ckpt = ckpts.model_checkpoint_path
+#     else:
+#       ckpt = FLAGS.checkpoint_path
+#     saver.restore(sess, ckpt)
+#     # Run on each line.
+#     with tf.gfile.Open(filename) as f:
+#       lines = f.readlines()
+#     results = []
+#     for line in lines:
+#       tab_split = line.split("\t")
+#       if len(tab_split) > 2:
+#         raise ValueError("Each line must have at most one tab separator.")
+#       if len(tab_split) == 1:
+#         targets = tab_split[0].strip()
+#       else:
+#         targets = tab_split[1].strip()
+#         inputs = tab_split[0].strip()
+#       # Run encoders and append EOS symbol.
+#       targets_numpy = encoders["targets"].encode(
+#           targets) + [text_encoder.EOS_ID]
+#       if has_inputs:
+#         inputs_numpy = encoders["inputs"].encode(inputs) + [text_encoder.EOS_ID]
+#       # Prepare the feed.
+#       if has_inputs:
+#         feed = {inputs_ph: inputs_numpy, targets_ph: targets_numpy}
+#       else:
+#         feed = {targets_ph: targets_numpy}
+#       # Get the score.
+#       np_loss = sess.run(losses["training"], feed)
+#       results.append(np_loss)
+#   return results
+
+def score_file(filename): # change to read every odd line as question and every even line as answer
   """Score each line in a file and return the scores."""
   # Prepare model.
   hparams = create_hparams()
