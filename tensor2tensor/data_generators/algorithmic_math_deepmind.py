@@ -29,6 +29,8 @@ from tensor2tensor.data_generators import generator_utils
 from tensor2tensor.data_generators import problem
 from tensor2tensor.data_generators import text_problems
 from tensor2tensor.utils import registry
+from tensor2tensor.utils import metrics
+
 
 import tensorflow.compat.v1 as tf
 
@@ -53,6 +55,11 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
         "split": problem.DatasetSplit.EVAL,
         "shards": 1,
     }]
+
+  # What evaluation metrics to use with this problem.
+  def eval_metrics(self):
+    return [metrics.Metrics.ACC, metrics.Metrics.ACC_TOP5,
+            metrics.Metrics.ACC_PER_SEQ]
 
   @property
   def is_generate_per_split(self):
