@@ -839,5 +839,5 @@ def adaptive_universal_transformer_base_range_jw(rhp):
   rhp.set_discrete("num_heads", [4, 8, 16])
   rhp.set_categorical("transformer_ffn_type", ["sepconv", "fc"])
   rhp.set_float("learning_rate", 1e-6, 3.0, scale=rhp.LOG_SCALE)
-  rhp.set_float("weight_decay", 0.0, 2.0).
-  
+  rhp.set_float("weight_decay", 0.0, 2.0)
+
