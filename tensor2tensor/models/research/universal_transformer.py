@@ -828,8 +828,48 @@ def adaptive_universal_transformer_base_range(rhp):
   rhp.set_float("learning_rate", 0.3, 3.0, scale=rhp.LOG_SCALE)
   rhp.set_float("weight_decay", 0.0, 2.0)
 
+
 @registry.register_ranged_hparams
-def adaptive_universal_transformer_base_range_jw(rhp):
+def adaptive_universal_transformer_base_range_0(rhp):
+  """Range of hyperparameters."""
+  # After starting from base, set intervals for some parameters.
+  rhp.set_discrete("act_max_steps", [8, 16, 32])
+  rhp.set_float("act_loss_weight", 0.0, 0.5)
+  rhp.set_discrete("hidden_size", [512, 1024, 2048, 4096])
+  rhp.set_discrete("filter_size", [1024, 2048, 4096])
+  rhp.set_discrete("num_heads", [4, 8, 16])
+  rhp.set_categorical("transformer_ffn_type", ["sepconv", "fc"])
+  rhp.set_float("learning_rate", 1e-6, 1e-4, scale=rhp.LOG_SCALE)
+  rhp.set_float("weight_decay", 0.0, 2.0)
+
+@registry.register_ranged_hparams
+def adaptive_universal_transformer_base_range_1(rhp):
+  """Range of hyperparameters."""
+  # After starting from base, set intervals for some parameters.
+  rhp.set_discrete("act_max_steps", [8, 16, 32])
+  rhp.set_float("act_loss_weight", 0.0, 0.5)
+  rhp.set_discrete("hidden_size", [512, 1024, 2048, 4096])
+  rhp.set_discrete("filter_size", [1024, 2048, 4096])
+  rhp.set_discrete("num_heads", [4, 8, 16])
+  rhp.set_categorical("transformer_ffn_type", ["sepconv", "fc"])
+  rhp.set_float("learning_rate", 1e-4, 1e-2, scale=rhp.LOG_SCALE)
+  rhp.set_float("weight_decay", 0.0, 2.0)
+
+@registry.register_ranged_hparams
+def adaptive_universal_transformer_base_range_2(rhp):
+  """Range of hyperparameters."""
+  # After starting from base, set intervals for some parameters.
+  rhp.set_discrete("act_max_steps", [8, 16, 32])
+  rhp.set_float("act_loss_weight", 0.0, 0.5)
+  rhp.set_discrete("hidden_size", [512, 1024, 2048, 4096])
+  rhp.set_discrete("filter_size", [1024, 2048, 4096])
+  rhp.set_discrete("num_heads", [4, 8, 16])
+  rhp.set_categorical("transformer_ffn_type", ["sepconv", "fc"])
+  rhp.set_float("learning_rate", 1e-2, 3.0, scale=rhp.LOG_SCALE)
+  rhp.set_float("weight_decay", 0.0, 2.0)
+
+@registry.register_ranged_hparams
+def adaptive_universal_transformer_base_range_2(rhp):
   """Range of hyperparameters."""
   # After starting from base, set intervals for some parameters.
   rhp.set_discrete("act_max_steps", [8, 16, 32])
@@ -840,4 +880,5 @@ def adaptive_universal_transformer_base_range_jw(rhp):
   rhp.set_categorical("transformer_ffn_type", ["sepconv", "fc"])
   rhp.set_float("learning_rate", 1e-6, 3.0, scale=rhp.LOG_SCALE)
   rhp.set_float("weight_decay", 0.0, 2.0)
+
 
