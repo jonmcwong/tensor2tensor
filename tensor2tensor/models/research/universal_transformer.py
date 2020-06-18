@@ -869,7 +869,7 @@ def adaptive_universal_transformer_base_range_2(rhp):
   rhp.set_float("weight_decay", 0.0, 2.0)
 
 @registry.register_ranged_hparams
-def adaptive_universal_transformer_base_range_2(rhp):
+def adaptive_universal_transformer_base_range_jw(rhp):
   """Range of hyperparameters."""
   # After starting from base, set intervals for some parameters.
   rhp.set_discrete("act_max_steps", [8, 16, 32])
