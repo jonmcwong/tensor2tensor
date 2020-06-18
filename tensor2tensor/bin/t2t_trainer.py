@@ -144,7 +144,7 @@ flags.DEFINE_bool("gpu_automatic_mixed_precision", False,
                   "Whether to employ GPU automatic mixed precision training "
                   "(via graph rewrite and dynamic loss scaling).")
 
-for flag, val in FLAGS.__dict__.items():
+for flag, val in FLAGS.__flags.items():
   print(flag, ": ", val)  
 
 def set_hparams_from_args(args):
