@@ -144,7 +144,7 @@ flags.DEFINE_bool("gpu_automatic_mixed_precision", False,
                   "Whether to employ GPU automatic mixed precision training "
                   "(via graph rewrite and dynamic loss scaling).")
 
-
+print(tf.flags.FLAGS.__flags)
 
 def set_hparams_from_args(args):
   """Set hparams overrides from unparsed args list."""
@@ -171,6 +171,7 @@ def set_hparams_from_args(args):
   if FLAGS.hparams:
     as_hparams = "," + as_hparams
   FLAGS.hparams += as_hparams
+  tf.logging.info("Detected hyperparameters: " + FLAGS.hparams)
 
 
 def create_hparams():
