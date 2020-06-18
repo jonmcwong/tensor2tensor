@@ -144,8 +144,6 @@ flags.DEFINE_bool("gpu_automatic_mixed_precision", False,
                   "Whether to employ GPU automatic mixed precision training "
                   "(via graph rewrite and dynamic loss scaling).")
 
-for flag, val in FLAGS.__flags.items():
-  print(flag, ": ", val.value)  
 
 def set_hparams_from_args(args):
   """Set hparams overrides from unparsed args list."""
@@ -402,6 +400,8 @@ def main(argv):
       key=mlperf_log.RUN_SET_RANDOM_SEED, value=FLAGS.random_seed,
       hparams=hparams)
   trainer_lib.set_random_seed(FLAGS.random_seed)
+  for flag, val in FLAGS.__flags.items():
+    print(flag, ": ", val.value)  
 
   if FLAGS.cloud_mlengine:
     cloud_mlengine.launch()
