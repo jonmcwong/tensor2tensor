@@ -154,7 +154,7 @@ def set_hparams_from_args(args):
   tf.logging.info("Found unparsed command-line arguments. Checking if any "
                   "start with %s and interpreting those as hparams "
                   "settings.", hp_prefix)
-
+  print("left over args: ", args)
   pairs = []
   i = 0
   while i < len(args):
