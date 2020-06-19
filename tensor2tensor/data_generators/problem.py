@@ -461,7 +461,7 @@ class Problem(object):
     elif dataset_split == DatasetSplit.TEST:
       return self.test_filepaths
     else:
-      def specific_filepaths(self, data_dir, num_shards, shuffled):
+      def specific_filepaths(data_dir, num_shards, shuffled):
         file_basename = self.dataset_filename()
         if not shuffled:
           file_basename += generator_utils.UNSHUFFLED_SUFFIX
