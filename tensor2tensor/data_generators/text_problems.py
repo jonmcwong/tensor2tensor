@@ -307,7 +307,7 @@ class Text2TextProblem(problem.Problem):
 
     # The algorithmic_math_deepmind problem gets its own paths in its generator,
     # so data_dir and tmp_dir are irrelevant
-    generator = self.generate_samples(data_dir, tmp_dir, dataset_split))
+    generator = self.generate_samples(data_dir, tmp_dir, dataset_split)
     # The algorithmic_math_deepmind problem uses character encoding so we good:
     # data_dir and tmp_dir are irrelevant
     encoder = self.get_or_create_vocab(data_dir, tmp_dir)
