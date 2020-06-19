@@ -105,7 +105,7 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
   def is_generate_per_split(self):
     return True
 
-  def generate_samples(self, data_dir, tmp_dir, dataset_split, specific_files=False):
+  def generate_samples(self, data_dir, tmp_dir, dataset_split):
     """Downloads and extracts the dataset and generates examples.
 
     Args:
@@ -135,19 +135,21 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
     train_dirs = ["mathematics_dataset-v1.0/train-easy", "mathematics_dataset-v1.0/train-medium", "mathematics_dataset-v1.0/train-hard"]
     eval_dirs = ["mathematics_dataset-v1.0/interpolate", "mathematics_dataset-v1.0/extrapolate"]
     dirs = eval_dirs
-    # this only happens if not training and specific_files
 
+    specific_files = False
     if dataset_split == problem.DatasetSplit.TRAIN:
       dirs = train_dirs
     elif dataset_split in [p["split"] for p in self.dataset_special_splits]:
+      # this only happens if not training and specific_files
       # load file specified by dataset_split
+      specific_files = True
       dirs = ["mathematics_dataset-v1.0/" + expand_split(pair["split"])]
     dirs = [os.path.join(tmp_dir, d) for d in dirs]
 
     # Iterate over directories and files generating examples.
     for d in dirs:
       if specific_files:
-        files = tf.gfile.Glob(d + ".txt")
+        files = tf.gfile.Glob(d + ".txt") # specific files already have the full name provided
       else:
         files = tf.gfile.Glob(d + "/*.txt")
       for fname in files:
