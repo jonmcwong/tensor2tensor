@@ -20,19 +20,19 @@ export TMP_DIR=${STORAGE_BUCKET} # /mathematics_dataset-v1.0
 # export DECODE_FILE=$HOME/test_file.txt
 # export DECODE_OUTPUT=$HOME/output.txt
 echo "PROBLEM = "$PROBLEM
-echo "MODEL = "$MODEL
-echo "HPARAMS_SET = "$HPARAMS_SET
-echo "TPU_NAME = "$TPU_NAME
+# echo "MODEL = "$MODEL
+# echo "HPARAMS_SET = "$HPARAMS_SET
+# echo "TPU_NAME = "$TPU_NAME
 echo "STORAGE_BUCKET = "$STORAGE_BUCKET
-echo "MODEL_TAG = "$MODEL_TAG
-echo "MODEL_TAG = "$MODEL_TAG
+# echo "MODEL_TAG = "$MODEL_TAG
+# echo "MODEL_TAG = "$MODEL_TAG
 echo "DATA_DIR = "$DATA_DIR
 echo "TMP_DIR = "$TMP_DIR
-echo "TRAIN_DIR = "$TRAIN_DIR
-echo "BEAM_SIZE = "$BEAM_SIZE
-echo "ALPHA = "$ALPHA
-echo "DECODE_FILE = "$DECODE_FILE
-echo "DECODE_OUTPUT = "$DECODE_OUTPUT
+# echo "TRAIN_DIR = "$TRAIN_DIR
+# echo "BEAM_SIZE = "$BEAM_SIZE
+# echo "ALPHA = "$ALPHA
+# echo "DECODE_FILE = "$DECODE_FILE
+# echo "DECODE_OUTPUT = "$DECODE_OUTPUT
 
 
 

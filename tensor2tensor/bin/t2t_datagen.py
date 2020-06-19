@@ -292,10 +292,9 @@ def generate_data_for_registered_problem(problem_name):
       # repeat generate_data for each of the 12 specific_splits
       def generate_multiple_separate_data(data_dir, tmp_dir, task_id):
         for split_pair in dataset_splits:
-          # ---------------------------------------
           func(data_dir, tmp_dir, task_id, specific_split=split_pair["split"])
       return generate_multiple_separate_data
-    problem.generate_data = generate_data_decorator(problem.generate_data, problem.dataset_splits)
+    problem.generate_data = generate_data_decorator(problem.generate_data, problem.dataset_special_splits)
 
 
   if task_id is None and problem.multiprocess_generate:

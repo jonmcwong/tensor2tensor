@@ -348,34 +348,25 @@ class Text2TextProblem(problem.Problem):
 
   def generate_data(self, data_dir, tmp_dir, task_id=-1, specific_split=None):
 
-    filepath_fns = {
-        problem.DatasetSplit.TRAIN: self.training_filepaths,
-        problem.DatasetSplit.EVAL: self.dev_filepaths,
-        problem.DatasetSplit.TEST: self.test_filepaths,
-    }
+    # option to produce a single shard from a specified datset_split
+    chosen_splits = self.dataset_splits if not specific_split else self.dataset_special_splits
 
+      # redefine filepath_fns to only provide paths with one dataset_split
+    filepath_fns = dict([
+      (
+        dataset_split["split"],
+        self.make_specific_filepaths_fn(dataset_split["split"])
+      ) for dataset_split in chosen_splits
+      if not specific_split or dataset_split["split"] == specific_split
+    ])
+    if not specific_split and not filepath_fns:
+      raise ValueError("specific_split provided cannot be found.")
+
+    # exceute the filepath_fns to get [(dataset_split, list of paths)]
     split_paths = [(split["split"], filepath_fns[split["split"]](
         data_dir, split["shards"], shuffled=self.already_shuffled))
-                   for split in self.dataset_splits]
-
-    # option to produce a single shard from a specified unencoded text file
-    if specific_split:
-      # redefine filepath_fns to only provide paths with one dataset_split
-      filepath_fns = dict([
-        (
-          dataset_split["split"],
-          self.make_specific_filepaths_fn(dataset_split["split"])
-        ) for dataset_split in self.dataset_splits
-        if dataset_split["split"] == specific_split
-      ])
-      if not filepath_fns:
-        raise ValueError("specific_split provided cannot be found.")
-
-      # exceute the filepath_fns to get [(dataset_split, list of paths)]
-      split_paths = [(split["split"], filepath_fns[split["split"]](
-          data_dir, split["shards"], shuffled=self.already_shuffled))
-                     for split in self.dataset_splits
-                     if split["split"] == specific_split]
+                   for split in chosen_splits
+                   if not specific_split or split["split"] == specific_split]
 
     all_paths = []
     for _, paths in split_paths:

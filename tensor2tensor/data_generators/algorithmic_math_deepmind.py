@@ -54,7 +54,11 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
     }, {
         "split": problem.DatasetSplit.EVAL,
         "shards": 1,
-    }, {
+    }]
+
+  @property
+  def dataset_special_splits(self):
+    return [{
         "split": "extra_add_or_sub_big",
         "shards": 1,
     }, {
