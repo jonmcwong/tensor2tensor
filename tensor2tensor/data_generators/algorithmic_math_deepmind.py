@@ -136,19 +136,12 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
     eval_dirs = ["mathematics_dataset-v1.0/interpolate", "mathematics_dataset-v1.0/extrapolate"]
     dirs = eval_dirs
     # this only happens if not training and specific_files
-    if specific_files:
-      dirs = [ # load files specified by self.dataset_splits
-        "mathematics_dataset-v1.0/" + expand_split(pair["split"])
-        for pair in self.dataset_splits
-        if not(
-          pair["split"] == problem.DatasetSplit.TRAIN or
-          pair["split"] == problem.DatasetSplit.EVAL or
-          pair["split"] == problem.DatasetSplit.TEST
-        )
-      ]
 
     if dataset_split == problem.DatasetSplit.TRAIN:
       dirs = train_dirs
+    elif dataset_split in [p["split"] for p in self.dataset_special_splits]:
+      # load file specified by dataset_split
+      dirs = ["mathematics_dataset-v1.0/" + expand_split(pair["split"])]
     dirs = [os.path.join(tmp_dir, d) for d in dirs]
 
     # Iterate over directories and files generating examples.
