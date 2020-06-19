@@ -501,6 +501,7 @@ class HParams(object):
       type_map[name] = param_type
 
     values_map = parse_values(values, type_map)
+    print("overridden hparams: ", values_map)
     return self.override_from_dict(values_map)
 
   def override_from_dict(self, values_dict):
