@@ -20,6 +20,7 @@ export TMP_DIR=${STORAGE_BUCKET} # /mathematics_dataset-v1.0
 # export DECODE_FILE=$HOME/test_file.txt
 # export DECODE_OUTPUT=$HOME/output.txt
 export SPECIFIC_SPLITS=True
+export MAX_CASES=100000
 echo "PROBLEM = "$PROBLEM
 # echo "MODEL = "$MODEL
 # echo "HPARAMS_SET = "$HPARAMS_SET
@@ -35,7 +36,7 @@ echo "TMP_DIR = "$TMP_DIR
 # echo "DECODE_FILE = "$DECODE_FILE
 # echo "DECODE_OUTPUT = "$DECODE_OUTPUT
 echo "SPECIFIC_SPLITS = "$SPECIFIC_SPLITS
-
+echo "MAX_CASES = "$MAX_CASES
 
 
 t2t-datagen \
@@ -43,3 +44,4 @@ t2t-datagen \
   --data_dir=$DATA_DIR \
   --tmp_dir=$TMP_DIR \
   --specific_splits=$SPECIFIC_SPLITS
+  --max_cases=$MAX_CASES
