@@ -454,11 +454,11 @@ class Problem(object):
                                                num_shards)
 
   def make_specific_filepaths_fn(self, dataset_split):
-    if split == DatasetSplit.TRAIN:
+    if dataset_split == DatasetSplit.TRAIN:
       return self.training_filepaths
-    elif split == DatasetSplit.EVAL:
+    elif dataset_split == DatasetSplit.EVAL:
       return self.dev_filepaths
-    elif split == DatasetSplit.TEST:
+    elif dataset_split == DatasetSplit.TEST:
       return self.test_filepaths
     else:
       def specific_filepaths(self, data_dir, num_shards, shuffled):
