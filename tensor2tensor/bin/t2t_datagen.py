@@ -286,7 +286,7 @@ def generate_data_for_registered_problem(problem_name):
   tmp_dir = os.path.expanduser(FLAGS.tmp_dir)
 
   # Code to preprocess the 12 specific files separately for later evaluation
-  SPECIFIC_FILE = True
+  SPECIFIC_FILE = False
   if SPECIFIC_FILE:
     def generate_data_decorator(func, dataset_splits):
       # repeat generate_data for each of the 12 specific_splits

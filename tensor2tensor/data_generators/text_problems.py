@@ -350,7 +350,8 @@ class Text2TextProblem(problem.Problem):
 
     # option to produce a single shard from a specified datset_split
     chosen_splits = self.dataset_splits if not specific_split else self.dataset_special_splits
-
+    # max_cases = 100000 if specific_split else None
+    max_cases = None
       # redefine filepath_fns to only provide paths with one dataset_split
     filepath_fns = dict([
       (
@@ -377,11 +378,11 @@ class Text2TextProblem(problem.Problem):
       for split, paths in split_paths:
         # Should only be one path if specific_split since there's only one shard
         generator_utils.generate_files(
-            self.generate_encoded_samples(data_dir, tmp_dir, split), paths)
+            self.generate_encoded_samples(data_dir, tmp_dir, split), paths, max_cases=max_cases)
     else:
       generator_utils.generate_files(
           self.generate_encoded_samples(
-              data_dir, tmp_dir, problem.DatasetSplit.TRAIN), all_paths)
+              data_dir, tmp_dir, problem.DatasetSplit.TRAIN), all_paths, max_cases=max_cases)
 
     generator_utils.shuffle_dataset(all_paths, extra_fn=self._pack_fn())
 
