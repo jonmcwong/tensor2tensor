@@ -117,8 +117,8 @@ def test_data_filenames(problem, output_dir, num_shards):
 
 
 # specific training files that need their own data_split for separate evaluation
-def make_specific_filenames_fn(dataset_split):
-  def specific_filenames(problem, output_dir, num_shards):
+def make_specific_data_filenames_fn(dataset_split):
+  def specific_data_filenames(problem, output_dir, num_shards):
     if num_shards != 1: raise ValueError(
       "Expect to only create one shard from specific evaluation file."
       " num_shards={}".format(num_shards))

@@ -465,7 +465,7 @@ class Problem(object):
         file_basename = self.dataset_filename()
         if not shuffled:
           file_basename += generator_utils.UNSHUFFLED_SUFFIX
-        return generator_utils.make_specific_filenames_fn(dataset_split)(
+        return generator_utils.make_specific_data_filenames_fn(dataset_split)(
                                           file_basename, data_dir, num_shards)
       return specific_filepaths
 
