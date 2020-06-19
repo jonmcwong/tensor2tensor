@@ -92,6 +92,8 @@ flags.DEFINE_string(
     "The imported files should contain registrations, "
     "e.g. @registry.register_problem calls, that will then be "
     "available to t2t-datagen.")
+flags.DEFINE_bool("specific_splits", False,
+    "Whether or not to build the 12 specific datasets.")
 
 # Mapping from problems that we can generate data for to their generators.
 # pylint: disable=g-long-lambda
