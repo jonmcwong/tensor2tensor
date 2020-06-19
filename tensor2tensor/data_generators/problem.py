@@ -377,6 +377,7 @@ class Problem(object):
       raise ValueError(error_str % (self.name,
                                     metric_names,
                                     list(self.all_metrics_fns.keys())))
+    print("reached inside data_generators metircs")
     return {
         metric_name: self.all_metrics_fns[metric_name]
         for metric_name in metric_names
