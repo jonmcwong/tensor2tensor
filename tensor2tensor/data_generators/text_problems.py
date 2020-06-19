@@ -346,13 +346,12 @@ class Text2TextProblem(problem.Problem):
     """String to prepend to targets before tokenization."""
     return ""
 
-  def generate_data(self, data_dir, tmp_dir, task_id=-1, specific_split=None):
+  def generate_data(self, data_dir, tmp_dir, task_id=-1, max_cases=None, specific_split=None):
 
     # option to produce a single shard from a specified datset_split
     chosen_splits = self.dataset_splits if not specific_split else self.dataset_special_splits
-    # max_cases = 100000 if specific_split else None
-    max_cases = None
-      # redefine filepath_fns to only provide paths with one dataset_split
+
+    # dict of dataset_split : paths making functions
     filepath_fns = dict([
       (
         dataset_split["split"],
