@@ -207,7 +207,7 @@ def tar_and_copy_t2t(train_dir):
   tf.logging.info("Tarring and pushing local Tensor2Tensor package.")
 
   output = text_encoder.native_to_unicode(shell_output(
-      "pip show tensor2tensor")).split("\n")
+      "pip3 show tensor2tensor")).split("\n")
   assert output[1].startswith("Version")
   assert output[7].startswith("Location")
   t2t_version = output[1].split(":")[1].strip()
