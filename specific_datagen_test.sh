@@ -19,7 +19,7 @@ export TMP_DIR=${STORAGE_BUCKET} # /mathematics_dataset-v1.0
 # export ALPHA=0.6
 # export DECODE_FILE=$HOME/test_file.txt
 # export DECODE_OUTPUT=$HOME/output.txt
-export SPECIFIC_SPLITS=False
+export SPECIFIC_SPLITS=True
 echo "PROBLEM = "$PROBLEM
 # echo "MODEL = "$MODEL
 # echo "HPARAMS_SET = "$HPARAMS_SET
@@ -43,4 +43,3 @@ t2t-datagen \
   --data_dir=$DATA_DIR \
   --tmp_dir=$TMP_DIR \
   --specific_splits=$SPECIFIC_SPLITS
-  

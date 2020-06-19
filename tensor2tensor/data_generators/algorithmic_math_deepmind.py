@@ -143,7 +143,7 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
       # this only happens if not training and specific_files
       # load file specified by dataset_split
       specific_files = True
-      dirs = ["mathematics_dataset-v1.0/" + expand_split(pair["split"])]
+      dirs = ["mathematics_dataset-v1.0/" + expand_split(dataset_split)]
     dirs = [os.path.join(tmp_dir, d) for d in dirs]
 
     # Iterate over directories and files generating examples.
