@@ -116,6 +116,16 @@ def test_data_filenames(problem, output_dir, num_shards):
   return _data_filenames(problem + "-test", output_dir, num_shards)
 
 
+# specific training files that need their own data_split for separate evaluation
+def make_specific_filenames_fn(dataset_split):
+  if num_shards != 1: raise ValueError(
+    "Expect to only create one shard from specific evaluation file."
+    " num_shards={}".format(num_shards))
+  def specific_filenames(problem, output_dir, num_shards):
+    return _data_filenames(problem + "-" + dataset_split, output_dir, num_shards)
+  return specific_data_filenames
+
+
 def combined_data_filenames(problem, output_dir, num_training_shards):
   return (train_data_filenames(problem, output_dir, num_training_shards) +
           dev_data_filenames(problem, output_dir, 1) + test_data_filenames(
@@ -166,6 +176,8 @@ def generate_files(generator, output_filenames,
       tag = "train"
     elif "-dev" in output_filenames[0]:
       tag = "eval"
+    elif "-inter" in output_filenames[0] or "-extra" in output_filenames[0]:
+      tag = "specific"
     else:
       tag = "other"
 
@@ -197,6 +209,9 @@ def generate_files(generator, output_filenames,
     elif tag == "eval":
       mlperf_log.transformer_print(
           key=mlperf_log.PREPROC_NUM_EVAL_EXAMPLES, value=counter)
+    elif tag == "specific":
+      print("\n\n\t\t\t", output_filenames, " was filled with ", counter, "entries.\n\n\n")
+
 
   tf.logging.info("Generated %s Examples", counter)
 

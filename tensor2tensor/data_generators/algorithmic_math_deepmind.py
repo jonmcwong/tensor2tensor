@@ -54,6 +54,42 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
     }, {
         "split": problem.DatasetSplit.EVAL,
         "shards": 1,
+    }, {
+        "split": "extra_add_or_sub_big",
+        "shards": 1,
+    }, {
+        "split": "extra_add_sub_multiple_longer",
+        "shards": 1,
+    }, {
+        "split": "extra_div_big",
+        "shards": 1,
+    }, {
+        "split": "extra_mixed_longer",
+        "shards": 1,
+    }, {
+        "split": "extra_mul_big",
+        "shards": 1,
+    }, {
+        "split": "extra_mul_div_multiple_longer",
+        "shards": 1,
+    }, {
+        "split": "inter_add_or_sub",
+        "shards": 1,
+    }, {
+        "split": "inter_add_sub_multiple",
+        "shards": 1,
+    }, {
+        "split": "inter_div",
+        "shards": 1,
+    }, {
+        "split": "inter_mixed",
+        "shards": 1,
+    }, {
+        "split": "inter_mul",
+        "shards": 1,
+    }, {
+        "split": "inter_mul_div_multiple",
+        "shards": 1,
     }]
 
   # What evaluation metrics to use with this problem.
@@ -65,7 +101,7 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
   def is_generate_per_split(self):
     return True
 
-  def generate_samples(self, data_dir, tmp_dir, dataset_split):
+  def generate_samples(self, data_dir, tmp_dir, dataset_split, specific_files=False):
     """Downloads and extracts the dataset and generates examples.
 
     Args:
@@ -88,17 +124,35 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
     # print("PATH: ", path)
     # tarfile.open(path, "r:gz").extractall(tmp_dir)
 
+    def expand_split(dataset_split):
+      return dataset_split[:5] + "polate/arithmetic__" + dataset_split[6:]
+
     # Create the list of directories with data files.
     train_dirs = ["mathematics_dataset-v1.0/train-easy", "mathematics_dataset-v1.0/train-medium", "mathematics_dataset-v1.0/train-hard"]
     eval_dirs = ["mathematics_dataset-v1.0/interpolate", "mathematics_dataset-v1.0/extrapolate"]
     dirs = eval_dirs
+    # this only happens if not training and specific_files
+    if specific_files:
+      dirs = [ # load files specified by self.dataset_splits
+        "mathematics_dataset-v1.0/" + expand_split(pair["split"])
+        for pair in self.dataset_splits
+        if not(
+          pair["split"] == problem.DatasetSplit.TRAIN or
+          pair["split"] == problem.DatasetSplit.EVAL or
+          pair["split"] == problem.DatasetSplit.TEST
+        )
+      ]
+
     if dataset_split == problem.DatasetSplit.TRAIN:
       dirs = train_dirs
     dirs = [os.path.join(tmp_dir, d) for d in dirs]
 
     # Iterate over directories and files generating examples.
     for d in dirs:
-      files = tf.gfile.Glob(d + "/*.txt")
+      if specific_files:
+        files = tf.gfile.Glob(d + ".txt")
+      else:
+        files = tf.gfile.Glob(d + "/*.txt")
       for fname in files:
         # In each text file, the first line is the input, the next the answer,
         # and so on until the end of the file.

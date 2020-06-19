@@ -453,6 +453,23 @@ class Problem(object):
     return generator_utils.test_data_filenames(file_basename, data_dir,
                                                num_shards)
 
+  def make_specific_filepaths_fn(self, dataset_split):
+    if split == DatasetSplit.TRAIN:
+      return self.training_filepaths
+    elif split == DatasetSplit.EVAL:
+      return self.dev_filepaths
+    elif split == DatasetSplit.TEST:
+      return self.test_filepaths
+    else:
+      def specific_filepaths(self, data_dir, num_shards, shuffled):
+        file_basename = self.dataset_filename()
+        if not shuffled:
+          file_basename += generator_utils.UNSHUFFLED_SUFFIX
+        return generator_utils.make_specific_filenames_fn(dataset_split)(
+                                          file_basename, data_dir, num_shards)
+      return specific_filepaths
+
+
   def data_filepaths(self, split, output_dir, num_shards, shuffled):
     if split == DatasetSplit.TRAIN:
       return self.training_filepaths(output_dir, num_shards, shuffled)

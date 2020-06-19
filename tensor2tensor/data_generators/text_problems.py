@@ -305,7 +305,11 @@ class Text2TextProblem(problem.Problem):
     elif dataset_split == problem.DatasetSplit.EVAL:
       mlperf_log.transformer_print(key=mlperf_log.PREPROC_TOKENIZE_EVAL)
 
-    generator = self.generate_samples(data_dir, tmp_dir, dataset_split)
+    # The algorithmic_math_deepmind problem gets its own paths in its generator,
+    # so data_dir and tmp_dir are irrelevant
+    generator = self.generate_samples(data_dir, tmp_dir, dataset_split))
+    # The algorithmic_math_deepmind problem uses character encoding so we good:
+    # data_dir and tmp_dir are irrelevant
     encoder = self.get_or_create_vocab(data_dir, tmp_dir)
     return text2text_generate_encoded(generator, encoder,
                                       has_inputs=self.has_inputs,
@@ -342,7 +346,7 @@ class Text2TextProblem(problem.Problem):
     """String to prepend to targets before tokenization."""
     return ""
 
-  def generate_data(self, data_dir, tmp_dir, task_id=-1):
+  def generate_data(self, data_dir, tmp_dir, task_id=-1, specific_split=None):
 
     filepath_fns = {
         problem.DatasetSplit.TRAIN: self.training_filepaths,
@@ -353,12 +357,34 @@ class Text2TextProblem(problem.Problem):
     split_paths = [(split["split"], filepath_fns[split["split"]](
         data_dir, split["shards"], shuffled=self.already_shuffled))
                    for split in self.dataset_splits]
+
+    # option to produce a single shard from a specified unencoded text file
+    if specific_split:
+      # redefine filepath_fns to only provide paths with one dataset_split
+      filepath_fns = dict([
+        (
+          dataset_split["split"],
+          self.make_specific_filepaths_fn(dataset_split["split"])
+        ) for dataset_split in self.dataset_splits
+        if dataset_split["split"] == specific_split
+      ])
+      if not filepath_fns:
+        raise ValueError("specific_split provided cannot be found.")
+
+      # exceute the filepath_fns to get [(dataset_split, list of paths)]
+      split_paths = [(split["split"], filepath_fns[split["split"]](
+          data_dir, split["shards"], shuffled=self.already_shuffled))
+                     for split in self.dataset_splits
+                     if split["split"] == specific_split]
+
     all_paths = []
     for _, paths in split_paths:
       all_paths.extend(paths)
 
     if self.is_generate_per_split:
+      # Should only be one split_paths pair if specific_split
       for split, paths in split_paths:
+        # Should only be one path if specific_split since there's only one shard
         generator_utils.generate_files(
             self.generate_encoded_samples(data_dir, tmp_dir, split), paths)
     else:

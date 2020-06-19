@@ -284,6 +284,20 @@ def generate_data_for_registered_problem(problem_name):
   task_id = None if FLAGS.task_id < 0 else FLAGS.task_id
   data_dir = os.path.expanduser(FLAGS.data_dir)
   tmp_dir = os.path.expanduser(FLAGS.tmp_dir)
+
+  # Code to preprocess the 12 specific files separately for later evaluation
+  SPECIFIC_FILE = True
+  if SPECIFIC_FILE:
+    def generate_data_decorator(func, dataset_splits):
+      # repeat generate_data for each of the 12 specific_splits
+      def generate_multiple_separate_data(data_dir, tmp_dir, task_id):
+        for split_pair in dataset_splits:
+          # ---------------------------------------
+          func(data_dir, tmp_dir, task_id, specific_split=split_pair["split"])
+      return generate_multiple_separate_data
+    problem.generate_data = generate_data_decorator(problem.generate_data, problem.dataset_splits)
+
+
   if task_id is None and problem.multiprocess_generate:
     if FLAGS.task_id_start != -1:
       assert FLAGS.task_id_end != -1
