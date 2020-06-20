@@ -69,8 +69,8 @@ def main(_):
   estimator = trainer_lib.create_estimator(
       FLAGS.model, hparams, config, use_tpu=FLAGS.use_tpu)
   ckpt_iter = trainer_lib.next_checkpoint(
-      hparams.model_dir, FLAGS.eval_timeout_mins) if not FLAGS.dataset_split
-      else my_chkpt_iter(hparams.model_dir)
+      hparams.model_dir, FLAGS.eval_timeout_mins
+      ) if not FLAGS.dataset_split else my_chkpt_iter(hparams.model_dir)
   with open("eval_results.txt", "a") as results_file:
     for ckpt_path in ckpt_iter:
       results = estimator.evaluate(
