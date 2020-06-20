@@ -59,9 +59,9 @@ def main(_):
   ckpt_iter = trainer_lib.next_checkpoint(
       hparams.model_dir, FLAGS.eval_timeout_mins)
   for ckpt_path in ckpt_iter:
-    predictions = estimator.evaluate(
+    results = estimator.evaluate(
         eval_input_fn, steps=FLAGS.eval_steps, checkpoint_path=ckpt_path)
-    tf.logging.info(predictions)
+    tf.logging.info(results)
 
 
 if __name__ == "__main__":
