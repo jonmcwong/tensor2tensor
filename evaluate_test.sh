@@ -53,4 +53,5 @@ t2t-eval \
   --hparams_set=$HPARAMS_SET \
   --dataset_split=$DATASET_SPLIT \
   --use_tpu=$USE_TPU \
-  --cloud_tpu_name=$CLOUD_TPU_NAME
+  --cloud_tpu_name=$CLOUD_TPU_NAME \
+  --eval_steps=4

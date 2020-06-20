@@ -94,8 +94,20 @@ def main(_):
     results_all_ckpts.append(results)
     tf.logging.info(results)
   pdb.set_trace()
+    # results_file.write(results_all_ckpts)
+
+  def build_line(items, labels=False):
+    if labels:
+      return "\t".join([i.split("/")[-1] for i in items])
+    else:
+      return "\t".join(items)
+
+  column_labels = results_all_ckpts[0].keys()
   with open("eval_results.txt", "w") as results_file:
-    results_file.write(results_all_ckpts)
+    results_file.write(build_line(column_labels, labels=True))
+    for r in results_all_ckpts:
+      results_file.write(build_lines([r[k] for k in column_labels]))
+
 
 
 if __name__ == "__main__":
