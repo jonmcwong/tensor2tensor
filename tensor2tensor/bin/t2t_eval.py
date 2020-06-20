@@ -36,12 +36,13 @@ flags.DEFINE_string("dataset_split", "",
   "The split used by the desired evaluation dataset")
 
 def my_chkpt_iter(model_dir):
-  with file_io.FileIO(os.path.join(model_dir, "checkpoint")) as ckpt_file:
+  with file_io.FileIO(os.path.join(model_dir, "checkpoint"), "r") as ckpt_file:
     contents = ckpt_file.read()
   specific_checkpoints = [
     f.split(" ")[1][1:-1]
     for f in contents.split("\n")
-    if f.startswith('all_model_checkpoint_paths: "')
+    if f.startswith('all_model_checkpoint_paths: "') and
+      f.split("-")[-1][:-1] != "0"
   ]
   for ckpt in specific_checkpoints:
     yield ckpt
@@ -80,8 +81,8 @@ def main(_):
     for ckpt_path in ckpt_iter:
       results = estimator.evaluate(
           eval_input_fn, steps=FLAGS.eval_steps, checkpoint_path=ckpt_path)
-      pdb.set_trace()
       results_file.writelines(list(L))
+      pdb.set_trace()
       tf.logging.info(results)
 
 
