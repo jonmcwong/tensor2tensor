@@ -28,6 +28,7 @@ import tensorflow.compat.v1 as tf
 flags = tf.flags
 FLAGS = flags.FLAGS
 
+flags.DEFINE_string("dataset_split", "", "The split used by the desired evaluation dataset")
 
 def main(_):
   tf.logging.set_verbosity(tf.logging.INFO)
@@ -39,7 +40,10 @@ def main(_):
       problem_name=FLAGS.problem)
 
   # set appropriate dataset-split, if flags.eval_use_test_set.
-  dataset_split = "test" if FLAGS.eval_use_test_set else None
+  if FLAGS.eval_use_test_set:
+    dataset_split = "test" if FLAGS.dataset_split else FLAGS.dataset_split
+  else:
+    dataset_split = None
   dataset_kwargs = {"dataset_split": dataset_split}
   eval_input_fn = hparams.problem.make_estimator_input_fn(
       tf.estimator.ModeKeys.EVAL, hparams, dataset_kwargs=dataset_kwargs)

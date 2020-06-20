@@ -12,14 +12,14 @@ export STORAGE_BUCKET=gs://mathsreasoning
 export MODEL_TAG=mds_paper_settings
 # export MODEL_TAG=${MODEL_TAG}-$(date +%F)
 export MODEL_TAG=${MODEL_TAG}-2020-06-12
-export DATA_DIR=${STORAGE_BUCKET}/t2t-data
+export DATA_DIR=${STORAGE_BUCKET}/t2t-specific-data
 export TMP_DIR=${STORAGE_BUCKET}/t2t_datagen
 export TRAIN_DIR=${STORAGE_BUCKET}/t2t_train/$PROBLEM/$MODEL-$MODEL_TAG
-export BEAM_SIZE=4
-export ALPHA=0.6
-export DECODE_FILE=$HOME/test_file.txt
-export DECODE_OUTPUT=$HOME/output.txt
-export DATA_SHARD=$DATA_DIR/algorithmic_math_deepmind_all-train-00000-of-00128
+# export BEAM_SIZE=4
+# export ALPHA=0.6
+# export DECODE_FILE=$HOME/test_file.txt
+# export DECODE_OUTPUT=$HOME/output.txt
+# export DATA_SHARD=$DATA_DIR/algorithmic_math_deepmind_all-train-00000-of-00128
 echo "PROBLEM = "$PROBLEM
 echo "MODEL = "$MODEL
 echo "HPARAMS_SET = "$HPARAMS_SET
@@ -30,10 +30,10 @@ echo "MODEL_TAG = "$MODEL_TAG
 echo "DATA_DIR = "$DATA_DIR
 echo "TMP_DIR = "$TMP_DIR
 echo "TRAIN_DIR = "$TRAIN_DIR
-echo "BEAM_SIZE = "$BEAM_SIZE
-echo "ALPHA = "$ALPHA
-echo "DECODE_FILE = "$DECODE_FILE
-echo "DECODE_OUTPUT = "$DECODE_OUTPUT
+# echo "BEAM_SIZE = "$BEAM_SIZE
+# echo "ALPHA = "$ALPHA
+# echo "DECODE_FILE = "$DECODE_FILE
+# echo "DECODE_OUTPUT = "$DECODE_OUTPUT
 
 
 

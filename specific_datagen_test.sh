@@ -43,5 +43,5 @@ t2t-datagen \
   --problem=$PROBLEM \
   --data_dir=$DATA_DIR \
   --tmp_dir=$TMP_DIR \
-  --specific_splits=$SPECIFIC_SPLITS
+  --specific_splits=$SPECIFIC_SPLITS \
   --max_cases=$MAX_CASES
