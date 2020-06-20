@@ -48,6 +48,7 @@ t2t-eval \
   --problem=$PROBLEM \
   --model=$MODEL \
   --data_dir=$DATA_DIR \
+  --input_file=$TRAIN_DIR \
   --output_dir=$TRAIN_DIR \
   --eval_use_test_set=$EVAL_USE_TEST_SET \
   --hparams_set=$HPARAMS_SET \

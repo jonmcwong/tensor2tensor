@@ -76,15 +76,18 @@ def main(_):
       FLAGS.model, hparams, config, use_tpu=FLAGS.use_tpu)
   ckpt_iter = trainer_lib.next_checkpoint(
       hparams.model_dir, FLAGS.eval_timeout_mins
-      ) if not FLAGS.dataset_split else my_chkpt_iter(hparams.model_dir)
+      )
+  ckpt_iter2 = my_chkpt_iter(hparams.model_dir)
 
+  # ckpt_iter = trainer_lib.next_checkpoint(
+
+  pdb.set_trace()
   results_all_ckpts = []
   for ckpt_path in ckpt_iter:
     results = estimator.evaluate(
         eval_input_fn, steps=FLAGS.eval_steps, checkpoint_path=ckpt_path)
-    # pdb.set_trace()
+    pdb.set_trace()
     results_all_ckpts.append(results)
-    # pdb.set_trace()
     tf.logging.info(results)
   pdb.set_trace()
   with open("eval_results.txt", "w") as results_file:
