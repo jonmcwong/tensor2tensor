@@ -24,6 +24,7 @@ from tensor2tensor.data_generators import problem  # pylint: disable=unused-impo
 from tensor2tensor.utils import trainer_lib
 from tensor2tensor.utils import usr_dir
 import tensorflow.compat.v1 as tf
+from tensorflow.python.lib.io import file_io
 
 import os
 import pdb
@@ -35,9 +36,13 @@ flags.DEFINE_string("dataset_split", "",
   "The split used by the desired evaluation dataset")
 
 def my_chkpt_iter(model_dir):
-  specific_checkpoints = [f[:-5]
-      for f in os.listdir(model_dir)
-      if f.startswith("model.ckpt-") and f.endswith(".meta")]
+  with file_io.FileIO(os.path.join(model_dir, "checkpoint")) as ckpt_file:
+    contents = ckpt_file.read()
+  specific_checkpoints = [
+    f.split(" ")[1][1:-1]
+    for f in contents.split("\n")
+    if f.startswith('all_model_checkpoint_paths: "')
+  ]
   for ckpt in specific_checkpoints:
     yield ckpt
 
