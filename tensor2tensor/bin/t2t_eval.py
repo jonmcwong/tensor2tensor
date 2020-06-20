@@ -27,7 +27,7 @@ import tensorflow.compat.v1 as tf
 from tensorflow.python.lib.io import file_io
 
 import os
-# import pdb
+import pdb
 
 flags = tf.flags
 FLAGS = flags.FLAGS
@@ -86,7 +86,8 @@ def main(_):
     results_all_ckpts.append(results)
     # pdb.set_trace()
     tf.logging.info(results)
-  with open("eval_results.txt", "wb") as results_file:
+  pdb.set_trace()
+  with open("eval_results.txt", "w") as results_file:
     results_file.write(results_all_ckpts)
 
 
