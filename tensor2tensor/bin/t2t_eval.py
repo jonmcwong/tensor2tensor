@@ -45,7 +45,7 @@ def my_chkpt_iter(model_dir):
       f.split("-")[-1][:-1] != "0"
   ]
   for ckpt in specific_checkpoints:
-    yield ckpt
+    yield os.path.join(model_dir, ckpt)
 
 def main(_):
   tf.logging.set_verbosity(tf.logging.INFO)
