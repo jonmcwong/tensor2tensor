@@ -46,6 +46,7 @@ def my_chkpt_iter(model_dir):
   ]
   for ckpt in specific_checkpoints:
     yield os.path.join(model_dir, ckpt)
+  # return specific_checkpoints
 
 def main(_):
   tf.logging.set_verbosity(tf.logging.INFO)
@@ -58,8 +59,8 @@ def main(_):
 
   # set appropriate dataset-split, if flags.eval_use_test_set.
   if FLAGS.dataset_split:
-    if not FLAGS.eval_use_test_set: raise ValueError(
-      "dataset_split flag was passed even though eval_use_test_set is False.")
+    # if not FLAGS.eval_use_test_set: raise ValueError(
+      # "dataset_split flag was passed even though eval_use_test_set is False.")
     dataset_split = FLAGS.dataset_split
   else:
     dataset_split = "test" if FLAGS.eval_use_test_set else None
@@ -76,8 +77,7 @@ def main(_):
       FLAGS.model, hparams, config, use_tpu=FLAGS.use_tpu)
   ckpt_iter = trainer_lib.next_checkpoint(
       hparams.model_dir, FLAGS.eval_timeout_mins
-      )
-  ckpt_iter2 = my_chkpt_iter(hparams.model_dir)
+      ) if not FLAGS.dataset_split else my_chkpt_iter(hparams.model_dir)
 
   # ckpt_iter = trainer_lib.next_checkpoint(
 
@@ -86,7 +86,7 @@ def main(_):
   for ckpt_path in ckpt_iter:
     results = estimator.evaluate(
         eval_input_fn, steps=FLAGS.eval_steps, checkpoint_path=ckpt_path)
-    pdb.set_trace()
+    # pdb.set_trace()
     results_all_ckpts.append(results)
     tf.logging.info(results)
   pdb.set_trace()
