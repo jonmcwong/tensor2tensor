@@ -25,10 +25,21 @@ from tensor2tensor.utils import trainer_lib
 from tensor2tensor.utils import usr_dir
 import tensorflow.compat.v1 as tf
 
+import os
+import pdb
+
 flags = tf.flags
 FLAGS = flags.FLAGS
 
-flags.DEFINE_string("dataset_split", "", "The split used by the desired evaluation dataset")
+flags.DEFINE_string("dataset_split", "",
+  "The split used by the desired evaluation dataset")
+
+def my_chkpt_iter(model_dir):
+  specific_checkpoints = [f[:-5]
+      for f in os.listdir(model_dir)
+      if f.startswith("model.ckpt-") and f.endswith(".meta")]
+  for ckpt in specific_checkpoints:
+    yield ckpt
 
 def main(_):
   tf.logging.set_verbosity(tf.logging.INFO)
@@ -41,7 +52,8 @@ def main(_):
 
   # set appropriate dataset-split, if flags.eval_use_test_set.
   if FLAGS.dataset_split:
-    if not FLAGS.eval_use_test_set: raise ValueError("dataset_split flag was passed even though eval_use_test_set is False.")
+    if not FLAGS.eval_use_test_set: raise ValueError(
+      "dataset_split flag was passed even though eval_use_test_set is False.")
     dataset_split = FLAGS.dataset_split
   else:
     dataset_split = "test" if FLAGS.eval_use_test_set else None
@@ -57,11 +69,15 @@ def main(_):
   estimator = trainer_lib.create_estimator(
       FLAGS.model, hparams, config, use_tpu=FLAGS.use_tpu)
   ckpt_iter = trainer_lib.next_checkpoint(
-      hparams.model_dir, FLAGS.eval_timeout_mins)
-  for ckpt_path in ckpt_iter:
-    results = estimator.evaluate(
-        eval_input_fn, steps=FLAGS.eval_steps, checkpoint_path=ckpt_path)
-    tf.logging.info(results)
+      hparams.model_dir, FLAGS.eval_timeout_mins) if not FLAGS.dataset_split
+      else my_chkpt_iter(hparams.model_dir)
+  with open("eval_results.txt", "a") as results_file:
+    for ckpt_path in ckpt_iter:
+      results = estimator.evaluate(
+          eval_input_fn, steps=FLAGS.eval_steps, checkpoint_path=ckpt_path)
+      pdb.set_trace()
+      results_file.writelines(list(L))
+      tf.logging.info(results)
 
 
 if __name__ == "__main__":
