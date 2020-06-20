@@ -20,6 +20,7 @@ export TRAIN_DIR=${STORAGE_BUCKET}/t2t_train/$PROBLEM/$MODEL-$MODEL_TAG
 # export DECODE_FILE=$HOME/test_file.txt
 # export DECODE_OUTPUT=$HOME/output.txt
 # export DATA_SHARD=$DATA_DIR/algorithmic_math_deepmind_all-train-00000-of-00128
+export DATASET_SPLIT=extra_add_or_sub_big
 echo "PROBLEM = "$PROBLEM
 echo "MODEL = "$MODEL
 echo "HPARAMS_SET = "$HPARAMS_SET
@@ -34,7 +35,7 @@ echo "TRAIN_DIR = "$TRAIN_DIR
 # echo "ALPHA = "$ALPHA
 # echo "DECODE_FILE = "$DECODE_FILE
 # echo "DECODE_OUTPUT = "$DECODE_OUTPUT
-
+echo "DATASET_SPLIT = "$DATASET_SPLIT
 
 
 t2t-eval \
@@ -45,4 +46,5 @@ t2t-eval \
   --eval_use_test_set=True \
   --hparams_set=$HPARAMS_SET \
   --use_tpu=True \
-  --cloud_tpu_name=jonmcwong-tpu
+  --cloud_tpu_name=jonmcwong-tpu \
+  --dataset_split=$DATASET_SPLIT

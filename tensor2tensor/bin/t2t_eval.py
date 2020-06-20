@@ -41,7 +41,7 @@ def main(_):
 
   # set appropriate dataset-split, if flags.eval_use_test_set.
   if FLAGS.dataset_split:
-    if FLAGS.eval_use_test_set: raise ValueError("dataset_split flag was passed even though eval_use_test_set is False.")
+    if not FLAGS.eval_use_test_set: raise ValueError("dataset_split flag was passed even though eval_use_test_set is False.")
     dataset_split = FLAGS.dataset_split
   else:
     dataset_split = "test" if FLAGS.eval_use_test_set else None
