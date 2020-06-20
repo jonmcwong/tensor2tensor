@@ -84,16 +84,16 @@ def main(_):
   # ckpt_iter = trainer_lib.next_checkpoint(
 
   ckpt_iter = ckpt_iter1 if not FLAGS.dataset_split else ckpt_iter2
-  pdb.set_trace()
+  # pdb.set_trace()
   results_all_ckpts = []
   for ckpt_path in ckpt_iter:
-    pdb.set_trace()
+    # pdb.set_trace()
     results = estimator.evaluate(
         eval_input_fn, steps=FLAGS.eval_steps, checkpoint_path=ckpt_path)
     # pdb.set_trace()
     results_all_ckpts.append(results)
     tf.logging.info(results)
-  pdb.set_trace()
+  # pdb.set_trace()
     # results_file.write(results_all_ckpts)
 
   def build_line(items, labels=False):
