@@ -42,7 +42,7 @@ t2t-eval \
   --model=$MODEL \
   --data_dir=$DATA_DIR \
   --output_dir=$TRAIN_DIR \
-  --eval_use_test_set=False \
+  --eval_use_test_set=True \
   --hparams_set=$HPARAMS_SET \
   --use_tpu=True \
   --cloud_tpu_name=jonmcwong-tpu

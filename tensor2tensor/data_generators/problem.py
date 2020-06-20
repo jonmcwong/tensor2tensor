@@ -503,6 +503,8 @@ class Problem(object):
       suffix = "train"
     elif mode in [DatasetSplit.EVAL, tf.estimator.ModeKeys.PREDICT]:
       suffix = "dev"
+    elif hasattr(self, 'dataset_special_splits') and mode in self.dataset_special_splits:
+      suffix = mode
     else:
       assert mode == DatasetSplit.TEST
       suffix = "test"
