@@ -27,7 +27,7 @@ import tensorflow.compat.v1 as tf
 from tensorflow.python.lib.io import file_io
 
 import os
-import pdb
+# import pdb
 
 flags = tf.flags
 FLAGS = flags.FLAGS
@@ -77,13 +77,17 @@ def main(_):
   ckpt_iter = trainer_lib.next_checkpoint(
       hparams.model_dir, FLAGS.eval_timeout_mins
       ) if not FLAGS.dataset_split else my_chkpt_iter(hparams.model_dir)
-  with open("eval_results.txt", "a") as results_file:
-    for ckpt_path in ckpt_iter:
-      results = estimator.evaluate(
-          eval_input_fn, steps=FLAGS.eval_steps, checkpoint_path=ckpt_path)
-      results_file.writelines(list(L))
-      pdb.set_trace()
-      tf.logging.info(results)
+
+  results_all_ckpts = []
+  for ckpt_path in ckpt_iter:
+    results = estimator.evaluate(
+        eval_input_fn, steps=FLAGS.eval_steps, checkpoint_path=ckpt_path)
+    # pdb.set_trace()
+    results_all_ckpts.append(results)
+    # pdb.set_trace()
+    tf.logging.info(results)
+  with open("eval_results.txt", "wb") as results_file:
+    results_file.write(results_all_ckpts)
 
 
 if __name__ == "__main__":
