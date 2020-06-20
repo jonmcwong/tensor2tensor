@@ -75,15 +75,19 @@ def main(_):
 
   estimator = trainer_lib.create_estimator(
       FLAGS.model, hparams, config, use_tpu=FLAGS.use_tpu)
-  ckpt_iter = trainer_lib.next_checkpoint(
+  ckpt_iter1 = trainer_lib.next_checkpoint(
       hparams.model_dir, FLAGS.eval_timeout_mins
-      ) if not FLAGS.dataset_split else my_chkpt_iter(hparams.model_dir)
+      )
+  ckpt_iter2 = my_chkpt_iter(hparams.model_dir)
+
 
   # ckpt_iter = trainer_lib.next_checkpoint(
 
+  ckpt_iter = ckpt_iter1 if not FLAGS.dataset_split else ckpt_iter2
   pdb.set_trace()
   results_all_ckpts = []
   for ckpt_path in ckpt_iter:
+    pdb.set_trace()
     results = estimator.evaluate(
         eval_input_fn, steps=FLAGS.eval_steps, checkpoint_path=ckpt_path)
     # pdb.set_trace()
