@@ -5,13 +5,13 @@ export STORAGE_BUCKET=gs://mathsreasoning
 echo "STORAGE_BUCKET = "$STORAGE_BUCKET
 
 # Assumed the VM has a tpu already configured
-export TPU_IP_ADDRESS=$2 # 10.218.218.146
+export TPU_IP_ADDRESS=$3 # 10.218.218.146
 export XRT_TPU_CONFIG="tpu_worker;0;$TPU_IP_ADDRESS:8470"
 export USE_TPU=True
-export CLOUD_TPU_NAME=$3 # jonmcwong-tpu
+export CLOUD_TPU_NAME=$4 # jonmcwong-tpu
 export PROBLEM=algorithmic_math_deepmind_all
-export MODEL=transformer
-export MODEL_TAG=$1 # mds_paper_settings-2020-06-12
+export MODEL=$1 # transformer
+export MODEL_TAG=$2 # mds_paper_settings-2020-06-12
 export HPARAMS_SET=transformer_tpu
 export DATA_DIR=${STORAGE_BUCKET}/t2t-specific-data
 export TRAIN_DIR=${STORAGE_BUCKET}/t2t_train/$PROBLEM/$MODEL-$MODEL_TAG
