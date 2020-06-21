@@ -27,7 +27,7 @@ echo "DATA_DIR = "$DATA_DIR
 echo "TRAIN_DIR = "$TRAIN_DIR
 echo "EVAL_USE_TEST_SET = "$EVAL_USE_TEST_SET
 
-mkdir "eval-rseults-"$MODEL_TAG
+mkdir "eval-results-"$MODEL_TAG
 
 for DATASET_SPLIT in \
 extra_add_or_sub_big \

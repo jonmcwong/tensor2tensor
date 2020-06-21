@@ -100,7 +100,7 @@ def main(_):
   pdb.set_trace()
   # get the category_names
   category_names = results_all_ckpts[0].keys()
-  results_dir = "eval-results-" + FLAGS.model_dir.split("/")[-1][len(FLAGS.model)+1:]
+  results_dir = "eval-results-" + hparams.model_dir.split("/")[-1][len(FLAGS.model)+1:]
   with open(results_dir + "/eval_" + FLAGS.dataset_split + "_results.txt", "w") as results_file:
     results_file.write(build_line(category_names, labels=True))
     for r in results_all_ckpts:
