@@ -91,7 +91,7 @@ def main(_):
 
   # forms a line of text from each category of data
   def build_line(items, labels=False):
-    items = map(str, itmes)
+    items = map(str, items)
     if labels:
       return "\t".join([i.split("/")[-1] for i in items])
     else:
