@@ -104,6 +104,8 @@ def main(_):
     results_file.write(build_line(category_names, labels=True))
     for r in results_all_ckpts:
       results_file.write(build_line([r[k] for k in category_names]))
+  with open("evaluation_results/checklist", "a") as checklist_file:
+    checklist_file.write(FLAGS.dataset_split+"\n")
 
 if __name__ == "__main__":
   tf.logging.set_verbosity(tf.logging.INFO)
