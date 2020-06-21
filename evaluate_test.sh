@@ -1,21 +1,18 @@
 #!/bin/bash
-
 if [ $# -eq 0 ]
-	then echo "No MODEL_TAG provided"
+	then echo "No MODEL_TAG provided, e.g. './$(basename "$0") mds_paper_settings-2020-06-12'"
 else
 	# Get the VM_NAME and INTERNAL_IP
-	export INTERNAL_IP= \
-		$(echo $SSH_CONNECTION | sed "s/^.* \([0-9|\.]*\) [0-9]*$/\1/")
-	export VM_NAME= \
-		$(gcloud compute instances list | grep $INTERNAL_IP | cut -d' ' -f1)
+	export INTERNAL_IP=$(echo $SSH_CONNECTION | sed "s/^.* \([0-9|\.]*\) [0-9]*$/\1/")
+	export VM_NAME=$(gcloud compute instances list | grep $INTERNAL_IP | cut -d' ' -f1)
 	export STORAGE_BUCKET=gs://mathsreasoning
 	echo "VM_NAME = "$VM_NAME
 	echo "INTERNAL_IP = "$INTERNAL_IP
 	echo "STORAGE_BUCKET = "$STORAGE_BUCKET
 
 	# Assumed the VM has a tpu already configured
-	# export TPU_IP_ADDRESS=10.218.218.146
-	# export XRT_TPU_CONFIG="tpu_worker;0;$TPU_IP_ADDRESS:8470"
+	export TPU_IP_ADDRESS=10.218.218.146
+	export XRT_TPU_CONFIG="tpu_worker;0;$TPU_IP_ADDRESS:8470"
 	export USE_TPU=True
 	export CLOUD_TPU_NAME=$VM_NAME
 	export PROBLEM=algorithmic_math_deepmind_all
@@ -63,6 +60,4 @@ else
 			--cloud_tpu_name=$CLOUD_TPU_NAME \
 			--eval_steps=4
 	done
-
-
 fi
