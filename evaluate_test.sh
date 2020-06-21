@@ -9,11 +9,12 @@ export CLOUD_TPU_NAME=jonmcwong-tpu
 
 export PROBLEM=algorithmic_math_deepmind_all
 export MODEL=transformer
+# export MODEL_TAG=mds_paper_settings-2020-06-12
+export MODEL_TAG=$1
 export HPARAMS_SET=transformer_tpu
 export STORAGE_BUCKET=gs://mathsreasoning
-export MODEL_TAG=mds_paper_settings
 # export MODEL_TAG=${MODEL_TAG}-$(date +%F)
-export MODEL_TAG=${MODEL_TAG}-2020-06-12
+# export MODEL_TAG=${MODEL_TAG}-2020-06-12
 export DATA_DIR=${STORAGE_BUCKET}/t2t-specific-data
 # export TMP_DIR=${STORAGE_BUCKET}/t2t_datagen
 export TRAIN_DIR=${STORAGE_BUCKET}/t2t_train/$PROBLEM/$MODEL-$MODEL_TAG
