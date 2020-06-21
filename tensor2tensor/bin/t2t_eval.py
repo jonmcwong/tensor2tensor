@@ -93,13 +93,14 @@ def main(_):
   def build_line(items, labels=False):
     items = map(str, items)
     if labels:
-      return "\t".join([i.split("/")[-1] for i in items])
+      return "\t".join([i.split("/")[-1] for i in items]) + "\n"
     else:
-      return "\t".join(items)
+      return "\t".join(items) + "\n"
 
   # get the category_names
   category_names = results_all_ckpts[0].keys()
-  with open("eval_"+FLAGS.dataset_split+"results.txt", "w") as results_file:
+  with open("evaluation_results/eval_" +
+      FLAGS.dataset_split + "results.txt", "w") as results_file:
     results_file.write(build_line(category_names, labels=True))
     for r in results_all_ckpts:
       results_file.write(build_line([r[k] for k in category_names]))

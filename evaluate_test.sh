@@ -23,7 +23,8 @@ export TRAIN_DIR=${STORAGE_BUCKET}/t2t_train/$PROBLEM/$MODEL-$MODEL_TAG
 # export DECODE_OUTPUT=$HOME/output.txt
 # export DATA_SHARD=$DATA_DIR/algorithmic_math_deepmind_all-train-00000-of-00128
 export EVAL_USE_TEST_SET=True
-export DATASET_SPLIT=extra_mul_big
+
+
 echo "TPU_IP_ADDRESS = "$TPU_IP_ADDRESS
 echo "XRT_TPU_CONFIG = "$XRT_TPU_CONFIG
 echo "USE_TPU = "$USE_TPU
@@ -41,17 +42,31 @@ echo "TRAIN_DIR = "$TRAIN_DIR
 # echo "DECODE_FILE = "$DECODE_FILE
 # echo "DECODE_OUTPUT = "$DECODE_OUTPUT
 echo "EVAL_USE_TEST_SET = "$EVAL_USE_TEST_SET
+
+for DATASET_SPLIT in \
+	extra_add_or_sub_big \
+	extra_add_sub_multiple_longer \
+	extra_div_big \
+	extra_mixed_longer \
+	extra_mul_big \
+	extra_mul_div_multiple_longer \
+	inter_add_or_sub \
+	inter_add_sub_multiple \
+	inter_div \
+	inter_mixed \
+	inter_mul \
+	inter_mul_div_multiple
+do
 echo "DATASET_SPLIT = "$DATASET_SPLIT
-
-
-t2t-eval \
-  --problem=$PROBLEM \
-  --model=$MODEL \
-  --data_dir=$DATA_DIR \
-  --output_dir=$TRAIN_DIR \
-  --eval_use_test_set=$EVAL_USE_TEST_SET \
-  --hparams_set=$HPARAMS_SET \
-  --dataset_split=$DATASET_SPLIT \
-  --use_tpu=$USE_TPU \
-  --cloud_tpu_name=$CLOUD_TPU_NAME \
-  --eval_steps=4
+	t2t-eval \
+		--problem=$PROBLEM \
+		--model=$MODEL \
+		--data_dir=$DATA_DIR \
+		--output_dir=$TRAIN_DIR \
+		--eval_use_test_set=$EVAL_USE_TEST_SET \
+		--hparams_set=$HPARAMS_SET \
+		--dataset_split=$DATASET_SPLIT \
+		--use_tpu=$USE_TPU \
+		--cloud_tpu_name=$CLOUD_TPU_NAME \
+		--eval_steps=4
+done
