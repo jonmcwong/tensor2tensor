@@ -100,7 +100,7 @@ def main(_):
   # get the category_names
   category_names = results_all_ckpts[0].keys()
   with open("evaluation_results/eval_" +
-      FLAGS.dataset_split + "results.txt", "w") as results_file:
+      FLAGS.dataset_split + "_results.txt", "w") as results_file:
     results_file.write(build_line(category_names, labels=True))
     for r in results_all_ckpts:
       results_file.write(build_line([r[k] for k in category_names]))
