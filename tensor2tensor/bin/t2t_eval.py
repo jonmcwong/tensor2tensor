@@ -97,15 +97,18 @@ def main(_):
     else:
       return "\t".join(items) + "\n"
 
+  pdb.set_trace()
   # get the category_names
   category_names = results_all_ckpts[0].keys()
-  with open("evaluation_results/eval_" +
+  results_dir = "eval-rseults-" +
+    FLAGS.model_dir.split("/")[-1][len(FLAGS.model)+1:]
+  with open(results_dir + "/eval_" +
       FLAGS.dataset_split + "_results.txt", "w") as results_file:
     results_file.write(build_line(category_names, labels=True))
     for r in results_all_ckpts:
       results_file.write(build_line([r[k] for k in category_names]))
-  with open("evaluation_results/checklist", "a") as checklist_file:
-    checklist_file.write(FLAGS.dataset_split+"\n")
+  with open(results_dir + "/checklist", "a") as checklist_file:
+    checklist_file.write(FLAGS.dataset_split + "\n")
 
 if __name__ == "__main__":
   tf.logging.set_verbosity(tf.logging.INFO)

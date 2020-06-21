@@ -1,5 +1,6 @@
 #!/bin/bash
-if [ $# -eq 3 ] then
+if [ $# -eq 4 ]
+then
 export STORAGE_BUCKET=gs://mathsreasoning
 echo "STORAGE_BUCKET = "$STORAGE_BUCKET
 
@@ -25,6 +26,8 @@ echo "HPARAMS_SET = "$HPARAMS_SET
 echo "DATA_DIR = "$DATA_DIR
 echo "TRAIN_DIR = "$TRAIN_DIR
 echo "EVAL_USE_TEST_SET = "$EVAL_USE_TEST_SET
+
+mkdir "eval-rseults-"$MODEL_TAG
 
 for DATASET_SPLIT in \
 extra_add_or_sub_big \
@@ -56,10 +59,12 @@ done
 else
 printf "Invalid arguments provided. Signature is:\n\
 ./$(basename "$0") \
+<MODEL> \
 <MODEL_TAG> \
 <CLOUD_TPU_NAME> \
 <TPU_IP_ADDRESS>\n\
 E.g. ./$(basename "$0") \
+transformer \
 mds_paper_settings-2020-06-12 \
 10.218.218.146 \
 jonmcwong-tpu\n"
