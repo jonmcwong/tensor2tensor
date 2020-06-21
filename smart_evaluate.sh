@@ -31,6 +31,7 @@ echo "DATA_DIR = "$DATA_DIR
 echo "TRAIN_DIR = "$TRAIN_DIR
 echo "EVAL_USE_TEST_SET = "$EVAL_USE_TEST_SET
 
+echo "mkdir eval-results-"$MODEL_TAG
 mkdir "eval-results-"$MODEL_TAG
 
 for DATASET_SPLIT in \
