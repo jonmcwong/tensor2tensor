@@ -26,24 +26,6 @@ elif [[ $# -eq 3 ]] ; then
     export TRAIN_DIR=${STORAGE_BUCKET}/t2t_train/$PROBLEM/$MODEL-$MODEL_TAG
     export RESULTS_DIR=${STORAGE_BUCKET}/results-$MODEL-$MODEL_TAG
     export EVAL_USE_TEST_SET=True
-
-    echo "Process will run the following:"
-    echo "TPU_IP_ADDRESS = "$TPU_IP_ADDRESS
-    echo "XRT_TPU_CONFIG = "$XRT_TPU_CONFIG
-    echo "t2t-eval \\"
-    echo "    --problem=$PROBLEM \\"
-    echo "    --model=$MODEL \\"
-    echo "    --data_dir=$DATA_DIR \\"
-    echo "    --output_dir=$TRAIN_DIR \\"
-    echo "    --eval_use_test_set=$EVAL_USE_TEST_SET \\"
-    echo "    --hparams_set=$HPARAMS_SET \\"
-    echo "    --dataset_split=$DATASET_SPLIT \\"
-    echo "    --use_tpu=$USE_TPU \\"
-    echo "    --cloud_tpu_name=$CLOUD_TPU_NAME \\"
-    echo "    --eval_steps=3 \\"
-    echo "    --results_dir=$RESULTS_DIR"
-    echo
-    echo
     # echo "mkdir eval-results-"$MODEL_TAG
     # mkdir "eval-results-"$MODEL_TAG
 
@@ -61,7 +43,23 @@ elif [[ $# -eq 3 ]] ; then
         inter_mul \
         inter_mul_div_multiple
     do
-        echo "DATASET_SPLIT = "$DATASET_SPLIT
+        echo
+        echo "Process will run the following:"
+        echo "TPU_IP_ADDRESS = "$TPU_IP_ADDRESS
+        echo "XRT_TPU_CONFIG = "$XRT_TPU_CONFIG
+        echo "t2t-eval \\"
+        echo "    --problem=$PROBLEM \\"
+        echo "    --model=$MODEL \\"
+        echo "    --data_dir=$DATA_DIR \\"
+        echo "    --output_dir=$TRAIN_DIR \\"
+        echo "    --eval_use_test_set=$EVAL_USE_TEST_SET \\"
+        echo "    --hparams_set=$HPARAMS_SET \\"
+        echo "    --dataset_split=<all_12_of_them> \\"
+        echo "    --use_tpu=$USE_TPU \\"
+        echo "    --cloud_tpu_name=$CLOUD_TPU_NAME \\"
+        echo "    --eval_steps=3 \\"
+        echo "    --results_dir=$RESULTS_DIR"
+        echo
         t2t-eval \
             --problem=$PROBLEM \
             --model=$MODEL \
@@ -105,7 +103,7 @@ elif [[ $# -eq 4 && $4 == "--dry-run" ]]; then
     echo "    --output_dir=$TRAIN_DIR \\"
     echo "    --eval_use_test_set=$EVAL_USE_TEST_SET \\"
     echo "    --hparams_set=$HPARAMS_SET \\"
-    echo "    --dataset_split=$DATASET_SPLIT \\"
+    echo "    --dataset_split=<all_12_of_them> \\"
     echo "    --use_tpu=$USE_TPU \\"
     echo "    --cloud_tpu_name=$CLOUD_TPU_NAME \\"
     echo "    --eval_steps=3 \\"
