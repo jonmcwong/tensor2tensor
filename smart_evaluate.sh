@@ -1,18 +1,29 @@
 #!/bin/bash
-if [ $# -eq 3 ]
+if [ $# -eq 2 ]
 then
-export INTERNAL_IP=$(echo $SSH_CONNECTION | sed "s/^.* \([0-9|\.]*\) [0-9]*$/\1/")
-export VM_NAME=$(gcloud compute instances list | grep $INTERNAL_IP | cut -d' ' -f1)
-export STORAGE_BUCKET=gs://mathsreasoning
-echo "INTERNAL_IP = "$INTERNAL_IP
+
+export ZONE=europe-west4-a
+export VM_IP=$(echo $SSH_CONNECTION | sed "s/^.* \([0-9|\.]*\) [0-9]*$/\1/")
+export VM_NAME=$(gcloud compute instances list | grep $VM_IP | cut -d' ' -f1)
+export TPU_INFO=$(gcloud compute tpus list --zone=$ZONE | grep $VM_NAME)
+export TPU_IP=$(echo $TPU_INFO | sed "s/^.*v[0-9].*\s\([0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\):[0-9]*\s.*$/\1/")
+# export TPU_NAME=$(echo $TPU_INFO | sed "s/^\(.*\)\sus-central.*$/\1/")
+export TPU_NAME=$(echo $TPU_INFO | cut -d' ' -f1)
+echo "VM_IP = "$VM_IP
 echo "VM_NAME = "$VM_NAME
+# echo "TPU_INFO = "$TPU_INFO
+echo "TPU_IP = "$TPU_IP
+echo "TPU_NAME = "$TPU_NAME
+
+
+export STORAGE_BUCKET=gs://mathsreasoning
 echo "STORAGE_BUCKET = "$STORAGE_BUCKET
 
 # Assumed the VM has a tpu already configured
-export TPU_IP_ADDRESS=$3 # 10.218.218.146
+export TPU_IP_ADDRESS=$TPU_IP
 export XRT_TPU_CONFIG="tpu_worker;0;$TPU_IP_ADDRESS:8470"
 export USE_TPU=True
-export CLOUD_TPU_NAME=$VM_NAME # jonmcwong-tpu
+export CLOUD_TPU_NAME=$TPU_NAME # jonmcwong-tpu
 export PROBLEM=algorithmic_math_deepmind_all
 export MODEL=$1 # transformer
 export MODEL_TAG=$2 # mds_paper_settings-2020-06-12
@@ -69,10 +80,8 @@ else
 printf "Invalid arguments provided. Signature is:\n\
 ./$(basename "$0") \
 <MODEL> \
-<MODEL_TAG> \
-<TPU_IP_ADDRESS>\n\
+<MODEL_TAG>\n\
 E.g. ./$(basename "$0") \
 transformer \
-mds_paper_settings-2020-06-12 \
-10.218.218.146\n"
+mds_paper_settings-2020-06-12\n"
 fi
