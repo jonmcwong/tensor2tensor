@@ -34,8 +34,8 @@ FLAGS = flags.FLAGS
 
 flags.DEFINE_string("dataset_split", "",
   "The split used by the desired evaluation dataset")
-# flags.DEFINE_string("results_dir", "",
-  # "Where to write results")
+flags.DEFINE_string("results_dir", "",
+  "Where to write results")
 
 def my_chkpt_iter(model_dir):
   with file_io.FileIO(os.path.join(model_dir, "checkpoint"), "r") as ckpt_file:
@@ -102,21 +102,33 @@ def main(_):
   # pdb.set_trace()
   # get the category_names
   category_names = results_all_ckpts[0].keys()
-  # results_dir = FLAGS.results_dir
-  results_dir = "eval-results-" + hparams.model_dir.split("/")[-1][len(FLAGS.model)+1:]
-  try:
-    if results_dir[0] == "/":
-      os.mkdir(results_dir[1:])
-    else:
-      os.mkdir(results_dir)
-  except:
-    pdb.set_trace()
-  with open(results_dir + "/eval_" + FLAGS.dataset_split + "_results.txt", "w") as results_file:
-    results_file.write(build_line(category_names, labels=True))
-    for r in results_all_ckpts:
-      results_file.write(build_line([r[k] for k in category_names]))
-  with open(results_dir + "/checklist", "a") as checklist_file:
-    checklist_file.write(FLAGS.dataset_split + "\n")
+  if FLAGS.results_dir and FLAGS.results_dir[:5] == "gs://":
+    # Write to bucket
+    results_dir = FLAGS.results_dir
+    with file_io.FileIO(
+      results_dir + "/eval_" + FLAGS.dataset_split + "_results.txt", "w"
+    ) as results_file:
+      results_file.write(build_line(category_names, labels=True))
+      for r in results_all_ckpts:
+        results_file.write(build_line([r[k] for k in category_names]))
+    with file_io.FileIO(results_dir + "/checklist", "a") as checklist_file:
+      checklist_file.write(FLAGS.dataset_split + "\n")
+  else
+    # Write to local root directory
+    results_dir = "eval-results-" + hparams.model_dir.split("/")[-1][len(FLAGS.model)+1:]
+    try:
+      if results_dir[0] == "/":
+        os.mkdir(results_dir[1:])
+      else:
+        os.mkdir(results_dir)
+    except:
+      pdb.set_trace()
+    with open(results_dir + "/eval_" + FLAGS.dataset_split + "_results.txt", "w") as results_file:
+      results_file.write(build_line(category_names, labels=True))
+      for r in results_all_ckpts:
+        results_file.write(build_line([r[k] for k in category_names]))
+    with open(results_dir + "/checklist", "a") as checklist_file:
+      checklist_file.write(FLAGS.dataset_split + "\n")
 
 if __name__ == "__main__":
   tf.logging.set_verbosity(tf.logging.INFO)
