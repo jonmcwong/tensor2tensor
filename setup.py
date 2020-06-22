@@ -33,6 +33,7 @@ setup(
         'tensor2tensor/bin/t2t-decoder',
         'tensor2tensor/bin/t2t-make-tf-configs',
         'tensor2tensor/bin/t2t-eval',
+        'tensor2tensor/bin/t2t-big-eval',
         'tensor2tensor/bin/t2t-exporter',
         'tensor2tensor/bin/t2t-query-server',
         'tensor2tensor/bin/t2t-insights-server',

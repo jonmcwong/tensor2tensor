@@ -3,10 +3,9 @@ if [ $# -eq 3 ]
 then
 export INTERNAL_IP=$(echo $SSH_CONNECTION | sed "s/^.* \([0-9|\.]*\) [0-9]*$/\1/")
 export VM_NAME=$(gcloud compute instances list | grep $INTERNAL_IP | cut -d' ' -f1)
+export STORAGE_BUCKET=gs://mathsreasoning
 echo "INTERNAL_IP = "$INTERNAL_IP
 echo "VM_NAME = "$VM_NAME
-
-export STORAGE_BUCKET=gs://mathsreasoning
 echo "STORAGE_BUCKET = "$STORAGE_BUCKET
 
 # Assumed the VM has a tpu already configured
@@ -59,7 +58,6 @@ t2t-eval \
 --output_dir=$TRAIN_DIR \
 --eval_use_test_set=$EVAL_USE_TEST_SET \
 --hparams_set=$HPARAMS_SET \
---dataset_split=$DATASET_SPLIT \
 --use_tpu=$USE_TPU \
 --cloud_tpu_name=$CLOUD_TPU_NAME \
 --eval_steps=3 \

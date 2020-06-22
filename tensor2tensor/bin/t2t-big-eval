@@ -1,0 +1,34 @@
+#!/usr/bin/env python
+"""Run t2t-big-eval from a folder of checkpoints. Make sure there is a "checkpoint" file listing all the checkpoints in the file.
+
+This script is used to run evaluation from a directory of checkpoints in multiple different data sets.
+
+t2t-eval \
+--problem=algorithmic_math_deepmind_all \
+--model=transformer \
+--data_dir=gs://mathsreasoning/t2t-specific-data \
+--output_dir=gs://mathsreasoning/t2t_train/algorithmic_math_deepmind_all/transformer-mds_paper_settings-2020-06-12 \
+--eval_use_test_set=True \
+--hparams_set=transformer_tpu \
+--dataset_split=add_or_sub \
+--use_tpu=True \
+--cloud_tpu_name=smart-evaluate-tpubase \
+--eval_steps=3 \
+--results_dir=gs://mathsreasoning/evaluation_results
+
+"""
+from __future__ import absolute_import
+from __future__ import division
+from __future__ import print_function
+
+from tensor2tensor.bin import t2t_big_eval
+
+import tensorflow as tf
+
+def main(argv):
+  t2t_eval.main(argv)
+
+
+if __name__ == "__main__":
+  tf.logging.set_verbosity(tf.logging.INFO)
+  tf.app.run()

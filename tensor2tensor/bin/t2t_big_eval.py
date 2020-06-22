@@ -32,8 +32,6 @@ import pdb
 flags = tf.flags
 FLAGS = flags.FLAGS
 
-flags.DEFINE_string("dataset_split", "",
-  "The split used by the desired evaluation dataset")
 flags.DEFINE_string("results_dir", "",
   "Where to write results")
 
@@ -59,37 +57,57 @@ def main(_):
       FLAGS.hparams_set, FLAGS.hparams, data_dir=FLAGS.data_dir,
       problem_name=FLAGS.problem)
 
-  # set appropriate dataset-split, if flags.eval_use_test_set.
-  if FLAGS.dataset_split:
-    # if not FLAGS.eval_use_test_set: raise ValueError(
-      # "dataset_split flag was passed even though eval_use_test_set is False.")
-    dataset_split = FLAGS.dataset_split
-  else:
-    dataset_split = "test" if FLAGS.eval_use_test_set else None
-  dataset_kwargs = {"dataset_split": dataset_split}
+
+  # Get the datasets needed
+  many_datset_splits = [
+    "extra_add_or_sub_big",
+    "extra_add_sub_multiple_longer",
+    "extra_div_big",
+    "extra_mixed_longer",
+    "extra_mul_big",
+    "extra_mul_div_multiple_longer",
+    "inter_add_or_sub",
+    "inter_add_sub_multiple",
+    "inter_div",
+    "inter_mixed",
+    "inter_mul",
+    "inter_mul_div_multiple"
+  ]
+  many_dataset_kwargs = [{"dataset_split": ds} for ds in many_datset_splits]
+
+
+
   # make the function that returns data
-  eval_input_fn = hparams.problem.make_estimator_input_fn(
-      tf.estimator.ModeKeys.EVAL, hparams, dataset_kwargs=dataset_kwargs)
+  many_eval_input_fns = [hparams.problem.make_estimator_input_fn(
+      tf.estimator.ModeKeys.EVAL, hparams, dataset_kwargs=dk)
+      for dk in many_dataset_kwargs]
+
+
+
+
+
+
+
+
   config = t2t_trainer.create_run_config(hparams)
 
   # summary-hook in tf.estimator.EstimatorSpec requires
   # hparams.model_dir to be set.
   hparams.add_hparam("model_dir", config.model_dir)
 
+  # set up "something" which will restore the
+  # checkpoints and test against the datasets
   estimator = trainer_lib.create_estimator(
       FLAGS.model, hparams, config, use_tpu=FLAGS.use_tpu)
-  ckpt_iter1 = trainer_lib.next_checkpoint(
-      hparams.model_dir, FLAGS.eval_timeout_mins
-      )
-  ckpt_iter2 = my_chkpt_iter(hparams.model_dir)
 
-  # Chose a specific set of checkpoints if dataset_split provided
-  ckpt_iter = ckpt_iter1 if not FLAGS.dataset_split else ckpt_iter2
+  ckpt_iter = my_chkpt_iter(hparams.model_dir)
+
+  # run against the datasets for each checkpoint
   results_all_ckpts = []
   for ckpt_path in ckpt_iter:
     # run the model from the given ckpt using the input_fn to give data
     results = estimator.evaluate(
-        eval_input_fn, steps=FLAGS.eval_steps, checkpoint_path=ckpt_path)
+        many_eval_input_fns[0], steps=FLAGS.eval_steps, checkpoint_path=ckpt_path)
     results_all_ckpts.append(results)
     tf.logging.info(results)
 
@@ -97,9 +115,9 @@ def main(_):
   def build_line(items, labels=False):
     items = map(str, items)
     if labels:
-      return ("\t".join([i.split("/")[-1] for i in items]) + "\n").encode("utf-8")
+      return "\t".join([i.split("/")[-1] for i in items]) + "\n"
     else:
-      return ("\t".join(items) + "\n").encode("utf-8")
+      return "\t".join(items) + "\n"
 
   # pdb.set_trace()
   # write all the data
@@ -107,14 +125,12 @@ def main(_):
   category_names = results_all_ckpts[0].keys()
   results_dir = FLAGS.results_dir
   results_dir += "/eval-results-" + hparams.model_dir.split("/")[-1][len(FLAGS.model)+1:]
-  with tf.python_io.TFRecordWriter(
-    results_dir + "/eval_" + FLAGS.dataset_split + "_results.txt"
-    ) as results_file:
+  with open(results_dir + "/eval_" + FLAGS.dataset_split + "_results.txt", "w") as results_file:
     results_file.write(build_line(category_names, labels=True))
     for r in results_all_ckpts:
       results_file.write(build_line([r[k] for k in category_names]))
   with open(results_dir + "/checklist", "a") as checklist_file:
-    checklist_file.write((FLAGS.dataset_split + "\n").encode("utf-8"))
+    checklist_file.write(FLAGS.dataset_split + "\n")
 
 if __name__ == "__main__":
   tf.logging.set_verbosity(tf.logging.INFO)
