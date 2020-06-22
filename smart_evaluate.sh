@@ -7,13 +7,15 @@ elif [[ $# -eq 3 ]] ; then
         export STORAGE_BUCKET=gs://us_bucketbucket
     elif [[ $ZONE == "europe-west4-a" ]] ; then
         export STORAGE_BUCKET=gs://mathsreasoning
-    echo
-    echo
-    echo
-    echo "ZONE variable is weird... ZONE = "$ZONE
-    echo
-    echo
-    echo
+    else
+        echo
+        echo
+        echo
+        echo "ZONE variable is weird... ZONE = "$ZONE
+        echo
+        echo
+        echo
+    fi
     export VM_IP=$(echo $SSH_CONNECTION | sed "s/^.* \([0-9|\.]*\) [0-9]*$/\1/")
     export VM_NAME=$(gcloud compute instances list | grep $VM_IP | cut -d' ' -f1)
     export TPU_INFO=$(gcloud compute tpus list --zone=$ZONE | grep $VM_NAME)
