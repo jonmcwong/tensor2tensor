@@ -54,7 +54,7 @@ elif [[ $# -eq 3 ]] ; then
         echo "    --output_dir=$TRAIN_DIR \\"
         echo "    --eval_use_test_set=$EVAL_USE_TEST_SET \\"
         echo "    --hparams_set=$HPARAMS_SET \\"
-        echo "    --dataset_split=<all_12_of_them> \\"
+        echo "    --dataset_split=$DATASET_SPLIT \\"
         echo "    --use_tpu=$USE_TPU \\"
         echo "    --cloud_tpu_name=$CLOUD_TPU_NAME \\"
         echo "    --eval_steps=3 \\"
