@@ -2,22 +2,24 @@
 if [ $# -eq 2 ]
 then
 
-export ZONE=europe-west4-a
+if [[ $ZONE == "" ]]
+then
+# export ZONE=europe-west4-a
 export VM_IP=$(echo $SSH_CONNECTION | sed "s/^.* \([0-9|\.]*\) [0-9]*$/\1/")
 export VM_NAME=$(gcloud compute instances list | grep $VM_IP | cut -d' ' -f1)
 export TPU_INFO=$(gcloud compute tpus list --zone=$ZONE | grep $VM_NAME)
 export TPU_IP=$(echo $TPU_INFO | sed "s/^.*v[0-9].*\s\([0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\):[0-9]*\s.*$/\1/")
-# export TPU_NAME=$(echo $TPU_INFO | sed "s/^\(.*\)\sus-central.*$/\1/")
 export TPU_NAME=$(echo $TPU_INFO | cut -d' ' -f1)
 echo "VM_IP = "$VM_IP
 echo "VM_NAME = "$VM_NAME
-# echo "TPU_INFO = "$TPU_INFO
 echo "TPU_IP = "$TPU_IP
 echo "TPU_NAME = "$TPU_NAME
 
 
 export STORAGE_BUCKET=gs://mathsreasoning
 echo "STORAGE_BUCKET = "$STORAGE_BUCKET
+
+
 
 # Assumed the VM has a tpu already configured
 export TPU_IP_ADDRESS=$TPU_IP
@@ -28,9 +30,10 @@ export PROBLEM=algorithmic_math_deepmind_all
 export MODEL=$1 # transformer
 export MODEL_TAG=$2 # mds_paper_settings-2020-06-12
 export HPARAMS_SET=transformer_tpu
+# export HPARAMS_SET=adaptive_universal_transformer_base_tpu
 export DATA_DIR=${STORAGE_BUCKET}/t2t-specific-data
 export TRAIN_DIR=${STORAGE_BUCKET}/t2t_train/$PROBLEM/$MODEL-$MODEL_TAG
-# export RESULTS_DIR=${STORAGE_BUCKET}/evalutation_results
+export RESULTS_DIR=${STORAGE_BUCKET}/results-$MODEL-$MODEL_TAG
 export EVAL_USE_TEST_SET=True
 
 echo "USE_TPU = "$USE_TPU
@@ -41,7 +44,7 @@ echo "MODEL_TAG = "$MODEL_TAG
 echo "HPARAMS_SET = "$HPARAMS_SET
 echo "DATA_DIR = "$DATA_DIR
 echo "TRAIN_DIR = "$TRAIN_DIR
-# echo "RESULTS_DIR = "$RESULTS_DIR
+echo "RESULTS_DIR = "$RESULTS_DIR
 echo "EVAL_USE_TEST_SET = "$EVAL_USE_TEST_SET
 
 # echo "mkdir eval-results-"$MODEL_TAG
@@ -72,8 +75,12 @@ t2t-eval \
 --dataset_split=$DATASET_SPLIT \
 --use_tpu=$USE_TPU \
 --cloud_tpu_name=$CLOUD_TPU_NAME \
---eval_steps=3
-
+--eval_steps=3 \
+--results_dir=$RESULTS_DIR
+done
+else
+echo "ZONE variable not defined"
+fi
 done
 else
 printf "Invalid arguments provided. Signature is:\n\
