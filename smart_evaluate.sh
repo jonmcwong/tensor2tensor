@@ -3,12 +3,6 @@
 if [[ $ZONE == "" ]] ; then
     echo "ZONE variable not defined"
 elif [[ $# -eq 3 ]] ; then
-    # export ZONE=europe-west4-a
-    export VM_IP=$(echo $SSH_CONNECTION | sed "s/^.* \([0-9|\.]*\) [0-9]*$/\1/")
-    export VM_NAME=$(gcloud compute instances list | grep $VM_IP | cut -d' ' -f1)
-    export TPU_INFO=$(gcloud compute tpus list --zone=$ZONE | grep $VM_NAME)
-    export TPU_IP=$(echo $TPU_INFO | sed "s/^.*v[0-9].*\s\([0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\):[0-9]*\s.*$/\1/")
-    export TPU_NAME=$(echo $TPU_INFO | cut -d' ' -f1)
     if [[ $ZONE == "us-central1-f" ]] ; then
         export STORAGE_BUCKET=gs://us_bucketbucket
     elif [[ $ZONE == "europe-west4-a" ]] ; then
@@ -20,6 +14,11 @@ elif [[ $# -eq 3 ]] ; then
     echo
     echo
     echo
+    export VM_IP=$(echo $SSH_CONNECTION | sed "s/^.* \([0-9|\.]*\) [0-9]*$/\1/")
+    export VM_NAME=$(gcloud compute instances list | grep $VM_IP | cut -d' ' -f1)
+    export TPU_INFO=$(gcloud compute tpus list --zone=$ZONE | grep $VM_NAME)
+    export TPU_IP=$(echo $TPU_INFO | sed "s/^.*v[0-9].*\s\([0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\):[0-9]*\s.*$/\1/")
+    export TPU_NAME=$(echo $TPU_INFO | cut -d' ' -f1)
 
     # Assumed the VM has a tpu already configured
     export TPU_IP_ADDRESS=$TPU_IP
@@ -84,22 +83,23 @@ elif [[ $# -eq 3 ]] ; then
             --results_dir=$RESULTS_DIR
     done
 elif [[ $# -eq 4 && $4 == "--dry-run" ]]; then
+    if [[ $ZONE == "us-central1-f" ]] ; then
+        export STORAGE_BUCKET=gs://us_bucketbucket
+    elif [[ $ZONE == "europe-west4-a" ]] ; then
+        export STORAGE_BUCKET=gs://mathsreasoning
+        echo
+        echo
+        echo
+        echo "ZONE variable is weird... ZONE = "$ZONE
+        echo
+        echo
+        echo
+    fi
     export VM_IP=$(echo $SSH_CONNECTION | sed "s/^.* \([0-9|\.]*\) [0-9]*$/\1/")
     export VM_NAME=$(gcloud compute instances list | grep $VM_IP | cut -d' ' -f1)
     export TPU_INFO=$(gcloud compute tpus list --zone=$ZONE | grep $VM_NAME)
     export TPU_IP=$(echo $TPU_INFO | sed "s/^.*v[0-9].*\s\([0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\):[0-9]*\s.*$/\1/")
     export TPU_NAME=$(echo $TPU_INFO | cut -d' ' -f1)
-    if [[ $ZONE == "us-central1-f" ]] ; then
-        export STORAGE_BUCKET=gs://us_bucketbucket
-    elif [[ $ZONE == "europe-west4-a" ]] ; then
-        export STORAGE_BUCKET=gs://mathsreasoning
-    echo
-    echo
-    echo
-    echo "ZONE variable is weird... ZONE = "$ZONE
-    echo
-    echo
-    echo
     export TPU_IP_ADDRESS=$TPU_IP
     export XRT_TPU_CONFIG="tpu_worker;0;$TPU_IP_ADDRESS:8470"
     export USE_TPU=True
