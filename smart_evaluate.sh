@@ -30,9 +30,18 @@ elif [[ $# -eq 3 ]] ; then
     export PROBLEM=algorithmic_math_deepmind_all
     export MODEL=$1 # transformer
     export MODEL_TAG=$2 # mds_paper_settings-2020-06-12
-    # export HPARAMS_SET=transformer_tpu
-    # export HPARAMS_SET=adaptive_universal_transformer_base_tpu
-    export HPARAMS_SET=$3
+    if [[ $MODEL == "transformer" ]] ; then
+        export HPARAMS_SET=transformer_tpu
+    elif [[ $MODEL == "universal_transformer" ]] ; then
+        export HPARAMS_SET=adaptive_universal_transformer_base_tpu
+    else
+        export HPARAMS_SET"???????"
+        echo
+        echo
+        echo "not sure what HPARAMS_SET to assign for this MODEL"
+        echo
+        echo
+    fi
     export DATA_DIR=${STORAGE_BUCKET}/t2t-specific-data
     export TRAIN_DIR=${STORAGE_BUCKET}/t2t_train/$PROBLEM/$MODEL-$MODEL_TAG
     export RESULTS_DIR=${STORAGE_BUCKET}/results-$MODEL-$MODEL_TAG
@@ -110,7 +119,18 @@ elif [[ $# -eq 4 && $4 == "--dry-run" ]]; then
     export PROBLEM=algorithmic_math_deepmind_all
     export MODEL=$1 # transformer
     export MODEL_TAG=$2 # mds_paper_settings-2020-06-12
-    export HPARAMS_SET=$3
+    if [[ $MODEL == "transformer" ]] ; then
+        export HPARAMS_SET=transformer_tpu
+    elif [[ $MODEL == "universal_transformer" ]] ; then
+        export HPARAMS_SET=adaptive_universal_transformer_base_tpu
+    else
+        export HPARAMS_SET"???????"
+        echo
+        echo
+        echo "not sure what HPARAMS_SET to assign for this MODEL"
+        echo
+        echo
+    fi
     export DATA_DIR=${STORAGE_BUCKET}/t2t-specific-data
     export TRAIN_DIR=${STORAGE_BUCKET}/t2t_train/$PROBLEM/$MODEL-$MODEL_TAG
     export RESULTS_DIR=${STORAGE_BUCKET}/results-$MODEL-$MODEL_TAG
@@ -134,6 +154,6 @@ elif [[ $# -eq 4 && $4 == "--dry-run" ]]; then
 
 else
     printf "Invalid arguments provided. Signature is:\n\
-     ./$(basename "$0")  <MODEL>                <MODEL_TAG>                     <HPARAMS_SET>\n\
-E.g. ./$(basename "$0")  universal_transformer  base_test-loss-0001-2020-06-21  adaptive_universal_transformer_base_tpu\n"
+     ./$(basename "$0")  <MODEL>                <MODEL_TAG>\n\
+E.g. ./$(basename "$0")  universal_transformer  base_test-loss-0001-2020-06-21\n"
 fi
