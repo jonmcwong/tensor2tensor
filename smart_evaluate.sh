@@ -29,7 +29,6 @@ export CLOUD_TPU_NAME=$TPU_NAME # jonmcwong-tpu
 export PROBLEM=algorithmic_math_deepmind_all
 export MODEL=$1 # transformer
 export MODEL_TAG=$2 # mds_paper_settings-2020-06-12
-<<<<<<< Updated upstream
 # export HPARAMS_SET=transformer_tpu
 export HPARAMS_SET=adaptive_universal_transformer_base_tpu
 export DATA_DIR=${STORAGE_BUCKET}/t2t-specific-data
