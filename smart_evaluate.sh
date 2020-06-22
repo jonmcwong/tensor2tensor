@@ -9,14 +9,7 @@ elif [[ $# -eq 3 ]] ; then
     export TPU_INFO=$(gcloud compute tpus list --zone=$ZONE | grep $VM_NAME)
     export TPU_IP=$(echo $TPU_INFO | sed "s/^.*v[0-9].*\s\([0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\):[0-9]*\s.*$/\1/")
     export TPU_NAME=$(echo $TPU_INFO | cut -d' ' -f1)
-    echo "VM_IP = "$VM_IP
-    echo "VM_NAME = "$VM_NAME
-    echo "TPU_IP = "$TPU_IP
-    echo "TPU_NAME = "$TPU_NAME
-
-
     export STORAGE_BUCKET=gs://mathsreasoning
-    echo "STORAGE_BUCKET = "$STORAGE_BUCKET
 
     # Assumed the VM has a tpu already configured
     export TPU_IP_ADDRESS=$TPU_IP
@@ -34,17 +27,23 @@ elif [[ $# -eq 3 ]] ; then
     export RESULTS_DIR=${STORAGE_BUCKET}/results-$MODEL-$MODEL_TAG
     export EVAL_USE_TEST_SET=True
 
-    echo "USE_TPU = "$USE_TPU
-    echo "CLOUD_TPU_NAME = "$CLOUD_TPU_NAME
-    echo "PROBLEM = "$PROBLEM
-    echo "MODEL = "$MODEL
-    echo "MODEL_TAG = "$MODEL_TAG
-    echo "HPARAMS_SET = "$HPARAMS_SET
-    echo "DATA_DIR = "$DATA_DIR
-    echo "TRAIN_DIR = "$TRAIN_DIR
-    echo "RESULTS_DIR = "$RESULTS_DIR
-    echo "EVAL_USE_TEST_SET = "$EVAL_USE_TEST_SET
-
+    echo "Process will run the following:"
+    echo "TPU_IP_ADDRESS = "$TPU_IP_ADDRESS
+    echo "XRT_TPU_CONFIG = "$XRT_TPU_CONFIG
+    echo "t2t-eval \\"
+    echo "    --problem=$PROBLEM \\"
+    echo "    --model=$MODEL \\"
+    echo "    --data_dir=$DATA_DIR \\"
+    echo "    --output_dir=$TRAIN_DIR \\"
+    echo "    --eval_use_test_set=$EVAL_USE_TEST_SET \\"
+    echo "    --hparams_set=$HPARAMS_SET \\"
+    echo "    --dataset_split=$DATASET_SPLIT \\"
+    echo "    --use_tpu=$USE_TPU \\"
+    echo "    --cloud_tpu_name=$CLOUD_TPU_NAME \\"
+    echo "    --eval_steps=3 \\"
+    echo "    --results_dir=$RESULTS_DIR"
+    echo
+    echo
     # echo "mkdir eval-results-"$MODEL_TAG
     # mkdir "eval-results-"$MODEL_TAG
 
