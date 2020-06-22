@@ -9,7 +9,7 @@ elif [[ $# -eq 3 ]] ; then
     export TPU_INFO=$(gcloud compute tpus list --zone=$ZONE | grep $VM_NAME)
     export TPU_IP=$(echo $TPU_INFO | sed "s/^.*v[0-9].*\s\([0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\):[0-9]*\s.*$/\1/")
     export TPU_NAME=$(echo $TPU_INFO | cut -d' ' -f1)
-    export STORAGE_BUCKET=gs://mathsreasoning
+    export STORAGE_BUCKET=gs://us_bucketbucket
 
     # Assumed the VM has a tpu already configured
     export TPU_IP_ADDRESS=$TPU_IP

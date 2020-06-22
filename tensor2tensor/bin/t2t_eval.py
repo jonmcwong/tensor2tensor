@@ -113,7 +113,7 @@ def main(_):
         results_file.write(build_line([r[k] for k in category_names]))
     with file_io.FileIO(results_dir + "/checklist", "a") as checklist_file:
       checklist_file.write(FLAGS.dataset_split + "\n")
-  else
+  else:
     # Write to local root directory
     results_dir = "eval-results-" + hparams.model_dir.split("/")[-1][len(FLAGS.model)+1:]
     try:
