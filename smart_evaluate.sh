@@ -87,6 +87,7 @@ elif [[ $# -eq 4 && $4 == "--dry-run" ]]; then
         export STORAGE_BUCKET=gs://us_bucketbucket
     elif [[ $ZONE == "europe-west4-a" ]] ; then
         export STORAGE_BUCKET=gs://mathsreasoning
+    else
         echo
         echo
         echo
