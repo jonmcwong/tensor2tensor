@@ -1,8 +1,8 @@
 #!/bin/bash
 
-if [[ $ZONE == "" ]]; then
+if [[ $ZONE == "" ]] ; then
 echo "ZONE variable not defined"
-elif [ $# -eq 2 ]; then
+elif [[ $# -eq 3 ]] ; then
 # export ZONE=europe-west4-a
 export VM_IP=$(echo $SSH_CONNECTION | sed "s/^.* \([0-9|\.]*\) [0-9]*$/\1/")
 export VM_NAME=$(gcloud compute instances list | grep $VM_IP | cut -d' ' -f1)
@@ -29,7 +29,8 @@ export PROBLEM=algorithmic_math_deepmind_all
 export MODEL=$1 # transformer
 export MODEL_TAG=$2 # mds_paper_settings-2020-06-12
 # export HPARAMS_SET=transformer_tpu
-export HPARAMS_SET=adaptive_universal_transformer_base_tpu
+# export HPARAMS_SET=adaptive_universal_transformer_base_tpu
+export HPARAMS_SET=$3
 export DATA_DIR=${STORAGE_BUCKET}/t2t-specific-data
 export TRAIN_DIR=${STORAGE_BUCKET}/t2t_train/$PROBLEM/$MODEL-$MODEL_TAG
 export RESULTS_DIR=${STORAGE_BUCKET}/results-$MODEL-$MODEL_TAG
@@ -80,8 +81,10 @@ else
 printf "Invalid arguments provided. Signature is:\n\
 ./$(basename "$0") \
 <MODEL> \
-<MODEL_TAG>\n\
+<MODEL_TAG> \
+<HPARAMS_SET>\n\
 E.g. ./$(basename "$0") \
-transformer \
-mds_paper_settings-2020-06-12\n"
+universal_transformer \
+base_test-loss-0001-2020-06-21 \
+adaptive_universal_transformer_base_tpu"
 fi
