@@ -103,11 +103,14 @@ def main(_):
   # get the category_names
   category_names = results_all_ckpts[0].keys()
   # results_dir = FLAGS.results_dir
-  results_dir = "/eval-results-" + hparams.model_dir.split("/")[-1][len(FLAGS.model)+1:]
+  results_dir = "eval-results-" + hparams.model_dir.split("/")[-1][len(FLAGS.model)+1:]
   try:
-    os.mkdir(results_dir)
+    if results_dir[0] == "/":
+      os.mkdir(results_dir[1:])
+    else:
+      os.mkdir(results_dir)
   except:
-    pass
+    pdb.set_trace()
   with open(results_dir + "/eval_" + FLAGS.dataset_split + "_results.txt", "w") as results_file:
     results_file.write(build_line(category_names, labels=True))
     for r in results_all_ckpts:
