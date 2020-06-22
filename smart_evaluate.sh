@@ -2,7 +2,7 @@
 
 if [[ $ZONE == "" ]] ; then
     echo "ZONE variable not defined"
-elif [[ $# -eq 3 ]] ; then
+elif [[ $# -eq 2 ]] ; then
     if [[ $ZONE == "us-central1-f" ]] ; then
         export STORAGE_BUCKET=gs://us_bucketbucket
     elif [[ $ZONE == "europe-west4-a" ]] ; then
@@ -93,7 +93,7 @@ elif [[ $# -eq 3 ]] ; then
             --eval_steps=3 \
             --results_dir=$RESULTS_DIR
     done
-elif [[ $# -eq 4 && $4 == "--dry-run" ]]; then
+elif [[ $# -eq 3 && $3 == "--dry-run" ]]; then
     if [[ $ZONE == "us-central1-f" ]] ; then
         export STORAGE_BUCKET=gs://us_bucketbucket
     elif [[ $ZONE == "europe-west4-a" ]] ; then
