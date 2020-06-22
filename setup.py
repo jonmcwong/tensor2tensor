@@ -5,7 +5,7 @@ from setuptools import setup
 
 setup(
     name='tensor2tensor',
-    version='1.15.6',
+    version='1.15.7',
     description='Tensor2Tensor',
     long_description=(
         'Tensor2Tensor, or T2T for short, is a library of '
@@ -50,7 +50,7 @@ setup(
         'gin-config',
         'google-api-python-client',
         'gunicorn',
-        'gym==0.14.0',
+        'gym',
         'h5py',
         'kfac',
         'mesh-tensorflow',
