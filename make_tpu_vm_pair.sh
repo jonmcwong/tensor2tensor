@@ -21,5 +21,9 @@ fi
 git clone https://github.com/jonmcwong/tensor2tensor.git
 cd tensor2tensor
 ./setup.sh
+./smart_evaluate.sh \
+transformer \
+base_test_dropout02-2020-06-19
+
+
 chmod +x smart_evaluate.sh
-./smart_evaluate.sh transformer noam-dropout03-2020-06-20 10.240.1.18

@@ -1,9 +1,8 @@
 #!/bin/bash
-if [ $# -eq 2 ]
-then
 
-if [[ $ZONE == "" ]]
-then
+if [[ $ZONE == "" ]]; then
+echo "ZONE variable not defined"
+elif [ $# -eq 2 ]; then
 # export ZONE=europe-west4-a
 export VM_IP=$(echo $SSH_CONNECTION | sed "s/^.* \([0-9|\.]*\) [0-9]*$/\1/")
 export VM_NAME=$(gcloud compute instances list | grep $VM_IP | cut -d' ' -f1)
@@ -77,11 +76,6 @@ t2t-eval \
 --cloud_tpu_name=$CLOUD_TPU_NAME \
 --eval_steps=3 \
 --results_dir=$RESULTS_DIR
-done
-else
-echo "ZONE variable not defined"
-fi
-done
 else
 printf "Invalid arguments provided. Signature is:\n\
 ./$(basename "$0") \
