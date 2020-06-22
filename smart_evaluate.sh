@@ -76,7 +76,7 @@ elif [[ $# -eq 3 ]] ; then
             --eval_steps=3 \
             --results_dir=$RESULTS_DIR
     done
-elif [[ $1 == "--dry-run" ]]; then
+elif [[ $# -eq 4 && $4 == "--dry-run" ]]; then
     export VM_IP=$(echo $SSH_CONNECTION | sed "s/^.* \([0-9|\.]*\) [0-9]*$/\1/")
     export VM_NAME=$(gcloud compute instances list | grep $VM_IP | cut -d' ' -f1)
     export TPU_INFO=$(gcloud compute tpus list --zone=$ZONE | grep $VM_NAME)
@@ -96,8 +96,9 @@ elif [[ $1 == "--dry-run" ]]; then
     export RESULTS_DIR=${STORAGE_BUCKET}/results-$MODEL-$MODEL_TAG
     export EVAL_USE_TEST_SET=True
 
-    echo "$TPU_IP_ADDRESS = "$TPU_IP_ADDRESS
-    echo "$XRT_TPU_CONFIG = "$XRT_TPU_CONFIG
+    echo "Process will run the following:"
+    echo "TPU_IP_ADDRESS = "$TPU_IP_ADDRESS
+    echo "XRT_TPU_CONFIG = "$XRT_TPU_CONFIG
     echo "t2t-eval \\"
     echo "    --problem=$PROBLEM \\"
     echo "    --model=$MODEL \\"
@@ -113,6 +114,6 @@ elif [[ $1 == "--dry-run" ]]; then
 
 else
     printf "Invalid arguments provided. Signature is:\n\
-     ./$(basename "$0") <MODEL>               <MODEL_TAG>                    <HPARAMS_SET>\n\
-E.g. ./$(basename "$0") universal_transformer base_test-loss-0001-2020-06-21 adaptive_universal_transformer_base_tpu\n"
+     ./$(basename "$0")  <MODEL>                <MODEL_TAG>                     <HPARAMS_SET>\n\
+E.g. ./$(basename "$0")  universal_transformer  base_test-loss-0001-2020-06-21  adaptive_universal_transformer_base_tpu\n"
 fi
