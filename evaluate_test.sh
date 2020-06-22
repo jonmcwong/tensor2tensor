@@ -1,4 +1,5 @@
 #!/bin/bash
+
 if [ $# -eq 0 ]
 	then echo "No MODEL_TAG provided, e.g. './$(basename "$0") mds_paper_settings-2020-06-12'"
 else

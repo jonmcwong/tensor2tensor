@@ -15,6 +15,7 @@ export MODEL_TAG=$2 # mds_paper_settings-2020-06-12
 export HPARAMS_SET=transformer_tpu
 export DATA_DIR=${STORAGE_BUCKET}/t2t-specific-data
 export TRAIN_DIR=${STORAGE_BUCKET}/t2t_train/$PROBLEM/$MODEL-$MODEL_TAG
+export RESULTS_DIR=${STORAGE_BUCKET}/evalutation_results
 export EVAL_USE_TEST_SET=True
 
 echo "USE_TPU = "$USE_TPU
@@ -25,9 +26,8 @@ echo "MODEL_TAG = "$MODEL_TAG
 echo "HPARAMS_SET = "$HPARAMS_SET
 echo "DATA_DIR = "$DATA_DIR
 echo "TRAIN_DIR = "$TRAIN_DIR
+echo "RESULTS_DIR = "$RESULTS_DIR
 echo "EVAL_USE_TEST_SET = "$EVAL_USE_TEST_SET
-
-mkdir "eval-results-"$MODEL_TAG
 
 for DATASET_SPLIT in \
 extra_add_or_sub_big \
@@ -54,7 +54,9 @@ t2t-eval \
 --dataset_split=$DATASET_SPLIT \
 --use_tpu=$USE_TPU \
 --cloud_tpu_name=$CLOUD_TPU_NAME \
---eval_steps=3
+--eval_steps=3 \
+--results_dir=$RESULTS_DIR
+
 done
 else
 printf "Invalid arguments provided. Signature is:\n\

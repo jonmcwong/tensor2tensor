@@ -34,6 +34,8 @@ FLAGS = flags.FLAGS
 
 flags.DEFINE_string("dataset_split", "",
   "The split used by the desired evaluation dataset")
+flags.DEFINE_string("results_dir", "",
+  "Where to write results")
 
 def my_chkpt_iter(model_dir):
   with file_io.FileIO(os.path.join(model_dir, "checkpoint"), "r") as ckpt_file:
@@ -100,7 +102,8 @@ def main(_):
   # pdb.set_trace()
   # get the category_names
   category_names = results_all_ckpts[0].keys()
-  results_dir = "eval-results-" + hparams.model_dir.split("/")[-1][len(FLAGS.model)+1:]
+  results_dir = FLAGS.results_dir
+  results_dir += "/eval-results-" + hparams.model_dir.split("/")[-1][len(FLAGS.model)+1:]
   with open(results_dir + "/eval_" + FLAGS.dataset_split + "_results.txt", "w") as results_file:
     results_file.write(build_line(category_names, labels=True))
     for r in results_all_ckpts:
