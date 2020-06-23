@@ -33,6 +33,7 @@ def plot_against_steps(collated_results, datset_splits, models):
 	if datset_splits == "all":
 		dataset_split_indicies = np.arange(12)
 	collated_results[dataset_splits, :, metrics]
+	plt.plot()
 	
 
 def inconsistent_cols():

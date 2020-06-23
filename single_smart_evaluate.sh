@@ -95,7 +95,7 @@ elif [[ $# -eq 3 ]] ; then
             --cloud_tpu_name=$CLOUD_TPU_NAME \
             --eval_steps=3 \
             --results_dir=$RESULTS_DIR
-elif [[ $# -eq 4 && $3 == "--dry-run" ]]; then
+elif [[ $# -eq 4 && $4 == "--dry-run" ]]; then
     if [[ $ZONE == "us-central1-f" ]] ; then
         export STORAGE_BUCKET=gs://us_bucketbucket
     elif [[ $ZONE == "europe-west4-a" ]] ; then
