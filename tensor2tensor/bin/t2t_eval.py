@@ -52,7 +52,7 @@ def my_chkpt_iter(model_dir):
 
 def main(_):
   if FLAGS.results_dir:
-    print("\n\n\n\n\nresults_dir = {}\n\n\n\n\n".format(results_dir))
+    print("\n\n\n\n\nresults_dir = {}\n\n\n\n\n".format(FLAGS.results_dir))
     print(FLAGS.results_dir and FLAGS.results_dir[:5] == "gs://")
   tf.logging.set_verbosity(tf.logging.INFO)
   trainer_lib.set_random_seed(FLAGS.random_seed)
