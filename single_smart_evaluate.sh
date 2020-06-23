@@ -1,8 +1,20 @@
 #!/bin/bash
+export LIST=(extra_add_or_sub_big \
+    extra_add_sub_multiple_longer \
+    extra_div_big \
+    extra_mixed_longer \
+    extra_mul_big \
+    extra_mul_div_multiple_longer \
+    inter_add_or_sub \
+    inter_add_sub_multiple \
+    inter_div \
+    inter_mixed \
+    inter_mul \
+    inter_mul_div_multiple)
 
 if [[ $ZONE == "" ]] ; then
     echo "ZONE variable not defined"
-elif [[ $# -eq 2 ]] ; then
+elif [[ $# -eq 3 ]] ; then
     if [[ $ZONE == "us-central1-f" ]] ; then
         export STORAGE_BUCKET=gs://us_bucketbucket
     elif [[ $ZONE == "europe-west4-a" ]] ; then
@@ -49,20 +61,11 @@ elif [[ $# -eq 2 ]] ; then
     # echo "mkdir eval-results-"$MODEL_TAG
     # mkdir "eval-results-"$MODEL_TAG
 
-    for DATASET_SPLIT in \
-        extra_add_or_sub_big \
-        extra_add_sub_multiple_longer \
-        extra_div_big \
-        extra_mixed_longer \
-        extra_mul_big \
-        extra_mul_div_multiple_longer \
-        inter_add_or_sub \
-        inter_add_sub_multiple \
-        inter_div \
-        inter_mixed \
-        inter_mul \
-        inter_mul_div_multiple
-    do
+    export SPLIT_NUM=$3
+    export DATASET_SPLIT=${LIST[$SPLIT_NUM]}
+
+
+
         echo
         echo "Process will run the following:"
         echo "TPU_IP_ADDRESS = "$TPU_IP_ADDRESS
@@ -92,8 +95,7 @@ elif [[ $# -eq 2 ]] ; then
             --cloud_tpu_name=$CLOUD_TPU_NAME \
             --eval_steps=3 \
             --results_dir=$RESULTS_DIR
-    done
-elif [[ $# -eq 3 && $3 == "--dry-run" ]]; then
+elif [[ $# -eq 4 && $3 == "--dry-run" ]]; then
     if [[ $ZONE == "us-central1-f" ]] ; then
         export STORAGE_BUCKET=gs://us_bucketbucket
     elif [[ $ZONE == "europe-west4-a" ]] ; then
@@ -135,7 +137,8 @@ elif [[ $# -eq 3 && $3 == "--dry-run" ]]; then
     export TRAIN_DIR=${STORAGE_BUCKET}/t2t_train/$PROBLEM/$MODEL-$MODEL_TAG
     export RESULTS_DIR=${STORAGE_BUCKET}/results-$MODEL-$MODEL_TAG
     export EVAL_USE_TEST_SET=True
-
+    export SPLIT_NUM=$3
+    export DATASET_SPLIT=${LIST[$SPLIT_NUM]}
     echo "Process will run the following:"
     echo "TPU_IP_ADDRESS = "$TPU_IP_ADDRESS
     echo "XRT_TPU_CONFIG = "$XRT_TPU_CONFIG
@@ -146,7 +149,7 @@ elif [[ $# -eq 3 && $3 == "--dry-run" ]]; then
     echo "    --output_dir=$TRAIN_DIR \\"
     echo "    --eval_use_test_set=$EVAL_USE_TEST_SET \\"
     echo "    --hparams_set=$HPARAMS_SET \\"
-    echo "    --dataset_split=<all_12_of_them> \\"
+    echo "    --dataset_split=$DATASET_SPLIT \\"
     echo "    --use_tpu=$USE_TPU \\"
     echo "    --cloud_tpu_name=$CLOUD_TPU_NAME \\"
     echo "    --eval_steps=3 \\"
@@ -154,6 +157,6 @@ elif [[ $# -eq 3 && $3 == "--dry-run" ]]; then
 
 else
     printf "Invalid arguments provided. Signature is:\n\
-     ./$(basename "$0")  <MODEL>                <MODEL_TAG>            (--dry-run)\n\
-E.g. ./$(basename "$0")  universal_transformer  base_test-loss-0001-2020-06-21\n"
+     ./$(basename "$0")  <MODEL>                <MODEL_TAG>                    <DATSET_SPLIT_NUM> (--dry-run)\n\
+E.g. ./$(basename "$0")  universal_transformer  base_test-loss-0001-2020-06-21 7\n"
 fi
