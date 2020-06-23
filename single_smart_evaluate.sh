@@ -95,6 +95,24 @@ elif [[ $# -eq 3 ]] ; then
             --cloud_tpu_name=$CLOUD_TPU_NAME \
             --eval_steps=3 \
             --results_dir=$RESULTS_DIR
+        echo
+        echo "Process will run the following:"
+        echo "TPU_IP_ADDRESS = "$TPU_IP_ADDRESS
+        echo "XRT_TPU_CONFIG = "$XRT_TPU_CONFIG
+        echo "t2t-eval \\"
+        echo "    --problem=$PROBLEM \\"
+        echo "    --model=$MODEL \\"
+        echo "    --data_dir=$DATA_DIR \\"
+        echo "    --output_dir=$TRAIN_DIR \\"
+        echo "    --eval_use_test_set=$EVAL_USE_TEST_SET \\"
+        echo "    --hparams_set=$HPARAMS_SET \\"
+        echo "    --dataset_split=$DATASET_SPLIT \\"
+        echo "    --use_tpu=$USE_TPU \\"
+        echo "    --cloud_tpu_name=$CLOUD_TPU_NAME \\"
+        echo "    --eval_steps=3 \\"
+        echo "    --results_dir=$RESULTS_DIR"
+        echo
+            
 elif [[ $# -eq 4 && $4 == "--dry-run" ]]; then
     if [[ $ZONE == "us-central1-f" ]] ; then
         export STORAGE_BUCKET=gs://us_bucketbucket
@@ -160,3 +178,5 @@ else
      ./$(basename "$0")  <MODEL>                <MODEL_TAG>                    <DATSET_SPLIT_NUM> (--dry-run)\n\
 E.g. ./$(basename "$0")  universal_transformer  base_test-loss-0001-2020-06-21 7\n"
 fi
+
+

@@ -99,7 +99,7 @@ def main(_):
     else:
       return "\t".join(items) + "\n"
 
-  # pdb.set_trace()
+  pdb.set_trace()
   # get the category_names
   category_names = results_all_ckpts[0].keys()
   if FLAGS.results_dir and FLAGS.results_dir[:5] == "gs://":
