@@ -1,5 +1,28 @@
 #!/bin/bash
 
+
+gcloud config set project mathsreasoning
+export PREFIX=smart-eval-frag
+
+for FRAG_NUM in 000 001 002 003 004 005 006 007 008 009 010 011
+do
+    export BIG_NAME=$PREFIX$FRAG_NUM
+    echo "Generating VM and TPU "$BIG_NAME"..."
+
+    gcloud compute instances create $BIG_NAME \
+    --source-instance-template=train-t2t \
+    --zone=us-central1-f
+
+    gcloud compute tpus create $BIG_NAME \
+          --accelerator-type=v2-8 \
+          --version=1.15.3 \
+          --preemptible \
+          --zone=us-central1-f
+
+done
+
+
+#storage for scripts thaty may not be officially saved
 # if [[ $# -eq 2 ]]
 # then
 # ctpu up \
@@ -22,23 +45,9 @@
 # cd tensor2tensor
 # ./setup.sh
 # chmod +x smart_evaluate.sh
-export BIG_NAME=smart-eval-007
-gcloud compute instances create $BIG_NAME \
---metadata=startup-script='#! /bin/bash
-echo "running startup script..."
-git clone https://github.com/jonmcwong/tensor2tensor.git
-cd tensor2tensor
-echo "DONE!"' \
---source-instance-template=train-t2t \
---zone=us-central1-f
 
-# --machine-type=n1-standard-1 \
-# --scopes=storage-full,cloud-platform,compute-rw \
-
-# --scopes=storage-ro \
-
-gcloud compute tpus create $BIG_NAME \
-      --zone=us-central1-f \
-      --accelerator-type=v2-8 \
-      --version=1.15.3 \
-      --preemptible
+    # --metadata=startup-script='#! /bin/bash
+    # echo "running startup script..."
+    # git clone https://github.com/jonmcwong/tensor2tensor.git
+    # cd tensor2tensor
+    # echo "DONE!"' \

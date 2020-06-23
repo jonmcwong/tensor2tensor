@@ -111,7 +111,7 @@ def main(_):
       results_file.write(build_line(category_names, labels=True))
       for r in results_all_ckpts:
         results_file.write(build_line([r[k] for k in category_names]))
-    with file_io.FileIO(results_dir + "/checklist", "a") as checklist_file:
+    with file_io.FileIO(results_dir + "/checklist", "w") as checklist_file:
       checklist_file.write(FLAGS.dataset_split + "\n")
   else:
     # Write to local root directory
@@ -127,7 +127,7 @@ def main(_):
       results_file.write(build_line(category_names, labels=True))
       for r in results_all_ckpts:
         results_file.write(build_line([r[k] for k in category_names]))
-    with open(results_dir + "/checklist", "a") as checklist_file:
+    with open(results_dir + "/checklist", "w") as checklist_file:
       checklist_file.write(FLAGS.dataset_split + "\n")
 
 if __name__ == "__main__":
