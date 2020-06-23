@@ -1,0 +1,1195 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"num",
+				"num"
+			],
+			[
+				"prev",
+				"prev"
+			],
+			[
+				"altl",
+				"altl"
+			],
+			[
+				"row",
+				"ws_row"
+			],
+			[
+				"L3L",
+				"L3L"
+			],
+			[
+				"int",
+				"int"
+			],
+			[
+				"string",
+				"stringify"
+			],
+			[
+				"j",
+				"javascript"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "tensor2tensor/bin/t2t_trainer.py",
+			"settings":
+			{
+				"buffer_size": 17220,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "tensor2tensor/utils/hparams_lib.py",
+			"settings":
+			{
+				"buffer_size": 3773,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "tensor2tensor/layers/common_hparams.py",
+			"settings":
+			{
+				"buffer_size": 23330,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "build/lib/tensor2tensor/data_generators/text_problems.py",
+			"settings":
+			{
+				"buffer_size": 48633,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "build/lib/tensor2tensor/data_generators/wikisum/get_references_web.py",
+			"settings":
+			{
+				"buffer_size": 3019,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/jonathan/Repos/#My Memory",
+			"settings":
+			{
+				"buffer_size": 6075,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "tensor2tensor/models/research/neural_stack.py",
+			"settings":
+			{
+				"buffer_size": 23331,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "tensor2tensor/models/transformer.py",
+			"settings":
+			{
+				"buffer_size": 108807,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "Searching 1015 files for \"neural_deque_model\"\n\n0 matches\n\nSearching 1015 files for \"neural_deque\"\n\n/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/build/lib/tensor2tensor/models/research/neural_stack.py:\n  643  \n  644  @registry.register_hparams\n  645: def neural_deque():\n  646    \"\"\"HParams for neural deques.\"\"\"\n  647    hparams = common_hparams.basic_params1()\n\n/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/models/research/neural_stack.py:\n  643  \n  644  @registry.register_hparams\n  645: def neural_deque():\n  646    \"\"\"HParams for neural deques.\"\"\"\n  647    hparams = common_hparams.basic_params1()\n\n2 matches across 2 files\n",
+			"settings":
+			{
+				"buffer_size": 704,
+				"line_ending": "Unix",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "tensor2tensor/utils/metrics.py",
+			"settings":
+			{
+				"buffer_size": 35391,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "tensor2tensor/data_generators/algorithmic_math_deepmind.py",
+			"settings":
+			{
+				"buffer_size": 3838,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "act_max_steps\t\thidden size\t\tnum_heads\t\ttransformer ffn type\t\tlearningrate\n8\t\t\t\t\t512\t\t\t\t8\t\t\t\tfc\t\t\t\t\t\t\t0.3",
+			"settings":
+			{
+				"buffer_size": 104,
+				"line_ending": "Unix",
+				"name": "act_max_steps\t\thidden size\t\tnum_heads\t\ttransformer"
+			}
+		},
+		{
+			"file": "tensor2tensor/data_generators/problem.py",
+			"settings":
+			{
+				"buffer_size": 37597,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/Java/Ant.sublime-build",
+					""
+				],
+				[
+					"Packages/Java/JavaC.sublime-build",
+					""
+				]
+			],
+			[
+				"Packages/Java/JavaC.sublime-build",
+				""
+			]
+		],
+		[
+			[
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					""
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Traditional"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"PdfLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"XeLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"LuaLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Basic Builder"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Basic Builder - PdfLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Basic Builder - XeLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Basic Builder - LuaLaTeX"
+				],
+				[
+					"Packages/LaTeXTools/LaTeX.sublime-build",
+					"Script Builder"
+				]
+			],
+			[
+				"Packages/LaTeXTools/LaTeX.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"menu",
+				"View: Toggle Menu"
+			],
+			[
+				"side",
+				"View: Toggle Side Bar"
+			],
+			[
+				"package",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Install Package Control"
+			],
+			[
+				"view new",
+				"File: New View into File"
+			],
+			[
+				"view files",
+				"View: Toggle Open Files in Side Bar"
+			],
+			[
+				"",
+				"Build: New Build System"
+			],
+			[
+				"sublime",
+				"Sublime Merge: File History"
+			],
+			[
+				"latex",
+				"LaTeXTools: Check system"
+			],
+			[
+				"build",
+				"LaTeXTools: Build cache of LaTeX packages"
+			],
+			[
+				"status",
+				"View: Toggle Status Bar"
+			],
+			[
+				"change",
+				"Changelog"
+			],
+			[
+				"toggle tab",
+				"View: Toggle Tabs"
+			],
+			[
+				"toggle sid",
+				"View: Toggle Side Bar"
+			],
+			[
+				"tabs",
+				"View: Toggle Tabs"
+			],
+			[
+				"key",
+				"Preferences: Key Bindings"
+			],
+			[
+				"side ",
+				"View: Toggle Side Bar"
+			],
+			[
+				"vmenu",
+				"View: Toggle Menu"
+			],
+			[
+				"word",
+				"Word Wrap: Toggle"
+			],
+			[
+				"view",
+				"View: Toggle Menu"
+			]
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 84.0,
+		"history":
+		[
+			"view menu",
+			"view menue"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": true,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/models"
+	],
+	"file_history":
+	[
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/utils/trainer_lib.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/build/lib/tensor2tensor/bin/t2t_trainer.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/build/lib/tensor2tensor/data_generators/allen_brain.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/data_generators/wikisum/wikisum.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/data_generators/problem.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/utils/metrics.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/models/research/universal_transformer.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/layers/common_layers.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/data_generators/text_problems.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/bin/t2t_datagen.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/utils/registry.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/insights/server.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/bin/t2t_eval.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/utils/hparam.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/README.md",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/build/lib/tensor2tensor/models/research/universal_transformer.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/build/lib/tensor2tensor/utils/trainer_lib.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/utils/cloud_mlengine.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/data_generators/dialog_abstract.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/build/lib/tensor2tensor/data_generators/problem.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/build/lib/tensor2tensor/bin/t2t_attack.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/data_generators/algorithmic.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/build/lib/tensor2tensor/utils/hparam.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/models/video/basic_stochastic_test.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/docs/cloud_mlengine.md",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/build/lib/tensor2tensor/bin/t2t_datagen.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/build/lib/tensor2tensor/data_generators/text_problems.py",
+		"/home/jonathan/Downloads/t2t_train_algorithmic_math_deepmind_all_transformer-mds_paper_settings-2020-06-12_eval_events.out.tfevents.1592563901 (1).checkpoint-testss",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/utils/hparams_lib.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/utils/mlperf_log.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/data_generators/algorithmic_math_deepmind.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/build/lib/tensor2tensor/bin/t2t_decoder.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tests/tf/universal_transformer_default.sh",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/build/lib/tensor2tensor/utils/hparams_lib.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/build/lib/tensor2tensor/utils/metrics.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/build/lib/tensor2tensor/envs/trajectory.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/bin/t2t_trainer.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/notebooks/asr_transformer.ipynb",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/serving/README.md",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/build/lib/tensor2tensor/data_generators/gene_expression.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/build/lib/tensor2tensor/layers/discretization.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tests/*projects",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/build/lib/tensor2tensor/data_generators/algorithmic.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/build/lib/tensor2tensor/utils/decoding.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/data_generators/generator_utils.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/layers/common_hparams.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/bin/t2t_decoder.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/utils/bleu_hook.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/build/lib/tensor2tensor/models/__init__.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/build/lib/tensor2tensor/bin/build_vocab.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/docs/overview.md",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/bin/t2t-eval",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/build/lib/tensor2tensor/rl/evaluator.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/build/scripts-3.7/t2t-decoder",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/data_generators/text_encoder.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/utils/learning_rate.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/data_generators/multi_problem.py",
+		"/home/jonathan/Repos/#My Memory",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/problems.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/@",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/test_data/transformer_test_ckpt/flags.txt",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/tensor2tensor/utils/flags.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/docs/new_problem.md",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/code/tf/tensor2tensor/build/scripts-3.7/t2t-datagen",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/interimReport/background/maths_qa.py",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/interimReport/bibs/sample.bib",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/interimReport/background/background.tex",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/interimReport/design_and_implementation/design_and_implementation.tex",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/interimReport/related_work/related_work.tex",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/interimReport/introduction/introduction.tex",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/interimReport/main.tex",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/report/related_work/related_work.tex",
+		"/home/jonathan/Repos/final_year_at_ic/ACA_cw2/SpectrePoC/spectre-ACA.c",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/report/future_work/future_work.tex",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/report/results/results.tex",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/report/design_and_implementation/design_and_implementation.tex",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/report/background/background.tex",
+		"/home/jonathan/Repos/final_year_at_ic/awesome_project/report/baseline/baseline.tex",
+		"/home/jonathan/Repos/final_year_at_ic/ACA_cw2/SpectrePoC/common/jw_log.txt",
+		"/home/jonathan/Repos/final_year_at_ic/ACA_cw2/SpectrePoC/common/jw_baseline.txt",
+		"/home/jonathan/Repos/final_year_at_ic/ACA_cw2/SpectrePoC/common/jw_varyFlushDelay.txt",
+		"/home/jonathan/Repos/final_year_at_ic/project_work/.gitignore",
+		"/home/jonathan/Repos/travelling_salesman/main.c",
+		"/home/jonathan/Repos/travelling_salesman/graph.h",
+		"/home/jonathan/Repos/travelling_salesman/graph.c",
+		"/home/jonathan/Repos/final_year_at_ic/ACA_cw2/SpectrePoC/common/jw_varFlushDelay.txt",
+		"/home/jonathan/Repos/final_year_at_ic/ACA_cw2/SpectrePoC/common/jw_VaryFlushDelay.sh",
+		"/home/jonathan/Repos/final_year_at_ic/ACA_cw2/SpectrePoC/common/jw_test.sh",
+		"/home/jonathan/Repos/final_year_at_ic/ACA_cw2/SpectrePoC/Makefile",
+		"/home/jonathan/Repos/final_year_at_ic/ACA_cw2/SpectrePoC/common/mw_V",
+		"/home/jonathan/Repos/final_year_at_ic/ACA_cw2/SpectrePoC/mfencedelay.txt",
+		"/home/jonathan/Repos/final_year_at_ic/ACA_cw2/SpectrePoC/cacheline512.txt",
+		"/home/jonathan/Repos/final_year_at_ic/ACA_cw2/SpectrePoC/spectre-ACA.out",
+		"/home/jonathan/Repos/final_year_at_ic/ACA_cw2/SpectrePoC/common/17-11-19-1947-testlog.txt",
+		"/home/jonathan/Repos/final_year_at_ic/ACA_cw2/SpectrePoC/common/jw_VaryCacheThreshold.sh",
+		"/home/jonathan/Repos/final_year_at_ic/project_work/mathematics_dataset-v1.0/train-easy/arithmetic__add_or_sub.txt",
+		"/home/jonathan/Repos/final_year_at_ic/rtx_bench/lambda-tensorflow-benchmark/benchmark.sh",
+		"/home/jonathan/Repos/final_year_at_ic/rtx_bench/lambda-tensorflow-benchmark/benchmarks/scripts/tf_cnn_benchmarks/tf_cnn_benchmarks.py",
+		"/home/jonathan/Repos/final_year_at_ic/rtx_bench/lambda-tensorflow-benchmark/bernchmark.sh",
+		"/home/jonathan/.local/share/gnome-shell/extensions/pixel-saver@deadalnix.me/app_menu.js",
+		"/home/jonathan/.local/share/gnome-shell/extensions/zTile@theowendev.gmail.com/extension.js",
+		"/home/jonathan/.local/share/gnome-shell/extensions/pixel-saver@deadalnix.me/buttons.js",
+		"/home/jonathan/.local/share/gnome-shell/extensions/pixel-saver@deadalnix.me/util.js",
+		"/home/jonathan/.local/share/gnome-shell/extensions/pixel-saver@deadalnix.me/decoration.js",
+		"/home/jonathan/.local/share/gnome-shell/extensions/pixel-saver@deadalnix.me/extension.js",
+		"/home/jonathan/Documents/learn_python/ex13.py",
+		"/home/jonathan/Documents/learn_python/ex12.py",
+		"/home/jonathan/Documents/learn_python/ex11_extension.py",
+		"/home/jonathan/Documents/learn_python/ex12",
+		"/home/jonathan/Documents/learn_python/output1.txt",
+		"/home/jonathan/Documents/learn_python/output.txt",
+		"/home/jonathan/Documents/learn_python/ex11.py",
+		"/home/jmw16/Documents/Repos/learnPython/ex10.py",
+		"/home/jmw16/Documents/Repos/learnPython/ex1.py",
+		"/home/jmw16/Documents/Repos/learnPython/ex2.py",
+		"/home/jmw16/Documents/Repos/learnPython/ex3.py",
+		"/home/jmw16/Documents/Repos/learnPython/ex4.py",
+		"/home/jmw16/Documents/Repos/learnPython/ex5.py",
+		"/home/jmw16/Documents/Repos/learnPython/ex6.py",
+		"/home/jmw16/Documents/Repos/learnPython/ex7.py",
+		"/home/jmw16/Documents/Repos/learnPython/ex8.py",
+		"/home/jmw16/Documents/Repos/learnPython/ex9.py",
+		"/home/jmw16/Documents/Repos/yr3ImgFinalReport/reportPlan.txt",
+		"/home/jmw16/Documents/Repos/yr3ImgFinalReport/latex/aua.bib",
+		"/home/jmw16/Documents/Repos/InterRep/InterimReport.tex",
+		"/home/jmw16/Documents/Repos/yr3ImgFinalReport/managerFeedback.txt",
+		"/home/jmw16/Documents/Repos/yr3ImgFinalReport/latex/finalReport.tex",
+		"/home/jmw16/Documents/Repos/FourthYear/Modules_Projects.txt"
+	],
+	"find":
+	{
+		"height": 27.0
+	},
+	"find_in_files":
+	{
+		"height": 143.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"neural_deque",
+			"neural_deque_model",
+			"neural_dequ",
+			"neural_deque_model",
+			"registry_help",
+			"registry",
+			"universal_tranformer",
+			"neural_deque",
+			"neural_deque_model",
+			"checkpoint",
+			"google-cloud",
+			"google",
+			"googole",
+			"google-cloud-storage",
+			"bucket",
+			"next_checkpoint",
+			"num_shards",
+			"config",
+			"continuous_train_and_eval",
+			"eval_steps",
+			"range",
+			"metric",
+			"train",
+			"metric",
+			"cloud_mlengine_master_type",
+			"adaptive_universal_transformer",
+			"autotune",
+			"hyperparameter_search",
+			"hyperparameter search",
+			"range_",
+			"universal_transformer",
+			"training_filepaths",
+			"generate_samples",
+			"loss",
+			"test",
+			"clip_grad_norm",
+			"values_map",
+			"hparams",
+			"Overriding hparams in",
+			"parse",
+			"autotune_max_trial",
+			"Found unknown flag",
+			"range",
+			"ranged_",
+			"range_",
+			"checkpoint",
+			"checkponit",
+			"load checkpoint",
+			"load_",
+			"load_weights",
+			"load_weight",
+			"load",
+			"keras.call",
+			"keras",
+			"callbacks",
+			"ModelCheckpoint",
+			"cloud_mlengine",
+			"--cloud_mlengine",
+			"tpuv3",
+			"tpu v3",
+			"tpuv3",
+			"tpu_v3",
+			"tpu",
+			"v3",
+			"config",
+			"accelerator",
+			"parallel_trial",
+			"parellel_trial",
+			"parallel_trials",
+			"cloud",
+			"master",
+			"--cloud_mlengine",
+			"neg_log_perplexity",
+			"translate_ende_wmt",
+			"eval_metric_fns",
+			"eval_metrics",
+			"metrics",
+			"eval_metrics",
+			"padded_accuracy",
+			"accuracy_per_sequence",
+			"accuracy",
+			"ACC",
+			"eval_metrics",
+			"eval_metric",
+			"autotune_objective",
+			"metrics",
+			"metrics-translate",
+			"cloud_mlengine",
+			"filter_size",
+			"universal_transformer_base_range",
+			"eval_metrics",
+			"estimator",
+			"score",
+			"next_checkpoint",
+			"params",
+			"model_dir\"",
+			"model_dir",
+			"\"output_dir\"",
+			"output_dir,",
+			"output_dir",
+			"model_dir",
+			"output_dir",
+			"FLAGS.",
+			"use_tpu",
+			"  --use_tpu",
+			"output_dir",
+			"alpha",
+			"hparams",
+			"beam",
+			"alpha",
+			"beam",
+			"comma separated list",
+			"gradient",
+			"multiprocess_generate",
+			"num_threads",
+			"num",
+			"core",
+			"thread",
+			"num",
+			"num_threads",
+			"t2t-datagen",
+			"setup"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 8,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "tensor2tensor/bin/t2t_trainer.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 17220,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								15378,
+								15378
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 6171.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "tensor2tensor/utils/hparams_lib.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3773,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1084,
+								1084
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 285.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "tensor2tensor/layers/common_hparams.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 23330,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								21386,
+								21386
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 6,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "build/lib/tensor2tensor/data_generators/text_problems.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 48633,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								30849,
+								30849
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 24172.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "build/lib/tensor2tensor/data_generators/wikisum/get_references_web.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3019,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1046,
+								1046
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "/home/jonathan/Repos/#My Memory",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6075,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4644,
+								4644
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1998.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "tensor2tensor/models/research/neural_stack.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 23331,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								22769,
+								22769
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 10617.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "tensor2tensor/models/transformer.py",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 108807,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								15916,
+								15916
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 6936.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 704,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										285,
+										297
+									],
+									[
+										570,
+										582
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								704,
+								704
+							]
+						],
+						"settings":
+						{
+							"detect_indentation": false,
+							"line_numbers": false,
+							"output_tag": 2,
+							"result_base_dir": "",
+							"result_file_regex": "^([^ \t].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 54.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 9,
+					"file": "tensor2tensor/utils/metrics.py",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 35391,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								33867,
+								33867
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 15503.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "tensor2tensor/data_generators/algorithmic_math_deepmind.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3838,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2958,
+								2958
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 594.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 104,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								104,
+								104
+							]
+						],
+						"settings":
+						{
+							"auto_name": "act_max_steps\t\thidden size\t\tnum_heads\t\ttransformer",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 12,
+					"file": "tensor2tensor/data_generators/problem.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 37597,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								11211,
+								11211
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 6135.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 12,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 27.0
+	},
+	"input":
+	{
+		"height": 44.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.507023601955,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 120.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.latextools":
+	{
+		"height": 194.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 30.0
+	},
+	"pinned_build_system": "",
+	"project": "t2t.sublime-project",
+	"replace":
+	{
+		"height": 50.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"common_layers",
+				"tensor2tensor/layers/common_layers.py"
+			],
+			[
+				"algorithm",
+				"tensor2tensor/data_generators/algorithmic_math_deepmind.py"
+			],
+			[
+				"cloud_ml",
+				"tensor2tensor/utils/cloud_mlengine.py"
+			],
+			[
+				"common",
+				"tensor2tensor/layers/common_hparams.py"
+			],
+			[
+				"decode",
+				"build/lib/tensor2tensor/bin/t2t_decoder.py"
+			],
+			[
+				"decoder",
+				"tensor2tensor/bin/t2t_decoder.py"
+			],
+			[
+				"comon",
+				"tensor2tensor/layers/common_hparams.py"
+			],
+			[
+				"learning_rate",
+				"tensor2tensor/utils/learning_rate.py"
+			],
+			[
+				"learning",
+				"tensor2tensor/utils/learning_rate.py"
+			],
+			[
+				"flags",
+				"tensor2tensor/test_data/transformer_test_ckpt/flags.txt"
+			],
+			[
+				"pro",
+				"tensor2tensor/problems.py"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 392.0,
+		"last_filter": "generate_data",
+		"selected_items":
+		[
+			[
+				"generate_data",
+				"generate_data"
+			],
+			[
+				"_default",
+				"_default_hparams"
+			],
+			[
+				"hpraams",
+				"HParams"
+			]
+		],
+		"width": 596.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 308.0,
+	"status_bar_visible": false,
+	"template_settings":
+	{
+	}
+}
