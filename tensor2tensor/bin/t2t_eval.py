@@ -51,6 +51,9 @@ def my_chkpt_iter(model_dir):
   # return specific_checkpoints
 
 def main(_):
+  if FLAGS.results_dir:
+    print("\n\n\n\n\nresults_dir = {}\n\n\n\n\n".format(results_dir))
+    print(FLAGS.results_dir and FLAGS.results_dir[:5] == "gs://")
   tf.logging.set_verbosity(tf.logging.INFO)
   trainer_lib.set_random_seed(FLAGS.random_seed)
   usr_dir.import_usr_dir(FLAGS.t2t_usr_dir)
