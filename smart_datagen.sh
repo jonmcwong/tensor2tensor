@@ -39,7 +39,7 @@ E.g. ./$(basename "$0")  t2t-data    True\n"
         echo "  --problem=$PROBLEM \\"
         echo "  --data_dir=$DATA_DIR \\"
         echo "  --tmp_dir=$TMP_DIR    (/mathematics_dataset-v1.0) \\"
-        echo "  --specific_split=$SPECIFIC_SPLIT"
+        echo "  --specific_splits=$SPECIFIC_SPLIT"
         echo
 
 
@@ -85,7 +85,7 @@ elif [[ $# -eq 3 && $3 == "--dry-run" ]]; then
     echo "  --problem=$PROBLEM \\"
     echo "  --data_dir=$DATA_DIR \\"
     echo "  --tmp_dir=$TMP_DIR    (/mathematics_dataset-v1.0) \\"
-    echo "  --specific_split=$SPECIFIC_SPLIT"
+    echo "  --specific_splits=$SPECIFIC_SPLIT"
     echo
 else
     printf "Invalid arguments provided. Signature is:\n\
