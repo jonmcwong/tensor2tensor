@@ -187,7 +187,7 @@ def generate_files(generator, output_filenames,
     if case is None:
       continue
     if counter % 100000 == 0:
-      tf.logging.info("Generating case {} into {}.".format(counter, output_filenames))
+      tf.logging.info("Generating case {} into {} for exmaple.".format(counter, output_filenames[0]))
     counter += 1
     if max_cases and counter > max_cases:
       break
