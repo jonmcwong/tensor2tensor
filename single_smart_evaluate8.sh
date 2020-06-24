@@ -59,7 +59,7 @@ if [[ $# -eq 3 ]] ; then
         echo
         echo
     fi
-    export DATA_DIR=${STORAGE_BUCKET}/t2t-specific-data
+    export DATA_DIR=${STORAGE_BUCKET}/t2t-data-emheam
     export TRAIN_DIR=${STORAGE_BUCKET}/t2t_train/$PROBLEM/$MODEL-$MODEL_TAG
     export RESULTS_DIR=${STORAGE_BUCKET}/results-$MODEL-$MODEL_TAG
     export EVAL_USE_TEST_SET=True
@@ -161,7 +161,7 @@ elif [[ $# -eq 4 && $4 == "--dry-run" ]]; then
         echo
         echo
     fi
-    export DATA_DIR=${STORAGE_BUCKET}/t2t-specific-data
+    export DATA_DIR=${STORAGE_BUCKET}/t2t-data-emheam
     export TRAIN_DIR=${STORAGE_BUCKET}/t2t_train/$PROBLEM/$MODEL-$MODEL_TAG
     export RESULTS_DIR=${STORAGE_BUCKET}/results-$MODEL-$MODEL_TAG
     export EVAL_USE_TEST_SET=True
