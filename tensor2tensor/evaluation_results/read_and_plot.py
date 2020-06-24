@@ -54,11 +54,14 @@ class dataHolder:
 		self.labels_dict = labels_dict
 		self.dataset_splits_dict = dataset_splits_dict
 
-def decide_colours(models):
+def decide_model_colours(models):
 	unique_cols = list(set(models))
 	col_gap = 1/len(unique_cols)
 	col_map = dict([(unique_cols[i], hsv_to_rgb([i*col_gap, 1.0, 1.0])) for i in range(len(unique_cols))])
 	return col_map
+
+def decide_split_colours(split):
+	return hsv_to_rgb(((dataset_splits_dict[split]%6)/6, 1.0, 1.0))
 
 def make_md(models, dataset_splits):
 	if models == "all" or models[0] == "all":
@@ -81,13 +84,14 @@ def plot_against_steps(models_and_dataset_splits,
 					font_size=12,
 					xlim=None,
 					save_name="Latest_plot.png",
-					col_match=False,
+					col_model=False,
+					col_split=False,
 					include_model_name=False,
 					xlabel="Accuracy"):
 	mdis = index(models_and_dataset_splits)
 	model_indicies = mdis[:, 0]
 	dataset_split_indicies = mdis[:, 1]
-	col_dict = decide_colours(model_indicies)
+	col_dict = decide_model_colours(model_indicies)
 	data_to_plot = database[:, model_indicies, dataset_split_indicies]
 	for i in range(data_to_plot.shape[-1]):
 		print(models_and_dataset_splits[i][1].startswith("extra"))
@@ -95,8 +99,10 @@ def plot_against_steps(models_and_dataset_splits,
 			linestyle = "--"
 		else:
 			linestyle = "-"
-		if col_match:
+		if col_model:
 			linecolor = col_dict[model_indicies[i]]
+		else col_split:
+			linecolor = decide_split_colours(models_and_dataset_splits[i][1])
 		label = " with ".join(models_and_dataset_splits[i]) if include_model_name else models_and_dataset_splits[i][1]
 		plt.plot(data_to_plot[0, i], data_to_plot[1, i],
 			label=label,
@@ -216,7 +222,7 @@ for k in range(database.shape[2]):
 
 
 
-# def decide_colours(models, dataset_splits):
+# def decide_model_colours(models, dataset_splits):
 # 	if len(unique_cols) != 1:
 # 		tmp_m = list(set(models))
 # 		unique_cols = dict([(tmp[i], i), for i in list(set(models))])
@@ -253,7 +259,7 @@ for k in range(database.shape[2]):
 # 	mdis = index(models_and_dataset_splits)
 # 	model_indicies = mdis[:, 0]
 # 	dataset_split_indicies = mdis[:, 1]
-# 	col_dict = decide_colours(model_indicies, dataset_split_indicies)
+# 	col_dict = decide_model_colours(model_indicies, dataset_split_indicies)
 # 	data_to_plot = database[:, model_indicies, dataset_split_indicies]
 # 	for i in range(data_to_plot.shape[-1]):
 # 		print(models_and_dataset_splits[i][1].startswith("extra"))
