@@ -1,8 +1,5 @@
 #!/bin/bash
-
-
-
-if [[ $# -eq 0 ]] ; then
+if [[ $# -eq 1 ]] ; then
     export VM_IP=$(echo $SSH_CONNECTION | sed "s/^.* \([0-9|\.]*\) [0-9]*$/\1/")
     export VM_INFO=$(gcloud compute instances list | grep $VM_IP)
     export VM_NAME=$(echo $VM_INFO | cut -d' ' -f1)
@@ -16,28 +13,25 @@ if [[ $# -eq 0 ]] ; then
 
     export PROBLEM=algorithmic_math_deepmind_all
     # datagen will recognise the "easy part and select only the train-easy data"
-    export DATA_DIR=${STORAGE_BUCKET}/t2t-easy-data
+    export DATA_DIR=${STORAGE_BUCKET}/$1
     export TMP_DIR=${STORAGE_BUCKET}/t2t-easy-data-incomplete
-    export SPECIFIC_SPLITS=easy
 
     echo
     echo "Running..."
     echo "t2t-datagen \\"
     echo "  --problem=$PROBLEM \\"
     echo "  --data_dir=$DATA_DIR \\"
-    echo "  --tmp_dir=$TMP_DIR \\"
-    echo "  --specific_splits=$SPECIFIC_SPLITS"
+    echo "  --tmp_dir=$TMP_DIR"
     echo
 
 
     t2t-datagen \
       --problem=$PROBLEM \
       --data_dir=$DATA_DIR \
-      --tmp_dir=$TMP_DIR \
-      --specific_splits=$SPECIFIC_SPLITS
+      --tmp_dir=$TMP_DIR
 
 
-elif [[ $# -eq 1 && $1 == "--dry-run" ]]; then
+elif [[ $# -eq 2 && $2 == "--dry-run" ]]; then
     export VM_IP=$(echo $SSH_CONNECTION | sed "s/^.* \([0-9|\.]*\) [0-9]*$/\1/")
     export VM_INFO=$(gcloud compute instances list | grep $VM_IP)
     export VM_NAME=$(echo $VM_INFO | cut -d' ' -f1)
@@ -51,17 +45,15 @@ elif [[ $# -eq 1 && $1 == "--dry-run" ]]; then
 
     export PROBLEM=algorithmic_math_deepmind_all
     # datagen will recognise the "easy part and select only the train-easy data"
-    export DATA_DIR=${STORAGE_BUCKET}/t2t-easy-data
+    export DATA_DIR=${STORAGE_BUCKET}/$1
     export TMP_DIR=${STORAGE_BUCKET}/t2t-easy-data-incomplete
-    export SPECIFIC_SPLITS=easy
 
     echo
     echo "Process will run the following:"
     echo "t2t-datagen \\"
     echo "  --problem=$PROBLEM \\"
     echo "  --data_dir=$DATA_DIR \\"
-    echo "  --tmp_dir=$TMP_DIR \\"
-    echo "  --specific_splits=$SPECIFIC_SPLITS"
+    echo "  --tmp_dir=$TMP_DIR"
     echo
 
 fi
