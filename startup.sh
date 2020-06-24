@@ -24,8 +24,8 @@ screen
 chmod +x single_smart_evaluate.sh
 
 gsutil -m cp -r \
-gs://mathsreasoning/t2t-train/algorithmic_math_deepmind_all/transformer-data-easy-2020-06-24
-gs://us_bucketbucket/t2t-train/algorithmic_math_deepmind_all/transformer-data-easy-2020-06-24
+gs://mathsreasoning/t2t_train/algorithmic_math_deepmind_all/transformer-data-easy-2020-06-24 \
+gs://us_bucketbucket/t2t_train/algorithmic_math_deepmind_all/transformer-data-easy-2020-06-24
 
 git clone https://github.com/jonmcwong/FYP_code.git
 git clone https://github.com/jonmcwong/PyTorch-Beam-Search-Decoding.git
@@ -34,17 +34,9 @@ git clone https://github.com/jonmcwong/PyTorch-Beam-Search-Decoding.git
 plt.clf()
 plot_against_steps(make_md([
 
-    "transformer-base_test-dropout01-2020-06-24",
-    "transformer-base_test-dropout03-2020-06-20",
-    "transformer-base_test-no-dropout-2020-06-19",
-    "transformer-base_test_dropout02-2020-06-19",
+    "combined_transformer-base-dropout01",
+
+
     ], [
- "extra_add_or_sub_big",
-"extra_mul_big",
-"inter_add_or_sub",
-"inter_mul",
-    "extra_mul_div_multiple_longer",
-
-    "inter_mul_div_multiple",
-
-    ]), xlim=(0, 1200000), title="???????????", save_name="Latest_plot.png", font_size=12)
+ "all",
+    ]), xlim=(0, 200000), title="???????????", save_name="Latest_plot.png", font_size=12)

@@ -12,6 +12,16 @@ export LIST=(\
     inter_mixed \
     inter_mul \
     inter_mul_div_multiple)
+# export LIST=(\
+#     train_easy_add_or_sub \
+#     train_medium_add_or_sub \
+#     train_hard_add_or_sub \
+#     extra_add_or_sub_big \
+#     train_easy_mul \
+#     train_medium_mul \
+#     train_hard_mul \
+#     extra_mul_big \
+#     )
 
 if [[ $# -eq 3 ]] ; then
     export VM_IP=$(echo $SSH_CONNECTION | sed "s/^.* \([0-9|\.]*\) [0-9]*$/\1/")
@@ -47,7 +57,12 @@ if [[ $# -eq 3 ]] ; then
     if [[ $MODEL == "transformer" ]] ; then
         export HPARAMS_SET=transformer_tpu
     elif [[ $MODEL == "universal_transformer" ]] ; then
-        export HPARAMS_SET=adaptive_universal_transformer_base_tpu
+        # check if global is in MODEL_TAG
+        if [[ $(echo $MODEL_TAG | grep "global") == "" ]] ; then
+            export HPARAMS_SET=adaptive_universal_transformer_base_tpu
+        else
+            export HPARAMS_SET=adaptive_universal_transformer_global_base_tpu
+        fi
     else
         export HPARAMS_SET"???????"
         echo
@@ -167,7 +182,7 @@ elif [[ $# -eq 4 && $4 == "--dry-run" ]]; then
 
     export SPLIT_NUM=$3
     export DATASET_SPLIT=${LIST[$SPLIT_NUM]}
-    
+
     echo "Process will run the following:"
     echo "TPU_IP_ADDRESS = "$TPU_IP_ADDRESS
     echo "XRT_TPU_CONFIG = "$XRT_TPU_CONFIG

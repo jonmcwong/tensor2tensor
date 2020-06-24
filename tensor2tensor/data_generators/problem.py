@@ -507,6 +507,7 @@ class Problem(object):
     elif hasattr(self, 'dataset_special_splits') and mode in [p["split"] for p in self.dataset_special_splits]:
       suffix = mode
     else:
+      print(mode)
       assert mode == DatasetSplit.TEST
       suffix = "test"
 
