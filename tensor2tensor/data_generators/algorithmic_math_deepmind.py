@@ -169,14 +169,14 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
     dirs = eval_dirs
 
     specific_files = False
-    if dataset_split == problem.DatasetSplit.TRAIN:
-      dirs = train_dirs
-    elif "easy-medium" in data_dir:
+    if "easy-medium" in data_dir:
       print("Found easy-medium data_dir")
       dirs = train_dirs[0:2]
     elif "easy" in data_dir:
       print("Found easy data_dir")
       dirs = train_dirs[0:1]
+    eif dataset_split == problem.DatasetSplit.TRAIN:
+      dirs = train_dirs
     elif dataset_split in [p["split"] for p in self.dataset_special_splits]:
       # this only happens if not training and specific_files
       # load file specified by dataset_split
