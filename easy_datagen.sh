@@ -2,22 +2,16 @@
 
 
 
+if [[ $# -eq 0 ]] ; then
+    export VM_IP=$(echo $SSH_CONNECTION | sed "s/^.* \([0-9|\.]*\) [0-9]*$/\1/")
+    export VM_INFO=$(gcloud compute instances list | grep $VM_IP)
+    export VM_NAME=$(echo $VM_INFO | cut -d' ' -f1)
+    export VM_ZONE=$(echo $VM_INFO | cut -d' ' -f2)
 
-if [[ $ZONE == "" ]] ; then
-    echo "ZONE variable not defined"
-elif [[ $# -eq 0 ]] ; then
     if [[ $ZONE == "us-central1-f" ]] ; then
         export STORAGE_BUCKET=gs://us_bucketbucket
     elif [[ $ZONE == "europe-west4-a" ]] ; then
         export STORAGE_BUCKET=gs://mathsreasoning
-    else
-        echo
-        echo
-        echo
-        echo "ZONE variable is weird... ZONE = "$ZONE
-        echo
-        echo
-        echo
     fi
 
     export PROBLEM=algorithmic_math_deepmind_all
@@ -44,18 +38,15 @@ elif [[ $# -eq 0 ]] ; then
 
 
 elif [[ $# -eq 1 && $1 == "--dry-run" ]]; then
+    export VM_IP=$(echo $SSH_CONNECTION | sed "s/^.* \([0-9|\.]*\) [0-9]*$/\1/")
+    export VM_INFO=$(gcloud compute instances list | grep $VM_IP)
+    export VM_NAME=$(echo $VM_INFO | cut -d' ' -f1)
+    export VM_ZONE=$(echo $VM_INFO | cut -d' ' -f2)
+
     if [[ $ZONE == "us-central1-f" ]] ; then
         export STORAGE_BUCKET=gs://us_bucketbucket
     elif [[ $ZONE == "europe-west4-a" ]] ; then
         export STORAGE_BUCKET=gs://mathsreasoning
-    else
-        echo
-        echo
-        echo
-        echo "ZONE variable is weird... ZONE = "$ZONE
-        echo
-        echo
-        echo
     fi
 
     export PROBLEM=algorithmic_math_deepmind_all
