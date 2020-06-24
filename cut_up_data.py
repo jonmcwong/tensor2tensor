@@ -14,10 +14,11 @@ for f_name in file_names:
 	with open(f_name, "r") as f:
 		file = f.readlines()
 		slice_index = len(file)//16
+		for i in range(DIVISIONS):
+			if i != DIVISIONS-1:
+				piece = file.[i*slice_index:(i+1)*slice_index]
+			else:
+				piece = file.[i*slice_index:]
+			os.join("train-easy-group{}".format(i), f_name)
 		print("added" + f_name)
 
-slice_sizes = [len(f)//16 for f in files]
-
-
-for n in renage(DIVISIONS):
-	if n != DIVISIONS-1:
