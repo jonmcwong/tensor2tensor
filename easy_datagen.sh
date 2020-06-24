@@ -5,10 +5,18 @@ if [[ $# -eq 1 ]] ; then
     export VM_NAME=$(echo $VM_INFO | cut -d' ' -f1)
     export VM_ZONE=$(echo $VM_INFO | cut -d' ' -f2)
 
-    if [[ $ZONE == "us-central1-f" ]] ; then
+    if [[ $VM_ZONE == "us-central1-f" ]] ; then
         export STORAGE_BUCKET=gs://us_bucketbucket
-    elif [[ $ZONE == "europe-west4-a" ]] ; then
+    elif [[ $VM_ZONE == "europe-west4-a" ]] ; then
         export STORAGE_BUCKET=gs://mathsreasoning
+    else
+        echo
+        echo
+        echo
+        echo "ZONE variable is weird... ZONE = "$ZONE
+        echo
+        echo
+        echo
     fi
 
     export PROBLEM=algorithmic_math_deepmind_all
@@ -37,10 +45,18 @@ elif [[ $# -eq 2 && $2 == "--dry-run" ]]; then
     export VM_NAME=$(echo $VM_INFO | cut -d' ' -f1)
     export VM_ZONE=$(echo $VM_INFO | cut -d' ' -f2)
 
-    if [[ $ZONE == "us-central1-f" ]] ; then
+    if [[ $VM_ZONE == "us-central1-f" ]] ; then
         export STORAGE_BUCKET=gs://us_bucketbucket
-    elif [[ $ZONE == "europe-west4-a" ]] ; then
+    elif [[ $VM_ZONE == "europe-west4-a" ]] ; then
         export STORAGE_BUCKET=gs://mathsreasoning
+    else
+        echo
+        echo
+        echo
+        echo "ZONE variable is weird... ZONE = "$ZONE
+        echo
+        echo
+        echo
     fi
 
     export PROBLEM=algorithmic_math_deepmind_all

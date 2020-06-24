@@ -13,6 +13,14 @@ if [[ $# -eq 2 ]] ; then
         export STORAGE_BUCKET=gs://us_bucketbucket
     elif [[ $VM_ZONE == "europe-west4-a" ]] ; then
         export STORAGE_BUCKET=gs://mathsreasoning
+    else
+        echo
+        echo
+        echo
+        echo "ZONE variable is weird... ZONE = "$ZONE
+        echo
+        echo
+        echo
     fi
     # Assumed the VM has a tpu already configured
     export TPU_IP_ADDRESS=$TPU_IP
@@ -98,6 +106,14 @@ elif [[ $# -eq 3 && $3 == "--dry-run" ]]; then
         export STORAGE_BUCKET=gs://us_bucketbucket
     elif [[ $VM_ZONE == "europe-west4-a" ]] ; then
         export STORAGE_BUCKET=gs://mathsreasoning
+    else
+        echo
+        echo
+        echo
+        echo "ZONE variable is weird... ZONE = "$ZONE
+        echo
+        echo
+        echo
     fi
 
     export TPU_IP_ADDRESS=$TPU_IP
