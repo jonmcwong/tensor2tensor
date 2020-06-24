@@ -1,17 +1,27 @@
 #!/bin/bash
+# export LIST=(\
+#     extra_add_or_sub_big \
+#     extra_add_sub_multiple_longer \
+#     extra_div_big \
+#     extra_mixed_longer \
+#     extra_mul_big \
+#     extra_mul_div_multiple_longer \
+#     inter_add_or_sub \
+#     inter_add_sub_multiple \
+#     inter_div \
+#     inter_mixed \
+#     inter_mul \
+#     inter_mul_div_multiple)
 export LIST=(\
+    train_easy_add_or_sub \
+    train_medium_add_or_sub \
+    train_hard_add_or_sub \
     extra_add_or_sub_big \
-    extra_add_sub_multiple_longer \
-    extra_div_big \
-    extra_mixed_longer \
+    train_easy_mul \
+    train_medium_mul \
+    train_hard_mul \
     extra_mul_big \
-    extra_mul_div_multiple_longer \
-    inter_add_or_sub \
-    inter_add_sub_multiple \
-    inter_div \
-    inter_mixed \
-    inter_mul \
-    inter_mul_div_multiple)
+    )
 
 if [[ $# -eq 3 ]] ; then
     export VM_IP=$(echo $SSH_CONNECTION | sed "s/^.* \([0-9|\.]*\) [0-9]*$/\1/")
@@ -167,7 +177,7 @@ elif [[ $# -eq 4 && $4 == "--dry-run" ]]; then
 
     export SPLIT_NUM=$3
     export DATASET_SPLIT=${LIST[$SPLIT_NUM]}
-    
+
     echo "Process will run the following:"
     echo "TPU_IP_ADDRESS = "$TPU_IP_ADDRESS
     echo "XRT_TPU_CONFIG = "$XRT_TPU_CONFIG

@@ -59,28 +59,28 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
   @property
   def dataset_special_splits(self):
     return [{
-        "split": "train_easy_add_or_sub",
+    #     "split": "train_easy_add_or_sub",
+    #     "shards": 1,
+    # }, {
+    #     "split": "train_medium_add_or_sub",
+    #     "shards": 1,
+    # }, {
+    #     "split": "train_hard_add_or_sub",
+    #     "shards": 1,
+    # }, {
+        "split": "extra_add_or_sub_big",
         "shards": 1,
     }, {
-        "split": "train_medium_add_or_sub",
-        "shards": 1,
-    }, {
-        "split": "train_hard_add_or_sub",
-        "shards": 1,
-    }, {
-        "split": "extra_add_or_sub",
-        "shards": 1,
-    }, {
-        "split": "train_easy_mul",
-        "shards": 1,
-    }, {
-        "split": "train_medium_mul",
-        "shards": 1,
-    }, {
-        "split": "train_hard_mul",
-        "shards": 1,
-    }, {
-        "split": "extra_mul",
+    #     "split": "train_easy_mul",
+    #     "shards": 1,
+    # }, {
+    #     "split": "train_medium_mul",
+    #     "shards": 1,
+    # }, {
+    #     "split": "train_hard_mul",
+    #     "shards": 1,
+    # }, {
+        "split": "extra_mul_big",
         "shards": 1,
     }]
 
