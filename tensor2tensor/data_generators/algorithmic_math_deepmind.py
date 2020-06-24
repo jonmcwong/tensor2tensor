@@ -175,7 +175,7 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
     elif "easy" in data_dir:
       print("Found easy data_dir")
       dirs = train_dirs[0:1]
-    eif dataset_split == problem.DatasetSplit.TRAIN:
+    elif dataset_split == problem.DatasetSplit.TRAIN:
       dirs = train_dirs
     elif dataset_split in [p["split"] for p in self.dataset_special_splits]:
       # this only happens if not training and specific_files
