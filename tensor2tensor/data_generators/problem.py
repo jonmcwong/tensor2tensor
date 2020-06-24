@@ -17,7 +17,7 @@
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
-
+import pdb
 import collections
 import functools
 import os
@@ -508,6 +508,7 @@ class Problem(object):
       suffix = mode
     else:
       print(mode)
+      pdb.set_trace()
       assert mode == DatasetSplit.TEST
       suffix = "test"
 
