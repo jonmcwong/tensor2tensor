@@ -10,14 +10,18 @@ chmod +x single_smart_evaluate.sh
 
 git checkout .
 git pull
-chmod +x single_smart_evaluate.sh
 ./setup.sh
+screen
+ 
+./single_smart_evaluate.sh transformer base_test-dropout01-2020-06-24 1
+
 ./single_smart_evaluate.sh transformer quick-noam-dropout01-2020-06-21 2
 
+chmod +x single_smart_evaluate.sh
 
 gsutil -m cp -r \
 gs://us_bucketbucket/results-universal_transformer-ut-lowerlr0-002-2020-06-23 \
-results-universal_transformer-ut-lowerlr0-002-2020-06-23
+results-universal_transformer-ut-lowerlr0-002-2020-06-23/
 
 git clone https://github.com/jonmcwong/FYP_code.git
 git clone https://github.com/jonmcwong/PyTorch-Beam-Search-Decoding.git
@@ -26,7 +30,13 @@ git clone https://github.com/jonmcwong/PyTorch-Beam-Search-Decoding.git
 plt.clf()
 plot_against_steps(make_md([
 
-    "transformer-base_test_dropout02-2020-06-19",
+    "transformer-noam-dropout01-2020-06-20",
     ], [
-"all"
-    ]), xlim=(-10000, 1200000))
+    "extra_add_or_sub_big",
+    "extra_mul_big",
+
+    "inter_mul",
+
+    "inter_add_or_sub",
+
+    ]), xlim=(0, 1200000), title="???????????", save_name="Latest_plot.png", font_size=12)
