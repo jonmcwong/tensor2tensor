@@ -137,6 +137,10 @@ elif [[ $# -eq 4 && $4 == "--dry-run" ]]; then
         echo
         echo
     fi
+
+    # Assumed the VM has a tpu already configured
+    export TPU_IP_ADDRESS=$TPU_IP
+    export XRT_TPU_CONFIG="tpu_worker;0;$TPU_IP_ADDRESS:8470"
     export USE_TPU=True
     export CLOUD_TPU_NAME=$TPU_NAME # jonmcwong-tpu
     export PROBLEM=algorithmic_math_deepmind_all
@@ -158,8 +162,12 @@ elif [[ $# -eq 4 && $4 == "--dry-run" ]]; then
     export TRAIN_DIR=${STORAGE_BUCKET}/t2t_train/$PROBLEM/$MODEL-$MODEL_TAG
     export RESULTS_DIR=${STORAGE_BUCKET}/results-$MODEL-$MODEL_TAG
     export EVAL_USE_TEST_SET=True
+    # echo "mkdir eval-results-"$MODEL_TAG
+    # mkdir "eval-results-"$MODEL_TAG
+
     export SPLIT_NUM=$3
     export DATASET_SPLIT=${LIST[$SPLIT_NUM]}
+    
     echo "Process will run the following:"
     echo "TPU_IP_ADDRESS = "$TPU_IP_ADDRESS
     echo "XRT_TPU_CONFIG = "$XRT_TPU_CONFIG
