@@ -13,7 +13,7 @@ E.g. ./$(basename "$0")  t2t-data    True\n"
         export TPU_IP=$(echo $TPU_INFO | sed "s/^.*v[0-9].*\s\([0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\):[0-9]*\s.*$/\1/")
         export TPU_NAME=$(echo $TPU_INFO | cut -d' ' -f1)
 
-        if [[ $VM_ZONE == "us-central1-f" ]] ; then
+        if [[ $VM_ZONE == "us-central1-a" || $VM_ZONE == "us-central1-b" || $VM_ZONE == "us-central1-c" || $VM_ZONE == "us-central1-f" ]] ; then
             export STORAGE_BUCKET=gs://us_bucketbucket
         elif [[ $VM_ZONE == "europe-west4-a" ]] ; then
             export STORAGE_BUCKET=gs://mathsreasoning
@@ -59,7 +59,7 @@ elif [[ $# -eq 3 && $3 == "--dry-run" ]]; then
     export TPU_IP=$(echo $TPU_INFO | sed "s/^.*v[0-9].*\s\([0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\):[0-9]*\s.*$/\1/")
     export TPU_NAME=$(echo $TPU_INFO | cut -d' ' -f1)
 
-    if [[ $VM_ZONE == "us-central1-f" ]] ; then
+    if [[ $VM_ZONE == "us-central1-a" || $VM_ZONE == "us-central1-b" || $VM_ZONE == "us-central1-c" || $VM_ZONE == "us-central1-f" ]] ; then
         export STORAGE_BUCKET=gs://us_bucketbucket
     elif [[ $VM_ZONE == "europe-west4-a" ]] ; then
         export STORAGE_BUCKET=gs://mathsreasoning

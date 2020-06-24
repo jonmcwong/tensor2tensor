@@ -17,7 +17,7 @@ chmod +x single_smart_evaluate.sh
 
 gsutil -m cp -r \
 gs://us_bucketbucket/results-universal_transformer-ut-lowerlr0-002-2020-06-23 \
-results-universal_transformer-ut-lowerlr0-002-2020-06-23
+results-universal_transformer-ut-lowerlr0-002-2020-06-23/
 
 git clone https://github.com/jonmcwong/FYP_code.git
 git clone https://github.com/jonmcwong/PyTorch-Beam-Search-Decoding.git
@@ -26,7 +26,9 @@ git clone https://github.com/jonmcwong/PyTorch-Beam-Search-Decoding.git
 plt.clf()
 plot_against_steps(make_md([
 
-    "transformer-base_test_dropout02-2020-06-19",
+    "universal_transformer-lowerlr0-02-2020-06-23",
+
+    "universal_transformer-ut-lowerlr0-002-2020-06-23",
     ], [
 "all"
-    ]), xlim=(-10000, 1200000))
+    ]), xlim=(-10000, 200000), title="???????????", save_name="Latest_plot.png", font_size=15)

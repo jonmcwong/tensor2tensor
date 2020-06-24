@@ -19,6 +19,8 @@ model_names_list = [
 	"universal_transformer-base_test-loss-0001-2020-06-21",
 	"universal_transformer-base_test-loss-001-2020-06-21",
 	"universal_transformer-base_test_loss_0005-2020-06-21",
+	"universal_transformer-lowerlr0-02-2020-06-23",
+	"universal_transformer-ut-lowerlr0-002-2020-06-23",
 	"combined_transformer-base-dropout01",
 	"combined_transformer-noam-dropout01",
 ]

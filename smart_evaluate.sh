@@ -17,7 +17,7 @@ if [[ $# -eq 2 ]] ; then
         echo
         echo
         echo
-        echo "ZONE variable is weird... ZONE = "$ZONE
+        echo "ZONE variable is weird... ZONE = "$VM_ZONE
         echo
         echo
         echo
@@ -110,7 +110,7 @@ elif [[ $# -eq 3 && $3 == "--dry-run" ]]; then
         echo
         echo
         echo
-        echo "ZONE variable is weird... ZONE = "$ZONE
+        echo "ZONE variable is weird... ZONE = "$VM_ZONE
         echo
         echo
         echo
