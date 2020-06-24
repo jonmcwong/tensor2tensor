@@ -57,7 +57,7 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
     }]
 
   @property
-  def dataset_special_splits(self):
+  def dataset_special2_splits(self):
     return [{
         "split": "train_easy_add_or_sub",
         "shards": 1,
@@ -84,45 +84,45 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
         "shards": 1,
     }]
 
-  # @property
-  # def dataset_special_splits(self):
-  #   return [{
-  #       "split": "extra_add_or_sub_big",
-  #       "shards": 1,
-  #   }, {
-  #       "split": "extra_add_sub_multiple_longer",
-  #       "shards": 1,
-  #   }, {
-  #       "split": "extra_div_big",
-  #       "shards": 1,
-  #   }, {
-  #       "split": "extra_mixed_longer",
-  #       "shards": 1,
-  #   }, {
-  #       "split": "extra_mul_big",
-  #       "shards": 1,
-  #   }, {
-  #       "split": "extra_mul_div_multiple_longer",
-  #       "shards": 1,
-  #   }, {
-  #       "split": "inter_add_or_sub",
-  #       "shards": 1,
-  #   }, {
-  #       "split": "inter_add_sub_multiple",
-  #       "shards": 1,
-  #   }, {
-  #       "split": "inter_div",
-  #       "shards": 1,
-  #   }, {
-  #       "split": "inter_mixed",
-  #       "shards": 1,
-  #   }, {
-  #       "split": "inter_mul",
-  #       "shards": 1,
-  #   }, {
-  #       "split": "inter_mul_div_multiple",
-  #       "shards": 1,
-  #   }]
+  @property
+  def dataset_special_splits(self):
+    return [{
+        "split": "extra_add_or_sub_big",
+        "shards": 1,
+    }, {
+        "split": "extra_add_sub_multiple_longer",
+        "shards": 1,
+    }, {
+        "split": "extra_div_big",
+        "shards": 1,
+    }, {
+        "split": "extra_mixed_longer",
+        "shards": 1,
+    }, {
+        "split": "extra_mul_big",
+        "shards": 1,
+    }, {
+        "split": "extra_mul_div_multiple_longer",
+        "shards": 1,
+    }, {
+        "split": "inter_add_or_sub",
+        "shards": 1,
+    }, {
+        "split": "inter_add_sub_multiple",
+        "shards": 1,
+    }, {
+        "split": "inter_div",
+        "shards": 1,
+    }, {
+        "split": "inter_mixed",
+        "shards": 1,
+    }, {
+        "split": "inter_mul",
+        "shards": 1,
+    }, {
+        "split": "inter_mul_div_multiple",
+        "shards": 1,
+    }]
 
   # What evaluation metrics to use with this problem.
   def eval_metrics(self):
