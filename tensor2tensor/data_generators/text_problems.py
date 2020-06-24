@@ -348,7 +348,7 @@ class Text2TextProblem(problem.Problem):
     return ""
 
   def generate_data(self, data_dir, tmp_dir, task_id=-1, max_cases=None, specific_split=None):
-
+    pdb.set_trace()
     # option to produce a single shard from a specified datset_split
     chosen_splits = self.dataset_splits if not specific_split else self.dataset_special_splits
     if "easy" in data_dir: # "easy-medium" included
