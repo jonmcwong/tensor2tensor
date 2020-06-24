@@ -21,8 +21,8 @@ if [[ $# -eq 1 ]] ; then
 
     export PROBLEM=algorithmic_math_deepmind_all
     # datagen will recognise the "easy part and select only the train-easy data"
-    export DATA_DIR=${STORAGE_BUCKET}/$1
-    export TMP_DIR=${STORAGE_BUCKET}/t2t-easy-data-incomplete
+    export DATA_DIR=${STORAGE_BUCKET}/$1 # where the dataset goes
+    export TMP_DIR=${STORAGE_BUCKET} # /mathematics_dataset-v1.0 - where the data comes from
 
     echo
     echo "Running..."
