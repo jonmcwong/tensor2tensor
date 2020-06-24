@@ -16,8 +16,8 @@ chmod +x single_smart_evaluate.sh
 
 
 gsutil -m cp -r \
-gs://mathsreasoning/t2t_train/algorithmic_math_deepmind_all/universal_transformer-lowerlr0-02-2020-06-23 \
-gs://us_bucketbucket/t2t_train/algorithmic_math_deepmind_all/universal_transformer-lowerlr0-02-2020-06-23
+gs://mathsreasoning/t2t_train/algorithmic_math_deepmind_all/universal_transformer-grad-clip-weight-0-001-2020-06-23 \
+gs://us_bucketbucket/t2t_train/algorithmic_math_deepmind_all/universal_transformer-grad-clip-weight-0-001-2020-06-23
 
 git clone https://github.com/jonmcwong/FYP_code.git
 git clone https://github.com/jonmcwong/PyTorch-Beam-Search-Decoding.git
