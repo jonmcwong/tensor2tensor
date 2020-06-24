@@ -94,7 +94,7 @@ flags.DEFINE_string(
     "available to t2t-datagen.")
 flags.DEFINE_bool("specific_splits", False,
     "Whether or not to build the 12 specific datasets.")
-pd.set_trace()
+pdb.set_trace()
 # Mapping from problems that we can generate data for to their generators.
 # pylint: disable=g-long-lambda
 _SUPPORTED_PROBLEM_GENERATORS = {
