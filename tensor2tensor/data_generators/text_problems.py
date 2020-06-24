@@ -350,7 +350,7 @@ class Text2TextProblem(problem.Problem):
 
     # option to produce a single shard from a specified datset_split
     chosen_splits = self.dataset_splits if not specific_split else self.dataset_special_splits
-    if "easy" in specific_split: # "easy-medium" included
+    if "easy" in data_dir: # "easy-medium" included
       chosen_splits = [{
         "split": problem.DatasetSplit.TRAIN,
         "shards": 64,
