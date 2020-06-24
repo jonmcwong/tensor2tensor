@@ -34,11 +34,9 @@ git clone https://github.com/jonmcwong/PyTorch-Beam-Search-Decoding.git
 plt.clf()
 plot_against_steps(make_md([
 
-    "universal_transformer-global-lowerlr0-02-2020-06-23",
+    "combined_transformer-base-dropout01",
+
 
     ], [
  "all",
-
-    "inter_mul_div_multiple",
-
-    ]), xlim=(0, 1200000), title="???????????", save_name="Latest_plot.png", font_size=12)
+    ]), xlim=(0, 200000), title="???????????", save_name="Latest_plot.png", font_size=12)
