@@ -20,10 +20,12 @@ model_names_list = [
 	"universal_transformer-base_test-loss-0001-2020-06-21",
 	"universal_transformer-base_test-loss-001-2020-06-21",
 	"universal_transformer-base_test_loss_0005-2020-06-21",
+	"universal_transformer-global-lowerlr0-02-2020-06-23",
 	"universal_transformer-lowerlr0-02-2020-06-23",
 	"universal_transformer-ut-lowerlr0-002-2020-06-23",
 	"combined_transformer-base-dropout01",
 	"combined_transformer-noam-dropout01",
+
 ]
 model_names_dict = dict([(model_names_list[i], i) for i in range(len(model_names_list))])
 
@@ -74,7 +76,12 @@ def make_md(models, dataset_splits):
 			M_list = models
 	return [(j, i) for i in D_list for j in M_list]
 
-def plot_against_steps(models_and_dataset_splits, title="asdfjdb", font_size=12, xlim=None, save_name="Latest_plot.png"):
+def plot_against_steps(models_and_dataset_splits,
+						title="asdfjdb",
+					font_size=12,
+					xlim=None,
+					save_name="Latest_plot.png",
+					col_match=False):
 	mdis = index(models_and_dataset_splits)
 	model_indicies = mdis[:, 0]
 	col_dict = decide_colours(model_indicies)
@@ -86,11 +93,11 @@ def plot_against_steps(models_and_dataset_splits, title="asdfjdb", font_size=12,
 			linestyle = "--"
 		else:
 			linestyle = "-"
-		linecolor = col_dict[model_indicies[i]]
+		if col_match:
+			linecolor = col_dict[model_indicies[i]]
 		plt.plot(data_to_plot[0, i], data_to_plot[1, i],
 			label=" with ".join(models_and_dataset_splits[i]),
-			linestyle=linestyle,
-			color=linecolor)
+			linestyle=linestyle,)
 	plt.rcParams["font.size"] = 12
 	plt.grid(which="major", axis="both")
 	plt.title(title)
