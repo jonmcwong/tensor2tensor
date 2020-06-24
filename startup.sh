@@ -13,11 +13,19 @@ chmod +x single_smart_evaluate.sh
 
 
 gsutil -m cp -r \
-gs://mathsreasoning/t2t_train/algorithmic_math_deepmind_all/transformer-quick-noam-dropout01-2020-06-21 \
-gs://us_bucketbucket/t2t_train/algorithmic_math_deepmind_all/transformer-quick-noam-dropout01-2020-06-21
+gs://mathsreasoning/t2t_train/algorithmic_math_deepmind_all/universal_transformer-ut-lowerlr0-002-2020-06-23 \
+gs://us_bucketbucket/t2t_train/algorithmic_math_deepmind_all/universal_transformer-ut-lowerlr0-002-2020-06-23
+
+git config --global user.name jonmcwong
+git config --global user.email jonmwong@gmail.com
+
+git clone https://github.com/jonmcwong/FYP_code.git
+git clone https://github.com/jonmcwong/PyTorch-Beam-Search-Decoding.git
+
 
 plt.clf()
 plot_against_steps(make_md([
+
     "transformer-base_test_dropout02-2020-06-19",
     ], [
 "all"
