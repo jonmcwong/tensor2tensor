@@ -504,13 +504,8 @@ class Problem(object):
       suffix = "train"
     elif mode in [DatasetSplit.EVAL, tf.estimator.ModeKeys.PREDICT]:
       suffix = "dev"
-    elif hasattr(self, 'dataset_special_splits') and mode in [p["split"] for p in self.dataset_special_splits]:
-      suffix = mode
     else:
-      print(mode)
-      pdb.set_trace()
-      assert mode == DatasetSplit.TEST
-      suffix = "test"
+      suffix = mode
 
     return "%s-%s%s*" % (path, suffix, shard_str)
 
