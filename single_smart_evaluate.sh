@@ -1,5 +1,6 @@
 #!/bin/bash
-export LIST=(extra_add_or_sub_big \
+export LIST=(\
+    extra_add_or_sub_big \
     extra_add_sub_multiple_longer \
     extra_div_big \
     extra_mixed_longer \
@@ -112,7 +113,7 @@ elif [[ $# -eq 3 ]] ; then
         echo "    --eval_steps=3 \\"
         echo "    --results_dir=$RESULTS_DIR"
         echo
-            
+
 elif [[ $# -eq 4 && $4 == "--dry-run" ]]; then
     if [[ $ZONE == "us-central1-f" ]] ; then
         export STORAGE_BUCKET=gs://us_bucketbucket

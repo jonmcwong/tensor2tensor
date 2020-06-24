@@ -102,7 +102,7 @@ def main(_):
     else:
       return "\t".join(items) + "\n"
 
-  pdb.set_trace()
+  # pdb.set_trace()
   # get the category_names
   category_names = results_all_ckpts[0].keys()
   if FLAGS.results_dir and FLAGS.results_dir[:5] == "gs://":
@@ -118,6 +118,7 @@ def main(_):
       checklist_file.write(FLAGS.dataset_split + "\n")
   else:
     # Write to local root directory
+    print("writing to local directory")
     results_dir = "eval-results-" + hparams.model_dir.split("/")[-1][len(FLAGS.model)+1:]
     try:
       if results_dir[0] == "/":

@@ -1,11 +1,17 @@
 #!/bin/bash
 
-if [[ $ZONE == "" ]] ; then
-    echo "ZONE variable not defined"
-elif [[ $# -eq 2 ]] ; then
-    if [[ $ZONE == "us-central1-f" ]] ; then
+if [[ $# -eq 2 ]] ; then
+    export VM_IP=$(echo $SSH_CONNECTION | sed "s/^.* \([0-9|\.]*\) [0-9]*$/\1/")
+    export VM_INFO=$(gcloud compute instances list | grep $VM_IP)
+    export VM_NAME=$(echo $VM_INFO | cut -d' ' -f1)
+    export VM_ZONE=$(echo $VM_INFO | cut -d' ' -f2)
+    export TPU_INFO=$(gcloud compute tpus list --zone=$VM_ZONE | grep $VM_NAME)
+    export TPU_IP=$(echo $TPU_INFO | sed "s/^.*v[0-9].*\s\([0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\):[0-9]*\s.*$/\1/")
+    export TPU_NAME=$(echo $TPU_INFO | cut -d' ' -f1)
+
+    if [[ $VM_ZONE == "us-central1-f" ]] ; then
         export STORAGE_BUCKET=gs://us_bucketbucket
-    elif [[ $ZONE == "europe-west4-a" ]] ; then
+    elif [[ $VM_ZONE == "europe-west4-a" ]] ; then
         export STORAGE_BUCKET=gs://mathsreasoning
     else
         echo
@@ -16,12 +22,6 @@ elif [[ $# -eq 2 ]] ; then
         echo
         echo
     fi
-    export VM_IP=$(echo $SSH_CONNECTION | sed "s/^.* \([0-9|\.]*\) [0-9]*$/\1/")
-    export VM_NAME=$(gcloud compute instances list | grep $VM_IP | cut -d' ' -f1)
-    export TPU_INFO=$(gcloud compute tpus list --zone=$ZONE | grep $VM_NAME)
-    export TPU_IP=$(echo $TPU_INFO | sed "s/^.*v[0-9].*\s\([0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\):[0-9]*\s.*$/\1/")
-    export TPU_NAME=$(echo $TPU_INFO | cut -d' ' -f1)
-
     # Assumed the VM has a tpu already configured
     export TPU_IP_ADDRESS=$TPU_IP
     export XRT_TPU_CONFIG="tpu_worker;0;$TPU_IP_ADDRESS:8470"
@@ -94,9 +94,17 @@ elif [[ $# -eq 2 ]] ; then
             --results_dir=$RESULTS_DIR
     done
 elif [[ $# -eq 3 && $3 == "--dry-run" ]]; then
-    if [[ $ZONE == "us-central1-f" ]] ; then
+    export VM_IP=$(echo $SSH_CONNECTION | sed "s/^.* \([0-9|\.]*\) [0-9]*$/\1/")
+    export VM_INFO=$(gcloud compute instances list | grep $VM_IP)
+    export VM_NAME=$(echo $VM_INFO | cut -d' ' -f1)
+    export VM_ZONE=$(echo $VM_INFO | cut -d' ' -f2)
+    export TPU_INFO=$(gcloud compute tpus list --zone=$VM_ZONE | grep $VM_NAME)
+    export TPU_IP=$(echo $TPU_INFO | sed "s/^.*v[0-9].*\s\([0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\):[0-9]*\s.*$/\1/")
+    export TPU_NAME=$(echo $TPU_INFO | cut -d' ' -f1)
+
+    if [[ $VM_ZONE == "us-central1-f" ]] ; then
         export STORAGE_BUCKET=gs://us_bucketbucket
-    elif [[ $ZONE == "europe-west4-a" ]] ; then
+    elif [[ $VM_ZONE == "europe-west4-a" ]] ; then
         export STORAGE_BUCKET=gs://mathsreasoning
     else
         echo
@@ -107,11 +115,7 @@ elif [[ $# -eq 3 && $3 == "--dry-run" ]]; then
         echo
         echo
     fi
-    export VM_IP=$(echo $SSH_CONNECTION | sed "s/^.* \([0-9|\.]*\) [0-9]*$/\1/")
-    export VM_NAME=$(gcloud compute instances list | grep $VM_IP | cut -d' ' -f1)
-    export TPU_INFO=$(gcloud compute tpus list --zone=$ZONE | grep $VM_NAME)
-    export TPU_IP=$(echo $TPU_INFO | sed "s/^.*v[0-9].*\s\([0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\):[0-9]*\s.*$/\1/")
-    export TPU_NAME=$(echo $TPU_INFO | cut -d' ' -f1)
+
     export TPU_IP_ADDRESS=$TPU_IP
     export XRT_TPU_CONFIG="tpu_worker;0;$TPU_IP_ADDRESS:8470"
     export USE_TPU=True

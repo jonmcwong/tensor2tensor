@@ -59,42 +59,70 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
   @property
   def dataset_special_splits(self):
     return [{
-        "split": "extra_add_or_sub_big",
+        "split": "train_easy_add_or_sub",
         "shards": 1,
     }, {
-        "split": "extra_add_sub_multiple_longer",
+        "split": "train_medium_add_or_sub",
         "shards": 1,
     }, {
-        "split": "extra_div_big",
+        "split": "train_hard_add_or_sub",
         "shards": 1,
     }, {
-        "split": "extra_mixed_longer",
+        "split": "extra_add_or_sub",
         "shards": 1,
     }, {
-        "split": "extra_mul_big",
+        "split": "train_easy_mul",
         "shards": 1,
     }, {
-        "split": "extra_mul_div_multiple_longer",
+        "split": "train_medium_mul",
         "shards": 1,
     }, {
-        "split": "inter_add_or_sub",
+        "split": "train_hard_mul",
         "shards": 1,
     }, {
-        "split": "inter_add_sub_multiple",
-        "shards": 1,
-    }, {
-        "split": "inter_div",
-        "shards": 1,
-    }, {
-        "split": "inter_mixed",
-        "shards": 1,
-    }, {
-        "split": "inter_mul",
-        "shards": 1,
-    }, {
-        "split": "inter_mul_div_multiple",
+        "split": "extra_mul",
         "shards": 1,
     }]
+
+  # @property
+  # def dataset_special_splits(self):
+  #   return [{
+  #       "split": "extra_add_or_sub_big",
+  #       "shards": 1,
+  #   }, {
+  #       "split": "extra_add_sub_multiple_longer",
+  #       "shards": 1,
+  #   }, {
+  #       "split": "extra_div_big",
+  #       "shards": 1,
+  #   }, {
+  #       "split": "extra_mixed_longer",
+  #       "shards": 1,
+  #   }, {
+  #       "split": "extra_mul_big",
+  #       "shards": 1,
+  #   }, {
+  #       "split": "extra_mul_div_multiple_longer",
+  #       "shards": 1,
+  #   }, {
+  #       "split": "inter_add_or_sub",
+  #       "shards": 1,
+  #   }, {
+  #       "split": "inter_add_sub_multiple",
+  #       "shards": 1,
+  #   }, {
+  #       "split": "inter_div",
+  #       "shards": 1,
+  #   }, {
+  #       "split": "inter_mixed",
+  #       "shards": 1,
+  #   }, {
+  #       "split": "inter_mul",
+  #       "shards": 1,
+  #   }, {
+  #       "split": "inter_mul_div_multiple",
+  #       "shards": 1,
+  #   }]
 
   # What evaluation metrics to use with this problem.
   def eval_metrics(self):
@@ -129,7 +157,11 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
     # tarfile.open(path, "r:gz").extractall(tmp_dir)
 
     def expand_split(dataset_split):
-      return dataset_split[:5] + "polate/arithmetic__" + dataset_split[6:]
+      if dataset_split[:5] == "inter" or dataset_split[:5] == "extra":
+        return dataset_split[:5] + "polate/arithmetic__" + dataset_split[6:]
+      elif dataset_split[:5] == "train":
+        items = dataset_split.split("_")
+        return  items[0] + "-" + items[1] + "/arithmetic__" + "_".join(items[2:])
 
     # Create the list of directories with data files.
     train_dirs = ["mathematics_dataset-v1.0/train-easy", "mathematics_dataset-v1.0/train-medium", "mathematics_dataset-v1.0/train-hard"]
@@ -137,7 +169,13 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
     dirs = eval_dirs
 
     specific_files = False
-    if dataset_split == problem.DatasetSplit.TRAIN:
+    if "easy-medium" in data_dir:
+      print("Found easy-medium data_dir")
+      dirs = train_dirs[0:2]
+    elif "easy" in data_dir:
+      print("Found easy data_dir")
+      dirs = train_dirs[0:1]
+    elif dataset_split == problem.DatasetSplit.TRAIN:
       dirs = train_dirs
     elif dataset_split in [p["split"] for p in self.dataset_special_splits]:
       # this only happens if not training and specific_files

@@ -28,7 +28,6 @@ each training example a dictionary mapping string feature names to lists of
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
-
 import multiprocessing
 import os
 import random
@@ -94,7 +93,6 @@ flags.DEFINE_string(
     "available to t2t-datagen.")
 flags.DEFINE_bool("specific_splits", False,
     "Whether or not to build the 12 specific datasets.")
-
 # Mapping from problems that we can generate data for to their generators.
 # pylint: disable=g-long-lambda
 _SUPPORTED_PROBLEM_GENERATORS = {
@@ -286,7 +284,6 @@ def generate_data_for_registered_problem(problem_name):
   task_id = None if FLAGS.task_id < 0 else FLAGS.task_id
   data_dir = os.path.expanduser(FLAGS.data_dir)
   tmp_dir = os.path.expanduser(FLAGS.tmp_dir)
-
   # Code to preprocess the 12 specific files separately for later evaluation
   if FLAGS.specific_splits:
     def generate_data_decorator(func, dataset_splits):
