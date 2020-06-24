@@ -34,6 +34,7 @@ import random
 import tempfile
 
 import numpy as np
+import pdb
 
 from tensor2tensor import problems as problems_lib  # pylint: disable=unused-import
 from tensor2tensor.data_generators import generator_utils
