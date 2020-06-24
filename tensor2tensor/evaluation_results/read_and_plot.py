@@ -5,45 +5,26 @@ import os
 
 # read_as_bytestring = bool(argv[2]) if argn > 2 else None
 
-model_name_list = [
-	'transformer-base_test-2020-06-19',
-	'transformer-base_test-dropout03-2020-06-20',
-	'transformer-base_test-no-dropout-2020-06-19',
-	'transformer-base_test_dropout02-2020-06-19',
-	'transformer-noam-dropout0-2020-06-20',
-	'transformer-noam-dropout01-2020-06-20',
-	'transformer-noam-dropout02-2020-06-20',
-	'transformer-noam-dropout03-2020-06-20',
-	'transformer-quick-base-dropout01-2020-06-21',
-	# 'transformer-quick-noam-dropout01-2020-06-21',
-	'universal_transformer-base_test-loss-0001-2020-06-21',
-	'universal_transformer-base_test-loss-001-2020-06-21',
-	'universal_transformer-base_test_loss_0005-2020-06-21',
+model_names_list = [
+	"transformer-base_test-2020-06-19",
+	"transformer-base_test-dropout03-2020-06-20",
+	"transformer-base_test-no-dropout-2020-06-19",
+	"transformer-base_test_dropout02-2020-06-19",
+	"transformer-noam-dropout0-2020-06-20",
+	"transformer-noam-dropout01-2020-06-20",
+	"transformer-noam-dropout02-2020-06-20",
+	"transformer-noam-dropout03-2020-06-20",
+	"transformer-quick-base-dropout01-2020-06-21",
+	"transformer-quick-noam-dropout01-2020-06-21",
+	"universal_transformer-base_test-loss-0001-2020-06-21",
+	"universal_transformer-base_test-loss-001-2020-06-21",
+	"universal_transformer-base_test_loss_0005-2020-06-21",
+	"combined_transformer-base-dropout01",
+	"combined_transformer-noam-dropout01",
 ]
+model_names_dict = dict([(model_names_list[i], i) for i in range(len(model_names_list))])
 
-all_results_array = []
-# print(results_dir, read_as_bytestring)
-
-class dataHolder:
-	def __init__(self, all_results_array, labels_dict, dataset_splits_dict):
-		self.all_results_array = all_results_array
-		self.labels_dict = labels_dict
-		self.dataset_splits_dict = dataset_splits_dict
-
-def plot_against_steps(collated_results, models, dataset_splits):
-	if datset_splits == "all":
-		dataset_split_indicies = np.arange(12)
-	collated_results[dataset_splits, :, metrics]
-	plt.plot()
-	
-
-def inconsistent_cols():
-	raise BaseException(
-						"number of columns is inconsistent with category labels"
-						)
-
-holders = []
-checklist = [
+dataset_splits_list = [
 	"extra_add_or_sub_big",
 	"extra_add_sub_multiple_longer",
 	"extra_div_big",
@@ -57,13 +38,81 @@ checklist = [
 	"inter_mul",
 	"inter_mul_div_multiple",
 ]
+dataset_splits_dict = dict([(dataset_splits_list[i], i) for i in range(len(dataset_splits_list))])
 
-for results_dir in model_name_list:
-	if os.path.isdir(results_dir):
+all_results_list = []
+# print(results_dir, read_as_bytestring)
+
+class dataHolder:
+	def __init__(self, all_results_list, labels_dict, dataset_splits_dict):
+		self.all_results_list = all_results_list
+		self.labels_dict = labels_dict
+		self.dataset_splits_dict = dataset_splits_dict
+
+def make_md(models, dataset_splits):
+	if models == "all" or models[0] == "all":
+		if dataset_splits == "all" or dataset_splits[0] == "all":
+			raise ValueError("maximum one of the arguments can be 'all'")
+		else:
+			D_list = dataset_splits
+			M_list = model_names_list
+	else:
+		if dataset_splits == "all" or dataset_splits[0] == "all":
+			D_list = dataset_splits_list
+			M_list = models
+		else:
+			D_list = dataset_splits
+			M_list = models
+	return [(j, i) for i in D_list for j in M_list]
+
+def plot_against_steps(models_and_dataset_splits, title="asdfjdb", font_size=12, xlim=None, save_name="Latest_plot.png"):
+	mdis = index(models_and_dataset_splits)
+	model_indicies = mdis[:, 0]
+	dataset_split_indicies = mdis[:, 1]
+	data_to_plot = database[:, model_indicies, dataset_split_indicies]
+	for i in range(data_to_plot.shape[-1]):
+		print(models_and_dataset_splits[i][1].startswith("extra"))
+		if models_and_dataset_splits[i][1].startswith("extra"):
+			linestyle = "--"
+		else:
+			linestyle = "-"
+
+		plt.plot(data_to_plot[0, i], data_to_plot[1, i], label=" with ".join(models_and_dataset_splits[i]), linestyle=linestyle)
+	plt.rcParams["font.size"] = 12
+	plt.grid(which="major", axis="both")
+	plt.title(title)
+	plt.xlabel("number of steps")
+	plt.ylabel("accuracy_per_sequence")
+	if xlim:
+		plt.xlim(xlim[0], xlim[1])
+		plt.ticklabel_format(style='plain', axis='x')
+	plt.legend()
+	plt.show()
+	plt.savefig(save_name)
+	
+def get_i(x):
+	if x in model_names_list:
+		return model_names_dict[x]
+	if x in dataset_splits_list:
+		return dataset_splits_dict[x]
+
+index = np.vectorize(get_i)
+
+def inconsistent_cols():
+	raise BaseException(
+						"number of columns is inconsistent with category labels"
+						)
+
+holders = []
+
+for results_dir in model_names_list:
+	if "combined" in results_dir:
+		continue
+	elif os.path.isdir(results_dir):
 		all_results_list = []
 		# read as text
-		# get dataset_splits from checklist
-		for dataset_split in checklist:
+		# get dataset_splits from dataset_splits_list
+		for dataset_split in dataset_splits_list:
 			print("found {:^30}in {:^60}".format(dataset_split, results_dir))
 			# read results
 			with open(os.path.join(
@@ -85,12 +134,54 @@ for results_dir in model_name_list:
 				# reorder the columns
 				array = array[:, reorder]
 			all_results_list.append(array)
-		all_results_array = np.array(all_results_list)
 		labels_dict = dict([(labels[i], i) for i in range(len(labels))])
-		dataset_splits_dict = dict([(checklist[i], i) for i in range(len(checklist))])
-		holders.append(dataHolder(all_results_array.copy(), labels_dict, dataset_splits_dict))
+		dataset_splits_dict = dict([(dataset_splits_list[i], i) for i in range(len(dataset_splits_list))])
+		holders.append(dataHolder(all_results_list[:], labels_dict, dataset_splits_dict))
 	else:
 		raise BaseException(
 			"Could not find {} folder".format(results_dir)
 			)
 
+database = np.empty((2, len(model_names_list), len(dataset_splits_list)), dtype=np.object)
+for i_qu, question in enumerate(holders):
+	question_data = []
+	for i_sp, split in enumerate(question.all_results_list):
+		gs_index = question.labels_dict["global_step"]
+		aps_index = question.labels_dict["accuracy_per_sequence"]
+		split_gs = []
+		split_aps = []
+		for i_st, step in enumerate(split):
+			split_gs.append(step[gs_index])
+			split_aps.append(step[aps_index])
+		database[0, i_qu, i_sp] = split_gs
+		database[1, i_qu, i_sp] = split_aps
+
+for k in range(database.shape[2]):
+	head_noam_gs, tail_noam_gs = database[0,
+		index(["transformer-quick-noam-dropout01-2020-06-21",
+			"transformer-noam-dropout01-2020-06-20"]), k]
+	head_base_gs, tail_base_gs = database[0,
+		index(["transformer-quick-base-dropout01-2020-06-21",
+			"transformer-base_test-2020-06-19"]), k]
+	head_noam_aps, tail_noam_aps = database[1,
+		index(["transformer-quick-noam-dropout01-2020-06-21",
+			"transformer-noam-dropout01-2020-06-20"]), k]
+	head_base_aps, tail_base_aps = database[1,
+		index(["transformer-quick-base-dropout01-2020-06-21",
+			"transformer-base_test-2020-06-19"]), k]
+
+	full_base_gs = np.array(head_base_gs + tail_base_gs)
+	full_base_aps = np.array(head_base_aps + tail_base_aps)
+	argsort_base = full_base_gs.argsort()
+	full_base_gs = full_base_gs[argsort_base]
+	full_base_aps = full_base_aps[argsort_base]
+
+	full_noam_gs = np.array(head_noam_gs + tail_noam_gs)
+	full_noam_aps = np.array(head_noam_aps + tail_noam_aps)
+	argsort_noam = full_noam_gs.argsort()
+	full_noam_gs = full_noam_gs[argsort_noam]
+	full_noam_aps = full_noam_aps[argsort_noam]
+	database[0, index("combined_transformer-noam-dropout01"), k] = full_noam_gs
+	database[1, index("combined_transformer-noam-dropout01"), k] = full_noam_aps
+	database[0, index("combined_transformer-base-dropout01"), k] = full_base_gs
+	database[1, index("combined_transformer-base-dropout01"), k] = full_base_aps

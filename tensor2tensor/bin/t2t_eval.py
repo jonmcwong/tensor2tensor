@@ -118,6 +118,7 @@ def main(_):
       checklist_file.write(FLAGS.dataset_split + "\n")
   else:
     # Write to local root directory
+    print("writing to local directory")
     results_dir = "eval-results-" + hparams.model_dir.split("/")[-1][len(FLAGS.model)+1:]
     try:
       if results_dir[0] == "/":
