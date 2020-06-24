@@ -2,11 +2,12 @@ import sys
 import matplotlib.pyplot as plt
 import numpy as np
 import os
-
+from  matplotlib.colors import hsv_to_rgb as hsv_to_rgb
 # read_as_bytestring = bool(argv[2]) if argn > 2 else None
 
 model_names_list = [
-	"transformer-base_test-2020-06-19",
+	"transformer-base_test-2020-06-19", # Dont delete, code will crash
+	"transformer-base_test-dropout01-2020-06-24",
 	"transformer-base_test-dropout03-2020-06-20",
 	"transformer-base_test-no-dropout-2020-06-19",
 	"transformer-base_test_dropout02-2020-06-19",
@@ -51,6 +52,12 @@ class dataHolder:
 		self.labels_dict = labels_dict
 		self.dataset_splits_dict = dataset_splits_dict
 
+def decide_colours(models):
+	unique_cols = list(set(models))
+	col_gap = 1/len(unique_cols)
+	col_map = dict([(unique_cols[i], hsv_to_rgb([i*col_gap, 1.0, 1.0])) for i in range(len(unique_cols))])
+	return col_map
+
 def make_md(models, dataset_splits):
 	if models == "all" or models[0] == "all":
 		if dataset_splits == "all" or dataset_splits[0] == "all":
@@ -70,6 +77,7 @@ def make_md(models, dataset_splits):
 def plot_against_steps(models_and_dataset_splits, title="asdfjdb", font_size=12, xlim=None, save_name="Latest_plot.png"):
 	mdis = index(models_and_dataset_splits)
 	model_indicies = mdis[:, 0]
+	col_dict = decide_colours(model_indicies)
 	dataset_split_indicies = mdis[:, 1]
 	data_to_plot = database[:, model_indicies, dataset_split_indicies]
 	for i in range(data_to_plot.shape[-1]):
@@ -78,8 +86,11 @@ def plot_against_steps(models_and_dataset_splits, title="asdfjdb", font_size=12,
 			linestyle = "--"
 		else:
 			linestyle = "-"
-
-		plt.plot(data_to_plot[0, i], data_to_plot[1, i], label=" with ".join(models_and_dataset_splits[i]), linestyle=linestyle)
+		linecolor = col_dict[model_indicies[i]]
+		plt.plot(data_to_plot[0, i], data_to_plot[1, i],
+			label=" with ".join(models_and_dataset_splits[i]),
+			linestyle=linestyle,
+			color=linecolor)
 	plt.rcParams["font.size"] = 12
 	plt.grid(which="major", axis="both")
 	plt.title(title)
