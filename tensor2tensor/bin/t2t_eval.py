@@ -65,7 +65,6 @@ def main(_):
       FLAGS.hparams_set, FLAGS.hparams, data_dir=FLAGS.data_dir,
       problem_name=FLAGS.problem)
 
-FLAGS.task_direction
 
   if FLAGS.task_direction == problem.TaskDirections.NORMAL:
     dataset_split = "test" if FLAGS.eval_use_test_set else None
