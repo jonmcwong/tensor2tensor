@@ -41,6 +41,12 @@ except ImportError:
   tpu_config = None
 # pylint: enable=g-import-not-at-top
 
+class TaskDirections(object):
+  NORMAL = "NORMAL"
+  EASY = "EASY"
+  EASY_MEDIUM = "EASY_MEDIUM"
+  Q12 = "Q12"
+  Q8 = "Q8"
 
 
 class DatasetSplit(object):
@@ -233,7 +239,7 @@ class Problem(object):
 
   @property
   def task_direction(self):
-    raise NotImplementedError() # "normal", or "12_questions" or "8_questions"
+    raise NotImplementedError() # NORMAL, Q12 or Q8
 
   @property
   def multiprocess_generate(self):

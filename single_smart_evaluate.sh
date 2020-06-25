@@ -127,6 +127,7 @@ if [[ $# -eq 3 ]] ; then
     echo "    --use_tpu=$USE_TPU \\"
     echo "    --cloud_tpu_name=$CLOUD_TPU_NAME \\"
     echo "    --eval_steps=3 \\"
+    echo "    --task_direction=q8 \\"
     echo "    --results_dir=$RESULTS_DIR"
     echo
 
