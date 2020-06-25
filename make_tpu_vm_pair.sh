@@ -25,7 +25,7 @@ gcloud config set project mathsreasoning
 
 # Make v2-8 TPUs in us
 export PREFIX=smart-eval-frag
-for FRAG_NUM in 000
+for FRAG_NUM in 000 001 002 003 004 005 006 007
 do
     export BIG_NAME=$PREFIX$FRAG_NUM
     echo "Generating VM and TPU "$BIG_NAME"..."

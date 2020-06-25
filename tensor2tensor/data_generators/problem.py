@@ -241,10 +241,6 @@ class Problem(object):
     raise NotImplementedError()
 
   @property
-  def task_direction(self):
-    raise NotImplementedError() # NORMAL, Q12 or Q8
-
-  @property
   def multiprocess_generate(self):
     """Whether to generate the data in multiple parallel processes."""
     return False
