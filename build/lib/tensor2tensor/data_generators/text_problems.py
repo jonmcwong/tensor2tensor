@@ -28,7 +28,7 @@ its docstring.
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
-
+import pdb
 import os
 import re
 
@@ -337,7 +337,7 @@ class Text2TextProblem(problem.Problem):
     return False
 
   @property
-  def inputs_prefix(self):
+  def inputs_prefix(self):  
     """String to prepend to inputs before tokenization."""
     return ""
 
@@ -348,8 +348,24 @@ class Text2TextProblem(problem.Problem):
 
   def generate_data(self, data_dir, tmp_dir, task_id=-1, max_cases=None, specific_split=None):
 
+
+
+
     # option to produce a single shard from a specified datset_split
-    chosen_splits = self.dataset_splits if not specific_split else self.dataset_special_splits
+    chosen_splits = self.dataset_splits
+
+    # if self.task_direction == problem.TaskDirections.NORMAL:
+    #   pass
+    # elif self.task_direction == problem.TaskDirections.EASY:
+    #   pass
+    # elif self.task_direction == problem.TaskDirections.EASY_MEDIUM:
+    #   pass
+    # elif self.task_direction == problem.TaskDirections.Q12:
+    #   pass
+    # elif self.task_direction == problem.TaskDirections.Q8:
+    # else:
+    #   raise ValueError("Found unknown task_direction which is ", self.task_direction)
+
 
     # dict of dataset_split : paths making functions
     filepath_fns = dict([
@@ -362,12 +378,18 @@ class Text2TextProblem(problem.Problem):
     if not specific_split and not filepath_fns:
       raise ValueError("specific_split provided cannot be found.")
 
+    # if self.task_direction == problem.TaskDirections.Q8:
+    #   shuff = True
+    # else:
+    #   shuff = self.already_shuffled
+    shuff = self.already_shuffled
+
     # exceute the filepath_fns to get [(dataset_split, list of paths)]
     split_paths = [(split["split"], filepath_fns[split["split"]](
-        data_dir, split["shards"], shuffled=self.already_shuffled))
+        data_dir, split["shards"], shuffled=shuff))
                    for split in chosen_splits
                    if not specific_split or split["split"] == specific_split]
-
+    pdb.set_trace()
     all_paths = []
     for _, paths in split_paths:
       all_paths.extend(paths)

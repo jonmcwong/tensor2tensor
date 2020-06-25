@@ -24,6 +24,10 @@ elif [[ $1 == "Q8" ]] ; then
         train_medium_mul \
         train_hard_mul \
         extra_mul_big \
+        train_easy_add_sub_multiple \
+        train_medium_add_sub_multiple \
+        train_hard_add_sub_multiple \
+        extra_add_sub_multiple_longer \
         )
 else
     echo

@@ -359,6 +359,9 @@ class Text2TextProblem(problem.Problem):
     if not specific_split and not filepath_fns:
       raise ValueError("specific_split provided cannot be found.")
 
+    if self.task_direction == problem.TaskDirection.Q8:
+      self.already_shuffled = True
+
     # exceute the filepath_fns to get [(dataset_split, list of paths)]
     split_paths = [(pair["split"], filepath_fns[pair["split"]](
       data_dir, pair["shards"], shuffled=self.already_shuffled)

@@ -1,7 +1,6 @@
 #!/bin/bash
 
 
-# gcloud config set project mathsreasoning
 # export PREFIX=smart-eval-frag
 
 # for FRAG_NUM in 005 006 007
@@ -22,10 +21,11 @@
 
 #           --preemptible \
 
+gcloud config set project mathsreasoning
 
 export PREFIX=smart-eval-frag
 
-for FRAG_NUM in 005
+for FRAG_NUM in 001 002 003 004 005 006 007
 do
     export BIG_NAME=$PREFIX$FRAG_NUM
     echo "Generating VM and TPU "$BIG_NAME"..."

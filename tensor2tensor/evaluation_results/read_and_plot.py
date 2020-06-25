@@ -30,20 +30,35 @@ model_names_list = [
 model_names_dict = dict([(model_names_list[i], i) for i in range(len(model_names_list))])
 
 dataset_splits_list = [
-	"extra_add_or_sub_big",
 	"extra_add_sub_multiple_longer",
-	"extra_div_big",
-	"extra_mixed_longer",
-	"extra_mul_big",
-	"extra_mul_div_multiple_longer",
-	"inter_add_or_sub",
 	"inter_add_sub_multiple",
-	"inter_div",
+	"extra_mixed_longer",
 	"inter_mixed",
+	"extra_mul_big",
 	"inter_mul",
+	"extra_add_or_sub_big",
+	"inter_add_or_sub",
+	"extra_mul_div_multiple_longer",
 	"inter_mul_div_multiple",
+	"extra_div_big",
+	"inter_div",
 ]
 dataset_splits_dict = dict([(dataset_splits_list[i], i) for i in range(len(dataset_splits_list))])
+
+split_list = [
+	"extra_add_sub_multiple_longer",
+	"extra_mul_big",
+	"extra_add_or_sub_big",
+	"train_easy_mul",
+	"train_medium_mul",
+	"train_hard_mul",
+	"train_easy_add_sub_multiple",
+	"train_medium_add_sub_multiple",
+	"train_hard_add_sub_multiple",
+	"train_easy_add_or_sub",
+	"train_medium_add_or_sub",
+	"train_hard_add_or_sub",
+]
 
 all_results_list = []
 # print(results_dir, read_as_bytestring)
@@ -57,11 +72,11 @@ class dataHolder:
 def decide_model_colours(models):
 	unique_cols = list(set(models))
 	col_gap = 1.0/len(unique_cols)
-	col_map = dict([(unique_cols[i], hsv_to_rgb([i*col_gap, 1.0, 1.0])) for i in range(len(unique_cols))])
+	col_map = dict([(unique_cols[i], hsv_to_rgb([i*col_gap, 1.0, .6])) for i in range(len(unique_cols))])
 	return col_map
 
 def decide_split_colours(split):
-	return hsv_to_rgb(((dataset_splits_dict[split]%6)/6, 1.0, 1.0))
+	return hsv_to_rgb((float(dataset_splits_dict[split]//2)/6, 1.0, 1.0))
 
 def make_md(models, dataset_splits):
 	if models == "all" or models[0] == "all":
@@ -79,10 +94,20 @@ def make_md(models, dataset_splits):
 			M_list = models
 	return [(j, i) for i in D_list for j in M_list]
 
+
+
+def plot_against_difficulty():
+	difficulties = ["easy", "medium", "hard", "extrapolate"]
+
+	plt.xticks(range(5), ["some", "words", "as", "x", "ticks"], rotation=45)
+
+
+
 def plot_against_steps(models_and_dataset_splits,
 						title="asdfjdb",
-					font_size=12,
+					font_size=15,
 					xlim=None,
+					ylim=None,
 					save_name="Latest_plot.png",
 					col_model=False,
 					col_split=False,
@@ -118,11 +143,14 @@ def plot_against_steps(models_and_dataset_splits,
 	plt.rcParams["font.size"] = 12
 	plt.grid(which="major", axis="both")
 	plt.title(title)
-	plt.xlabel("steps")
-	plt.ylabel(ylabel)
+	plt.xlabel("steps", fontsize=font_size)
+	plt.ylabel(ylabel, fontsize=font_size)
 	if xlim:
 		plt.xlim(xlim[0], xlim[1])
 		plt.ticklabel_format(style='plain', axis='x')
+	if ylim:
+		plt.ylim(ylim[0], ylim[1])
+		plt.ticklabel_format(style='plain', axis='y')
 	plt.legend()
 	plt.show()
 	plt.savefig(save_name)
@@ -225,6 +253,34 @@ for k in range(database.shape[2]):
 
 
 
+all_results_list = []
+# read as text
+# get dataset_splits from dataset_splits_list
+for dataset_split in dataset_splits_list:
+	print("found {:^30}in {:^60}".format(dataset_split, results_dir))
+	# read results
+	with open(os.path.join(
+		results_dir,
+		"eval_"+dataset_split+"_results.txt"), "r") as data_file:
+		# split by line as remove empty lines
+		data = data_file.read().split("\n")
+		data = [i for i in data if i != ""]
+		# split lines by data item
+		data = [row.split("\t") for row in data]
+		# pick out the first row (category labels)
+		labels = np.array(data.pop(0))
+		reorder = labels.argsort()
+		labels = np.sort(labels)
+		num_categories = len(labels)
+		# raise error if inconsistent columns per row
+		[inconsistent_cols() for i in data if len(i) != num_categories ]
+		array = np.array(data, dtype = np.float64)
+		# reorder the columns
+		array = array[:, reorder]
+	all_results_list.append(array)
+labels_dict = dict([(labels[i], i) for i in range(len(labels))])
+dataset_splits_dict = dict([(dataset_splits_list[i], i) for i in range(len(dataset_splits_list))])
+holders.append(dataHolder(all_results_list[:], labels_dict, dataset_splits_dict))
 
 
 

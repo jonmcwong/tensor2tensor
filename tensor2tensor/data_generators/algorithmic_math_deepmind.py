@@ -24,7 +24,7 @@ from __future__ import print_function
 
 import os
 import tarfile
-
+import pdb
 from tensor2tensor.data_generators import generator_utils
 from tensor2tensor.data_generators import problem
 from tensor2tensor.data_generators import text_problems
@@ -70,25 +70,33 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
           "split": "train_easy_medium",
           "shards": 64,
       }]
-    elif self.task_direction == problem.TaskDirections.Q12:
-      return [{
-          "split": "train_easy_add_or_sub", "shards": 1,
-      }, {
-          "split": "train_medium_add_or_sub", "shards": 1,
-      }, {
-          "split": "train_hard_add_or_sub", "shards": 1,
-      }, {
-          "split": "extra_add_or_sub_big", "shards": 1,
-      }, {
-          "split": "train_easy_mul", "shards": 1,
-      }, {
-          "split": "train_medium_mul", "shards": 1,
-      }, {
-          "split": "train_hard_mul", "shards": 1,
-      }, {
-          "split": "extra_mul_big", "shards": 1,
-      }]
     elif self.task_direction == problem.TaskDirections.Q8:
+      return [{
+      #     "split": "train_easy_add_or_sub", "shards": 1,
+      # }, {
+      #     "split": "train_medium_add_or_sub", "shards": 1,
+      # }, {
+      #     "split": "train_hard_add_or_sub", "shards": 1,
+      # }, {
+      #     "split": "extra_add_or_sub_big", "shards": 1,
+      # }, {
+      #     "split": "train_easy_mul", "shards": 1,
+      # }, {
+      #     "split": "train_medium_mul", "shards": 1,
+      # }, {
+      #     "split": "train_hard_mul", "shards": 1,
+      # }, {
+      #     "split": "extra_mul_big", "shards": 1,
+      # }, {
+          "split": "train_easy_add_sub_multiple", "shards": 1,
+      }, {
+          "split": "train_medium_add_sub_multiple", "shards": 1,
+      }, {
+          "split": "train_hard_add_sub_multiple", "shards": 1,
+      }, {
+          "split": "extra_add_sub_multiple_longer", "shards": 1,
+      }]
+    elif self.task_direction == problem.TaskDirections.Q12:
       return [{
           "split": "extra_add_or_sub_big", "shards": 1,
       }, {
@@ -154,46 +162,46 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
 
     def expand_split(dataset_split):
       if dataset_split[:5] == "inter" or dataset_split[:5] == "extra":
-        return dataset_split[:5] + "polate/arithmetic__" + dataset_split[6:]
+        return dataset_split[:5] + "polate/arithmetic__" + dataset_split[6:] + ".txt"
       elif dataset_split[:5] == "train":
         items = dataset_split.split("_")
-        return  items[0] + "-" + items[1] + "/arithmetic__" + "_".join(items[2:])
+        return  items[0] + "-" + items[1] + "/arithmetic__" + "_".join(items[2:]) + ".txt"
       else:
         raise ValueError(dataset_split)
 
     split_names = [p["split"] for p in self.dataset_splits]
 
 
-    if hparams.problem.task_direction == problem.TaskDirections.NORMAL:
+    if self.task_direction == problem.TaskDirections.NORMAL:
       # Create the list of directories with data files.
       train_dirs = ["mathematics_dataset-v1.0/train-easy", "mathematics_dataset-v1.0/train-medium", "mathematics_dataset-v1.0/train-hard"]
       eval_dirs = ["mathematics_dataset-v1.0/interpolate", "mathematics_dataset-v1.0/extrapolate"]
       dirs = eval_dirs
       if dataset_split == problem.DatasetSplit.TRAIN:
         dirs = train_dirs
-    elif hparams.problem.task_direction == problem.TaskDirections.EASY:
+    elif self.task_direction == problem.TaskDirections.EASY:
       dirs = train_dirs[0:1]
-    elif hparams.problem.task_direction == problem.TaskDirections.EASY_MEDIUM:
+    elif self.task_direction == problem.TaskDirections.EASY_MEDIUM:
       dirs = train_dirs[0:2]
-    elif hparams.problem.task_direction == problem.TaskDirections.Q12:
+    elif self.task_direction == problem.TaskDirections.Q12:
         dirs = ["mathematics_dataset-v1.0/" + expand_split(dataset_split) for dataset_split in split_names]
-    elif hparams.problem.task_direction == problem.TaskDirections.Q8:
+    elif self.task_direction == problem.TaskDirections.Q8:
         dirs = ["mathematics_dataset-v1.0/" + expand_split(dataset_split) for dataset_split in split_names]
     else:
-      raise ValueError("Found unknown task_direction which is ", hparams.problem.task_direction)
+      raise ValueError("Found unknown task_direction which is ", self.task_direction)
 
     dirs = [os.path.join(tmp_dir, d) for d in dirs]
-
+    pdb.set_trace()
     # Iterate over directories and files generating examples.
     for d in dirs:
-      if hparams.problem.task_direction == problem.TaskDirections.NORMAL:
+      if self.task_direction == problem.TaskDirections.NORMAL:
         files = tf.gfile.Glob(d + "/*.txt")
-      elif hparams.problem.task_direction == problem.TaskDirections.Q12:
+      elif self.task_direction == problem.TaskDirections.Q12:
         files = [d]
-      elif hparams.problem.task_direction == problem.TaskDirections.Q8:
+      elif self.task_direction == problem.TaskDirections.Q8:
         files = [d]
       else:
-        raise ValueError("Found unknown task_direction which is ", hparams.problem.task_direction)
+        raise ValueError("Found unknown task_direction which is ", self.task_direction)
 
       for fname in files:
         # In each text file, the first line is the input, the next the answer,
