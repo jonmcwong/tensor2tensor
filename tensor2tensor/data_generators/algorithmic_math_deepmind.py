@@ -48,7 +48,7 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
 
   @property
   def task_direction(self):
-    return problem.TaskDirections.Q8
+    return problem.TaskDirections.Q12
   
   @property
   def dataset_splits(self):
@@ -191,7 +191,7 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
       raise ValueError("Found unknown task_direction which is ", self.task_direction)
 
     dirs = [os.path.join(tmp_dir, d) for d in dirs]
-    pdb.set_trace()
+    # pdb.set_trace()
     # Iterate over directories and files generating examples.
     for d in dirs:
       if self.task_direction == problem.TaskDirections.NORMAL:
