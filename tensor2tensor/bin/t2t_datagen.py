@@ -290,7 +290,7 @@ def generate_data_for_registered_problem(problem_name):
   pdb.set_trace()
   if FLAGS.task_direction in problem.TaskDirections:
     problem.task_direction = FLAGS.task_direction
-pdb.set_trace()
+  pdb.set_trace()
   if FLAGS.specific_splits:
     def generate_data_decorator(func, dataset_splits):
       # repeat generate_data for each of the 12 specific_splits
