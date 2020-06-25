@@ -41,7 +41,7 @@ from tensor2tensor.data_generators import generator_utils
 from tensor2tensor.envs import env_problem_utils
 from tensor2tensor.utils import registry
 from tensor2tensor.utils import usr_dir
-from problem import TaskDirections
+from tensor2tensor.data_generators.problem import TaskDirections
 try:
   # pylint: disable=g-import-not-at-top
   from tensor2tensor.data_generators import algorithmic_math
