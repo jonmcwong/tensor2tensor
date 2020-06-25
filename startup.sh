@@ -14,7 +14,10 @@ git config --global user.email jonmwong@gmail.com
 ./specific_datagen.sh t2t-data-emheam
 
 
-./single_smart_evaluate.sh Q12 transformer base-relu-dp-03-2020-06-25
+git checkout .
+git pull
+./setup.sh
+./single_smart_evaluate.sh Q12 transformer base-relu-dp-03-2020-06-25 0
 
 
 
@@ -23,9 +26,9 @@ chmod +x single_smart_evaluate.sh
 exit
 git checkout .
 git pull
-./setup.sh
 ./single_smart_evaluate.sh Q8 transformer data-easy-2020-06-24 8
 
+./setup.sh
 
 
 screen
