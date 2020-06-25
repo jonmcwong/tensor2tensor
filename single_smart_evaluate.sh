@@ -82,7 +82,12 @@ if [[ $# -eq 4 ]] ; then
         echo
         echo
     fi
-    export DATA_DIR=${STORAGE_BUCKET}/t2t-data-emheam
+    if [[ $1 == "Q8" ]] ; then
+        export DATA_DIR=${STORAGE_BUCKET}/t2t-data-emheam
+    elif [[ $1 == "Q12" ]] ; then
+        export DATA_DIR=${STORAGE_BUCKET}/t2t-specific-data
+    else
+        echo "Task direction not understood"
     export TRAIN_DIR=${STORAGE_BUCKET}/t2t_train/$PROBLEM/$MODEL-$MODEL_TAG
     export RESULTS_DIR=${STORAGE_BUCKET}/results-$MODEL-$MODEL_TAG
     export EVAL_USE_TEST_SET=True
