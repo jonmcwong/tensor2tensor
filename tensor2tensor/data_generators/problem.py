@@ -492,6 +492,10 @@ class Problem(object):
       raise ValueError("Unknown value for split: %s" % split)
 
   def filepattern(self, data_dir, mode, shard=None):
+    print("filepttern")
+    pdb.set_trace()
+
+    
     """Get filepattern for data files for mode.
 
     Matches mode to a suffix.
@@ -514,7 +518,7 @@ class Problem(object):
       suffix = "train"
     elif mode in [DatasetSplit.EVAL, tf.estimator.ModeKeys.PREDICT]:
       suffix = "dev"
-    elif hasattr(self, 'dataset_special_splits') and mode in [p["split"] for p in self.dataset_special_splits]:
+    elif self.task_direction != TaskDirections.NORMAL:
       suffix = mode
     else:
       print(mode)
