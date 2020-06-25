@@ -46,18 +46,18 @@ dataset_splits_list = [
 dataset_splits_dict = dict([(dataset_splits_list[i], i) for i in range(len(dataset_splits_list))])
 
 split_list = [
-	"extra_add_sub_multiple_longer",
-	"extra_mul_big",
-	"extra_add_or_sub_big",
 	"train_easy_mul",
 	"train_medium_mul",
 	"train_hard_mul",
+	"extra_mul_big",
 	"train_easy_add_sub_multiple",
 	"train_medium_add_sub_multiple",
 	"train_hard_add_sub_multiple",
+	"extra_add_sub_multiple_longer",
 	"train_easy_add_or_sub",
 	"train_medium_add_or_sub",
 	"train_hard_add_or_sub",
+	"extra_add_or_sub_big",
 ]
 
 all_results_list = []
@@ -96,11 +96,31 @@ def make_md(models, dataset_splits):
 
 
 
-def plot_against_difficulty():
+def plot_against_difficulty(holder8,
+							title="???",
+						ylabel="Accuracy",
+						font_size=15,
+						ylim=None):
+	arr = np.array(holder8.all_results_list)
+	ia = holder8.labels_dict["accuracy_per_sequence"]
+	arr = arr[:, -1, ia]
+	plt.plot(range(4), arr[8:12], label="add_or_sub")
+	plt.plot(range(4), arr[4:8], label="add_sub_multiple")
+	plt.plot(range(4), arr[0:4], label="mul")
 	difficulties = ["easy", "medium", "hard", "extrapolate"]
 
-	plt.xticks(range(5), ["some", "words", "as", "x", "ticks"], rotation=45)
 
+	plt.rcParams["font.size"] = 12
+	plt.grid(which="major", axis="both")
+	plt.title(title)
+	plt.xlabel("dificulty", fontsize=font_size)
+	plt.ylabel(ylabel, fontsize=font_size)
+	plt.xticks(range(4), difficulties, rotation=0)
+	if ylim:
+		plt.ylim(ylim[0], ylim[1])
+		plt.ticklabel_format(style='plain', axis='y')
+	plt.legend()
+	plt.show()
 
 
 def plot_against_steps(models_and_dataset_splits,
@@ -255,9 +275,10 @@ for k in range(database.shape[2]):
 
 all_results_list = []
 # read as text
-# get dataset_splits from dataset_splits_list
-for dataset_split in dataset_splits_list:
-	print("found {:^30}in {:^60}".format(dataset_split, results_dir))
+results_dir = "transformer-data-easy-2020-06-24"
+# get dataset_splits from split_list
+for dataset_split in split_list:
+	print("found {:^30} in {:^60}".format(dataset_split, results_dir))
 	# read results
 	with open(os.path.join(
 		results_dir,
@@ -278,9 +299,9 @@ for dataset_split in dataset_splits_list:
 		# reorder the columns
 		array = array[:, reorder]
 	all_results_list.append(array)
-labels_dict = dict([(labels[i], i) for i in range(len(labels))])
-dataset_splits_dict = dict([(dataset_splits_list[i], i) for i in range(len(dataset_splits_list))])
-holders.append(dataHolder(all_results_list[:], labels_dict, dataset_splits_dict))
+labels8_dict = dict([(labels[i], i) for i in range(len(labels))])
+dataset_splits8_dict = dict([(split_list[i], i) for i in range(len(split_list))])
+holder8 = dataHolder(all_results_list[:], labels_dict, dataset_splits_dict)
 
 
 
