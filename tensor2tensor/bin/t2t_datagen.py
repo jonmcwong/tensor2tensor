@@ -41,7 +41,7 @@ from tensor2tensor.data_generators import generator_utils
 from tensor2tensor.envs import env_problem_utils
 from tensor2tensor.utils import registry
 from tensor2tensor.utils import usr_dir
-from tensor2tensor.data_generators.problem import TaskDirections
+from tensor2tensor.data_generators.problem import TaskDirections as problemTaskDirections
 try:
   # pylint: disable=g-import-not-at-top
   from tensor2tensor.data_generators import algorithmic_math
@@ -288,7 +288,7 @@ def generate_data_for_registered_problem(problem_name):
   tmp_dir = os.path.expanduser(FLAGS.tmp_dir)
   # Code to preprocess the 12 specific files separately for later evaluation
   pdb.set_trace()
-  if FLAGS.task_direction in problem.TaskDirections:
+  if FLAGS.task_direction in problemTaskDirections:
     problem.task_direction = FLAGS.task_direction
   pdb.set_trace()
   if FLAGS.specific_splits:
