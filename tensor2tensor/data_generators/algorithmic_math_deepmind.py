@@ -72,13 +72,13 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
       }]
     elif self.task_direction == problem.TaskDirections.INTERPOLATE:
       return [{
-          "split": "train_easy_medium",
-          "shards": 64,
+          "split": "single_inter",
+          "shards": 1,
       }]
     elif self.task_direction == problem.TaskDirections.EXTRAPOLATE:
       return [{
-          "split": "train_easy_medium",
-          "shards": 64,
+          "split": "single_extra",
+          "shards": 1,
       }]
     elif self.task_direction == problem.TaskDirections.Q8:
       return [{
