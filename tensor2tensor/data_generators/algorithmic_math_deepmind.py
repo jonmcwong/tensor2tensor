@@ -24,7 +24,7 @@ from __future__ import print_function
 
 import os
 import tarfile
-
+import pdb
 from tensor2tensor.data_generators import generator_utils
 from tensor2tensor.data_generators import problem
 from tensor2tensor.data_generators import text_problems
@@ -191,7 +191,7 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
       raise ValueError("Found unknown task_direction which is ", self.task_direction)
 
     dirs = [os.path.join(tmp_dir, d) for d in dirs]
-
+    pdb.set_trace()
     # Iterate over directories and files generating examples.
     for d in dirs:
       if self.task_direction == problem.TaskDirections.NORMAL:
