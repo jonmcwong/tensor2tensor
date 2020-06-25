@@ -7,6 +7,13 @@ cd tensor2tensor
 git config --global user.name jonmcwong
 git config --global user.email jonmwong@gmail.com
 ./setup.sh
+./single_smart_evaluate.sh Q8 transformer data-easy-2020-06-24 8
+
+
+
+./specific_datagen.sh t2t-data-emheam
+
+
 ./single_smart_evaluate.sh Q8 transformer data-easy-2020-06-24 0
 
 
@@ -17,6 +24,10 @@ exit
 git checkout .
 git pull
 ./setup.sh
+./single_smart_evaluate.sh Q8 transformer data-easy-2020-06-24 8
+
+
+
 screen
  
 ./single_smart_evaluate.sh transformer base_test-dropout01-2020-06-24 1
