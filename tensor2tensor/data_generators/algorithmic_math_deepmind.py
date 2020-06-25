@@ -70,25 +70,33 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
           "split": "train_easy_medium",
           "shards": 64,
       }]
-    elif self.task_direction == problem.TaskDirections.Q12:
-      return [{
-          "split": "train_easy_add_or_sub", "shards": 1,
-      }, {
-          "split": "train_medium_add_or_sub", "shards": 1,
-      }, {
-          "split": "train_hard_add_or_sub", "shards": 1,
-      }, {
-          "split": "extra_add_or_sub_big", "shards": 1,
-      }, {
-          "split": "train_easy_mul", "shards": 1,
-      }, {
-          "split": "train_medium_mul", "shards": 1,
-      }, {
-          "split": "train_hard_mul", "shards": 1,
-      }, {
-          "split": "extra_mul_big", "shards": 1,
-      }]
     elif self.task_direction == problem.TaskDirections.Q8:
+      return [{
+      #     "split": "train_easy_add_or_sub", "shards": 1,
+      # }, {
+      #     "split": "train_medium_add_or_sub", "shards": 1,
+      # }, {
+      #     "split": "train_hard_add_or_sub", "shards": 1,
+      # }, {
+      #     "split": "extra_add_or_sub_big", "shards": 1,
+      # }, {
+      #     "split": "train_easy_mul", "shards": 1,
+      # }, {
+      #     "split": "train_medium_mul", "shards": 1,
+      # }, {
+      #     "split": "train_hard_mul", "shards": 1,
+      # }, {
+      #     "split": "extra_mul_big", "shards": 1,
+      # }, {
+          "split": "train_easy_add_sub_multiple", "shards": 1,
+      }, {
+          "split": "train_medium_add_sub_multiple", "shards": 1,
+      }, {
+          "split": "train_hard_add_sub_multiple", "shards": 1,
+      }, {
+          "split": "extra_add_sub_multiple_longer", "shards": 1,
+      }]
+    elif self.task_direction == problem.TaskDirections.Q12:
       return [{
           "split": "extra_add_or_sub_big", "shards": 1,
       }, {

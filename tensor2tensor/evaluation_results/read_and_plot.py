@@ -30,18 +30,18 @@ model_names_list = [
 model_names_dict = dict([(model_names_list[i], i) for i in range(len(model_names_list))])
 
 dataset_splits_list = [
-	"extra_add_or_sub_big",
 	"extra_add_sub_multiple_longer",
-	"extra_div_big",
-	"extra_mixed_longer",
-	"extra_mul_big",
-	"extra_mul_div_multiple_longer",
-	"inter_add_or_sub",
 	"inter_add_sub_multiple",
-	"inter_div",
+	"extra_mixed_longer",
 	"inter_mixed",
+	"extra_mul_big",
 	"inter_mul",
+	"extra_add_or_sub_big",
+	"inter_add_or_sub",
+	"extra_mul_div_multiple_longer",
 	"inter_mul_div_multiple",
+	"extra_div_big",
+	"inter_div",
 ]
 dataset_splits_dict = dict([(dataset_splits_list[i], i) for i in range(len(dataset_splits_list))])
 
@@ -57,11 +57,11 @@ class dataHolder:
 def decide_model_colours(models):
 	unique_cols = list(set(models))
 	col_gap = 1.0/len(unique_cols)
-	col_map = dict([(unique_cols[i], hsv_to_rgb([i*col_gap, 1.0, 1.0])) for i in range(len(unique_cols))])
+	col_map = dict([(unique_cols[i], hsv_to_rgb([i*col_gap, 1.0, .6])) for i in range(len(unique_cols))])
 	return col_map
 
 def decide_split_colours(split):
-	return hsv_to_rgb(((dataset_splits_dict[split]%6)/6, 1.0, 1.0))
+	return hsv_to_rgb((float(dataset_splits_dict[split]//2)/6, 1.0, 1.0))
 
 def make_md(models, dataset_splits):
 	if models == "all" or models[0] == "all":
@@ -81,8 +81,9 @@ def make_md(models, dataset_splits):
 
 def plot_against_steps(models_and_dataset_splits,
 						title="asdfjdb",
-					font_size=12,
+					font_size=15,
 					xlim=None,
+					ylim=None,
 					save_name="Latest_plot.png",
 					col_model=False,
 					col_split=False,
@@ -118,11 +119,14 @@ def plot_against_steps(models_and_dataset_splits,
 	plt.rcParams["font.size"] = 12
 	plt.grid(which="major", axis="both")
 	plt.title(title)
-	plt.xlabel("steps")
-	plt.ylabel(ylabel)
+	plt.xlabel("steps", fontsize=font_size)
+	plt.ylabel(ylabel, fontsize=font_size)
 	if xlim:
 		plt.xlim(xlim[0], xlim[1])
 		plt.ticklabel_format(style='plain', axis='x')
+	if ylim:
+		plt.ylim(ylim[0], ylim[1])
+		plt.ticklabel_format(style='plain', axis='y')
 	plt.legend()
 	plt.show()
 	plt.savefig(save_name)

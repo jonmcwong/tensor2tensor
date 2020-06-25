@@ -348,8 +348,24 @@ class Text2TextProblem(problem.Problem):
 
   def generate_data(self, data_dir, tmp_dir, task_id=-1, max_cases=None, specific_split=None):
 
+
+
+
     # option to produce a single shard from a specified datset_split
-    chosen_splits = self.dataset_splits if not specific_split else self.dataset_special_splits
+    chosen_splits = self.dataset_splits
+
+    # if self.task_direction == problem.TaskDirections.NORMAL:
+    #   pass
+    # elif self.task_direction == problem.TaskDirections.EASY:
+    #   pass
+    # elif self.task_direction == problem.TaskDirections.EASY_MEDIUM:
+    #   pass
+    # elif self.task_direction == problem.TaskDirections.Q12:
+    #   pass
+    # elif self.task_direction == problem.TaskDirections.Q8:
+    # else:
+    #   raise ValueError("Found unknown task_direction which is ", self.task_direction)
+
 
     # dict of dataset_split : paths making functions
     filepath_fns = dict([

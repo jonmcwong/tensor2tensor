@@ -1,6 +1,6 @@
 import os
 
-
+root = "gs://us_bucketbucket"
 DIVISIONS = 16
 [os.mkdir("train-easy-group{}".format(i)) for i in range(DIVISIONS)]
 
