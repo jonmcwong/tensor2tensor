@@ -184,9 +184,9 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
     elif self.task_direction == problem.TaskDirections.EASY_MEDIUM:
       dirs = train_dirs[0:2]
     elif self.task_direction == problem.TaskDirections.Q12:
-        dirs = ["mathematics_dataset-v1.0/" + expand_split(dataset_split) for dataset_split in split_names]
+        dirs = ["mathematics_dataset-v1.0/" + expand_split(dataset_split)]
     elif self.task_direction == problem.TaskDirections.Q8:
-        dirs = ["mathematics_dataset-v1.0/" + expand_split(dataset_split) for dataset_split in split_names]
+        dirs = ["mathematics_dataset-v1.0/" + expand_split(dataset_split)]
     else:
       raise ValueError("Found unknown task_direction which is ", self.task_direction)
 

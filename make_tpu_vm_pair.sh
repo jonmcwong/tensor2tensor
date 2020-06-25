@@ -1,31 +1,31 @@
 #!/bin/bash
 
 
-# export PREFIX=smart-eval-frag
 
-# for FRAG_NUM in 005 006 007
-# do
-#     export BIG_NAME=$PREFIX$FRAG_NUM
-#     echo "Generating VM and TPU "$BIG_NAME"..."
+# Make v3-8 TPUs in Europe
+export PREFIX=smart-eval-frag
+for FRAG_NUM in 000 001 002 003 004
+do
+    export BIG_NAME=$PREFIX$FRAG_NUM
+    echo "Generating VM and TPU "$BIG_NAME"..."
 
-#     gcloud compute instances create $BIG_NAME \
-#     --source-instance-template=train-t2t \
-#     --zone=europe-west4-a
+    gcloud compute instances create $BIG_NAME \
+    --source-instance-template=train-t2t \
+    --zone=europe-west4-a
 
-#     gcloud compute tpus create $BIG_NAME \
-#           --accelerator-type=v3-8 \
-#           --version=1.15.3 \
-#           --zone=europe-west4-a
+    gcloud compute tpus create $BIG_NAME \
+          --accelerator-type=v3-8 \
+          --version=1.15.3 \
+          --zone=europe-west4-a
 
-# done
-
-#           --preemptible \
+done
 
 gcloud config set project mathsreasoning
 
-export PREFIX=smart-eval-frag
 
-for FRAG_NUM in 001 002 003 004 005 006 007
+# Make v2-8 TPUs in us
+export PREFIX=smart-eval-frag
+for FRAG_NUM in 005 006 007 008 009 010 011 012
 do
     export BIG_NAME=$PREFIX$FRAG_NUM
     echo "Generating VM and TPU "$BIG_NAME"..."
@@ -44,28 +44,24 @@ done
 
 
 
+# export PREFIX=smart-eval-frag
 
+# for FRAG_NUM in 009 010 011 012 013 014 015
+# do
+#     export BIG_NAME=$PREFIX$FRAG_NUM
+#     echo "Generating VM and TPU "$BIG_NAME"..."
 
+#     gcloud compute instances create $BIG_NAME \
+#     --source-instance-template=train-t2t \
+#     --zone=us-central1-a
 
+#     gcloud compute tpus create $BIG_NAME \
+#           --accelerator-type=v2-8 \
+#           --version=1.15.3 \
+#           --preemptible \
+#           --zone=us-central1-f
 
-export PREFIX=smart-eval-frag
-
-for FRAG_NUM in 009 010 011 012 013 014 015
-do
-    export BIG_NAME=$PREFIX$FRAG_NUM
-    echo "Generating VM and TPU "$BIG_NAME"..."
-
-    gcloud compute instances create $BIG_NAME \
-    --source-instance-template=train-t2t \
-    --zone=us-central1-a
-
-    gcloud compute tpus create $BIG_NAME \
-          --accelerator-type=v2-8 \
-          --version=1.15.3 \
-          --preemptible \
-          --zone=us-central1-f
-
-done
+# done
 
 
 
