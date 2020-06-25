@@ -56,7 +56,7 @@ class dataHolder:
 
 def decide_model_colours(models):
 	unique_cols = list(set(models))
-	col_gap = 1/len(unique_cols)
+	col_gap = 1.0/len(unique_cols)
 	col_map = dict([(unique_cols[i], hsv_to_rgb([i*col_gap, 1.0, 1.0])) for i in range(len(unique_cols))])
 	return col_map
 
@@ -111,8 +111,10 @@ def plot_against_steps(models_and_dataset_splits,
 		plt.plot(x, y,
 			label=label,
 			linestyle=linestyle,
-			color=linecolor,
+			color=linecolor
 			)
+	# plt.plot(label="base_tset, dropout01, extrapolate"
+	# 	)
 	plt.rcParams["font.size"] = 12
 	plt.grid(which="major", axis="both")
 	plt.title(title)

@@ -37,9 +37,10 @@ git clone https://github.com/jonmcwong/PyTorch-Beam-Search-Decoding.git
 plt.clf()
 plot_against_steps(make_md([
 
-	"universal_transformer-global-lowerlr0-02-2020-06-23",
-
-
+	"transformer-base_test-dropout01-2020-06-24",
+	"transformer-base_test-dropout03-2020-06-20",
+	"transformer-base_test-no-dropout-2020-06-19",
+	"transformer-base_test_dropout02-2020-06-19",
     ], [
- "all",
+ "extra_add_or_sub_big",
     ]), xlim=(0, 110000), title="Accuracies By Question Type During Unieversal Transformer Training", save_name="Latest_plot.png", font_size=12)

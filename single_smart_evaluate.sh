@@ -1,29 +1,36 @@
 #!/bin/bash
-export LIST=(\
-    extra_add_or_sub_big \
-    extra_add_sub_multiple_longer \
-    extra_div_big \
-    extra_mixed_longer \
-    extra_mul_big \
-    extra_mul_div_multiple_longer \
-    inter_add_or_sub \
-    inter_add_sub_multiple \
-    inter_div \
-    inter_mixed \
-    inter_mul \
-    inter_mul_div_multiple)
-# export LIST=(\
-#     train_easy_add_or_sub \
-#     train_medium_add_or_sub \
-#     train_hard_add_or_sub \
-#     extra_add_or_sub_big \
-#     train_easy_mul \
-#     train_medium_mul \
-#     train_hard_mul \
-#     extra_mul_big \
-#     )
 
-if [[ $# -eq 3 ]] ; then
+if [[ $1 == "Q8" ]] ; then
+    export LIST=(\
+        extra_add_or_sub_big \
+        extra_add_sub_multiple_longer \
+        extra_div_big \
+        extra_mixed_longer \
+        extra_mul_big \
+        extra_mul_div_multiple_longer \
+        inter_add_or_sub \
+        inter_add_sub_multiple \
+        inter_div \
+        inter_mixed \
+        inter_mul \
+        inter_mul_div_multiple)
+elif [[ $1 == "Q12" ]] ; then
+    export LIST=(\
+        train_easy_add_or_sub \
+        train_medium_add_or_sub \
+        train_hard_add_or_sub \
+        extra_add_or_sub_big \
+        train_easy_mul \
+        train_medium_mul \
+        train_hard_mul \
+        extra_mul_big \
+        )
+else
+    echo
+    echo task direcition unknown
+    echo
+fi
+if [[ $# -eq 4 ]] ; then
     export VM_IP=$(echo $SSH_CONNECTION | sed "s/^.* \([0-9|\.]*\) [0-9]*$/\1/")
     export VM_INFO=$(gcloud compute instances list | grep $VM_IP)
     export VM_NAME=$(echo $VM_INFO | cut -d' ' -f1)
@@ -52,8 +59,8 @@ if [[ $# -eq 3 ]] ; then
     export USE_TPU=True
     export CLOUD_TPU_NAME=$TPU_NAME # jonmcwong-tpu
     export PROBLEM=algorithmic_math_deepmind_all
-    export MODEL=$1 # transformer
-    export MODEL_TAG=$2 # mds_paper_settings-2020-06-12
+    export MODEL=$2 # transformer
+    export MODEL_TAG=$3 # mds_paper_settings-2020-06-12
     if [[ $MODEL == "transformer" ]] ; then
         export HPARAMS_SET=transformer_tpu
     elif [[ $MODEL == "universal_transformer" ]] ; then
@@ -78,10 +85,10 @@ if [[ $# -eq 3 ]] ; then
     # echo "mkdir eval-results-"$MODEL_TAG
     # mkdir "eval-results-"$MODEL_TAG
 
-    export SPLIT_NUM=$3
+    export SPLIT_NUM=$4
     export DATASET_SPLIT=${LIST[$SPLIT_NUM]}
 
-
+    export TASK_DIRECTION=$1
 
     echo
     echo "Running..."
@@ -98,6 +105,7 @@ if [[ $# -eq 3 ]] ; then
     echo "    --use_tpu=$USE_TPU \\"
     echo "    --cloud_tpu_name=$CLOUD_TPU_NAME \\"
     echo "    --eval_steps=3 \\"
+    echo "    --task_direction=$TASK_DIRECTION \\"
     echo "    --results_dir=$RESULTS_DIR"
     echo
     t2t-eval \
@@ -111,6 +119,7 @@ if [[ $# -eq 3 ]] ; then
         --use_tpu=$USE_TPU \
         --cloud_tpu_name=$CLOUD_TPU_NAME \
         --eval_steps=3 \
+        --task_direction=$TASK_DIRECTION \
         --results_dir=$RESULTS_DIR
     echo
     echo "Process ran with these settings:"
@@ -127,11 +136,11 @@ if [[ $# -eq 3 ]] ; then
     echo "    --use_tpu=$USE_TPU \\"
     echo "    --cloud_tpu_name=$CLOUD_TPU_NAME \\"
     echo "    --eval_steps=3 \\"
-    echo "    --task_direction=q8 \\"
+    echo "    --task_direction=$TASK_DIRECTION \\"
     echo "    --results_dir=$RESULTS_DIR"
     echo
 
-elif [[ $# -eq 4 && $4 == "--dry-run" ]]; then
+elif [[ $# -eq 5 && $5 == "--dry-run" ]]; then
     export VM_IP=$(echo $SSH_CONNECTION | sed "s/^.* \([0-9|\.]*\) [0-9]*$/\1/")
     export VM_INFO=$(gcloud compute instances list | grep $VM_IP)
     export VM_NAME=$(echo $VM_INFO | cut -d' ' -f1)
@@ -160,8 +169,8 @@ elif [[ $# -eq 4 && $4 == "--dry-run" ]]; then
     export USE_TPU=True
     export CLOUD_TPU_NAME=$TPU_NAME # jonmcwong-tpu
     export PROBLEM=algorithmic_math_deepmind_all
-    export MODEL=$1 # transformer
-    export MODEL_TAG=$2 # mds_paper_settings-2020-06-12
+    export MODEL=$2 # transformer
+    export MODEL_TAG=$3 # mds_paper_settings-2020-06-12
     if [[ $MODEL == "transformer" ]] ; then
         export HPARAMS_SET=transformer_tpu
     elif [[ $MODEL == "universal_transformer" ]] ; then
@@ -181,8 +190,9 @@ elif [[ $# -eq 4 && $4 == "--dry-run" ]]; then
     # echo "mkdir eval-results-"$MODEL_TAG
     # mkdir "eval-results-"$MODEL_TAG
 
-    export SPLIT_NUM=$3
+    export SPLIT_NUM=$4
     export DATASET_SPLIT=${LIST[$SPLIT_NUM]}
+    export TASK_DIRECTION=$1
 
     echo "Process will run the following:"
     echo "TPU_IP_ADDRESS = "$TPU_IP_ADDRESS
@@ -198,12 +208,13 @@ elif [[ $# -eq 4 && $4 == "--dry-run" ]]; then
     echo "    --use_tpu=$USE_TPU \\"
     echo "    --cloud_tpu_name=$CLOUD_TPU_NAME \\"
     echo "    --eval_steps=3 \\"
+    echo "    --task_direction=$TASK_DIRECTION \\"
     echo "    --results_dir=$RESULTS_DIR"
 
 else
     printf "Invalid arguments provided. Signature is:\n\
-     ./$(basename "$0")  <MODEL>                <MODEL_TAG>                    <DATSET_SPLIT_NUM> (--dry-run)\n\
-E.g. ./$(basename "$0")  universal_transformer  base_test-loss-0001-2020-06-21 7\n"
+     ./$(basename "$0")  <task>  <MODEL>                <MODEL_TAG>                    <DATSET_SPLIT_NUM> (--dry-run)\n\
+E.g. ./$(basename "$0")  Q8     universal_transformer  base_test-loss-0001-2020-06-21 7\n"
 fi
 
 

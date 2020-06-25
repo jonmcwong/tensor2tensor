@@ -76,7 +76,6 @@ def main(_):
   else:
     raise ValueError("Found unknown task_direction which is ", hparams.problem.task_direction)
 
-
   dataset_kwargs = {"dataset_split": dataset_split}
   eval_input_fn = hparams.problem.make_estimator_input_fn(
       tf.estimator.ModeKeys.EVAL, hparams, dataset_kwargs=dataset_kwargs)
