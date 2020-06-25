@@ -41,13 +41,16 @@ except ImportError:
   tpu_config = None
 # pylint: enable=g-import-not-at-top
 
-class TaskDirections(object):
-  NORMAL = "NORMAL"
-  EASY = "EASY"
-  EASY_MEDIUM = "EASY_MEDIUM"
-  Q12 = "Q12"
-  Q8 = "Q8"
-
+class _(object):
+  _options = ["NORMAL", "EASY", "EASY_MEDIUM", "INTERPOLATE", "EXTRAPOLATE", "Q12", "Q8",]
+  def __getattr__(self, item):
+    if item in self._options:
+      return item
+    else:
+      raise ValueError(item + " is not a task_direction")
+  def __contains__(self, item):
+    return item in [self.NORMAL, self.EASY, self.EASY_MEDIUM, self.INTERPOLATE, self.EXTRAPOLATE, self.Q12, self.Q8]
+TaskDirections = _()
 
 class DatasetSplit(object):
   TRAIN = tf.estimator.ModeKeys.TRAIN

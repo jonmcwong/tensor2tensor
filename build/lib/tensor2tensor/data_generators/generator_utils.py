@@ -172,7 +172,7 @@ def generate_files(generator, output_filenames,
   num_shards = len(output_filenames)
   # Check if is training or eval, ref: train_data_filenames().
   if num_shards > 0:
-    if "-train" in output_filenames[0] and "train_" not in output_filenames[0]:
+    if "-train" in output_filenames[0]:
       tag = "train"
     elif "-dev" in output_filenames[0]:
       tag = "eval"
@@ -187,7 +187,7 @@ def generate_files(generator, output_filenames,
     if case is None:
       continue
     if counter % 100000 == 0:
-      tf.logging.info("Generating case %d." % counter)
+      tf.logging.info("Generating case {} into {} for exmaple.".format(counter, output_filenames[0]))
     counter += 1
     if max_cases and counter > max_cases:
       break

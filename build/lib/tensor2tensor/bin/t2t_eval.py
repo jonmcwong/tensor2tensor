@@ -38,7 +38,7 @@ flags.DEFINE_string("results_dir", "", "Where to write results")
 flags.DEFINE_string("task_direction", "", "Any hacky stuff to do")
 print(FLAGS.results_dir)
 FLAGS.task_direction = FLAGS.task_direction.upper()
-
+pdb.set_trace()
 
 def my_chkpt_iter(model_dir):
   with file_io.FileIO(os.path.join(model_dir, "checkpoint"), "r") as ckpt_file:
