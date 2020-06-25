@@ -1,4 +1,7 @@
 #!/bin/bash
+cd ..
+sudo rm -r tensor2tensor
+
 git clone https://github.com/jonmcwong/tensor2tensor.git
 cd tensor2tensor
 git config --global user.name jonmcwong
@@ -34,9 +37,9 @@ git clone https://github.com/jonmcwong/PyTorch-Beam-Search-Decoding.git
 plt.clf()
 plot_against_steps(make_md([
 
-    "combined_transformer-base-dropout01",
+	"universal_transformer-global-lowerlr0-02-2020-06-23",
 
 
     ], [
  "all",
-    ]), xlim=(0, 200000), title="???????????", save_name="Latest_plot.png", font_size=12)
+    ]), xlim=(0, 110000), title="Accuracies By Question Type During Unieversal Transformer Training", save_name="Latest_plot.png", font_size=12)

@@ -36,7 +36,7 @@ flags.DEFINE_string("dataset_split", "",
   "The split used by the desired evaluation dataset")
 flags.DEFINE_string("results_dir", "",
   "Where to write results")
-
+print(FLAGS.results_dir)
 def my_chkpt_iter(model_dir):
   with file_io.FileIO(os.path.join(model_dir, "checkpoint"), "r") as ckpt_file:
     contents = ckpt_file.read()
@@ -61,6 +61,7 @@ def main(_):
   hparams = trainer_lib.create_hparams(
       FLAGS.hparams_set, FLAGS.hparams, data_dir=FLAGS.data_dir,
       problem_name=FLAGS.problem)
+  
 
   # set appropriate dataset-split, if flags.eval_use_test_set.
   if FLAGS.dataset_split:

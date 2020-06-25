@@ -87,7 +87,8 @@ def plot_against_steps(models_and_dataset_splits,
 					col_model=False,
 					col_split=False,
 					include_model_name=False,
-					xlabel="Accuracy"):
+					ylabel="Accuracy",
+					flip=False):
 	mdis = index(models_and_dataset_splits)
 	model_indicies = mdis[:, 0]
 	dataset_split_indicies = mdis[:, 1]
@@ -101,17 +102,22 @@ def plot_against_steps(models_and_dataset_splits,
 			linestyle = "-"
 		if col_model:
 			linecolor = col_dict[model_indicies[i]]
-		else col_split:
+		else:
 			linecolor = decide_split_colours(models_and_dataset_splits[i][1])
 		label = " with ".join(models_and_dataset_splits[i]) if include_model_name else models_and_dataset_splits[i][1]
-		plt.plot(data_to_plot[0, i], data_to_plot[1, i],
+		x, y = data_to_plot[0, i], data_to_plot[1, i]
+		if flip:
+			x = np.flip(x)
+		plt.plot(x, y,
 			label=label,
-			linestyle=linestyle,)
+			linestyle=linestyle,
+			color=linecolor,
+			)
 	plt.rcParams["font.size"] = 12
 	plt.grid(which="major", axis="both")
 	plt.title(title)
 	plt.xlabel("steps")
-	plt.ylabel(xlabel)
+	plt.ylabel(ylabel)
 	if xlim:
 		plt.xlim(xlim[0], xlim[1])
 		plt.ticklabel_format(style='plain', axis='x')
