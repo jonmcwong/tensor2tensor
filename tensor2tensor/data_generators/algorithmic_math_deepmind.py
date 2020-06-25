@@ -47,6 +47,10 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
     return text_problems.VocabType.CHARACTER
 
   @property
+  def td(self):
+    return problem.TaskDirections.Q8
+  
+  @property
   def dataset_splits(self):
     if self.task_direction == problem.TaskDirections.NORMAL:
       return [{

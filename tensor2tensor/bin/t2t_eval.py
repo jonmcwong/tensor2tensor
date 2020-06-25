@@ -65,16 +65,16 @@ def main(_):
       FLAGS.hparams_set, FLAGS.hparams, data_dir=FLAGS.data_dir,
       problem_name=FLAGS.problem)
 
-  hparams.problem.task_direction = FLAGS.task_direction
+FLAGS.task_direction
 
-  if hparams.problem.task_direction == problem.TaskDirections.NORMAL:
+  if FLAGS.task_direction == problem.TaskDirections.NORMAL:
     dataset_split = "test" if FLAGS.eval_use_test_set else None
-  elif hparams.problem.task_direction == problem.TaskDirections.Q12:
+  elif FLAGS.task_direction == problem.TaskDirections.Q12:
     dataset_split = FLAGS.dataset_split
-  elif hparams.problem.task_direction == problem.TaskDirections.Q8:
+  elif FLAGS.task_direction == problem.TaskDirections.Q8:
     dataset_split = FLAGS.dataset_split
   else:
-    raise ValueError("Found unknown task_direction which is ", hparams.problem.task_direction)
+    raise ValueError("Found unknown task_direction which is ", FLAGS.task_direction)
 
   dataset_kwargs = {"dataset_split": dataset_split}
   eval_input_fn = hparams.problem.make_estimator_input_fn(
@@ -89,16 +89,16 @@ def main(_):
       FLAGS.model, hparams, config, use_tpu=FLAGS.use_tpu)
 
 
-  if hparams.problem.task_direction == problem.TaskDirections.NORMAL:
+  if FLAGS.task_direction == problem.TaskDirections.NORMAL:
     ckpt_iter = trainer_lib.next_checkpoint(
       hparams.model_dir, FLAGS.eval_timeout_mins
       )
-  elif hparams.problem.task_direction == problem.TaskDirections.Q12:
+  elif FLAGS.task_direction == problem.TaskDirections.Q12:
     ckpt_iter = my_chkpt_iter(hparams.model_dir)
-  elif hparams.problem.task_direction == problem.TaskDirections.Q8:
+  elif FLAGS.task_direction == problem.TaskDirections.Q8:
     ckpt_iter = my_chkpt_iter(hparams.model_dir)
   else:
-    raise ValueError("Found unknown task_direction which is ", hparams.problem.task_direction)
+    raise ValueError("Found unknown task_direction which is ", FLAGS.task_direction)
 
 
   # Chose a specific set of checkpoints if dataset_split provided

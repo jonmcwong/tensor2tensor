@@ -492,8 +492,6 @@ class Problem(object):
       raise ValueError("Unknown value for split: %s" % split)
 
   def filepattern(self, data_dir, mode, shard=None):
-    print("filepttern")
-    pdb.set_trace()
 
     
     """Get filepattern for data files for mode.
