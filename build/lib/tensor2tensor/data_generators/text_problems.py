@@ -337,7 +337,7 @@ class Text2TextProblem(problem.Problem):
     return False
 
   @property
-  def inputs_prefix(self):
+  def inputs_prefix(self):  
     """String to prepend to inputs before tokenization."""
     return ""
 
@@ -378,12 +378,14 @@ class Text2TextProblem(problem.Problem):
     if not specific_split and not filepath_fns:
       raise ValueError("specific_split provided cannot be found.")
 
-    if self.task_direction == problem.TaskDirection.Q8:
-      self.already_shuffled = True
+    # if self.task_direction == problem.TaskDirections.Q8:
+    #   shuff = True
+    # else:
+    #   shuff = self.already_shuffled
 
     # exceute the filepath_fns to get [(dataset_split, list of paths)]
     split_paths = [(split["split"], filepath_fns[split["split"]](
-        data_dir, split["shards"], shuffled=self.already_shuffled))
+        data_dir, split["shards"], shuffled=shuff))
                    for split in chosen_splits
                    if not specific_split or split["split"] == specific_split]
     pdb.set_trace()
