@@ -41,6 +41,12 @@ except ImportError:
   tpu_config = None
 # pylint: enable=g-import-not-at-top
 
+class TaskDirections(object):
+  NORMAL = "NORMAL"
+  EASY = "EASY"
+  EASY_MEDIUM = "EASY_MEDIUM"
+  Q12 = "Q12"
+  Q8 = "Q8"
 
 
 class DatasetSplit(object):
@@ -230,6 +236,10 @@ class Problem(object):
 
   def generate_data(self, data_dir, tmp_dir, task_id=-1):
     raise NotImplementedError()
+
+  @property
+  def task_direction(self):
+    raise NotImplementedError() # NORMAL, Q12 or Q8
 
   @property
   def multiprocess_generate(self):
@@ -482,6 +492,8 @@ class Problem(object):
       raise ValueError("Unknown value for split: %s" % split)
 
   def filepattern(self, data_dir, mode, shard=None):
+
+    
     """Get filepattern for data files for mode.
 
     Matches mode to a suffix.
@@ -504,9 +516,10 @@ class Problem(object):
       suffix = "train"
     elif mode in [DatasetSplit.EVAL, tf.estimator.ModeKeys.PREDICT]:
       suffix = "dev"
-    elif hasattr(self, 'dataset_special_splits') and mode in [p["split"] for p in self.dataset_special_splits]:
+    elif self.task_direction != TaskDirections.NORMAL:
       suffix = mode
     else:
+      print(mode)
       assert mode == DatasetSplit.TEST
       suffix = "test"
 
