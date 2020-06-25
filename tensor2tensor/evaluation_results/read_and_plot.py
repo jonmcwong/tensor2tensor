@@ -6,7 +6,10 @@ from  matplotlib.colors import hsv_to_rgb as hsv_to_rgb
 # read_as_bytestring = bool(argv[2]) if argn > 2 else None
 
 model_names_list = [
-	# "transformer-base_test-2020-06-19", # Dont delete, code will crash
+	# "transformer-base-relu-dp-00-2020-06-25",
+	# "transformer-base-relu-dp-01-2020-06-25",
+	"transformer-base-relu-dp-02-2020-06-25",
+	"transformer-base-relu-dp-03-2020-06-25",
 	"transformer-base_test-dropout01-2020-06-24",
 	"transformer-base_test-dropout03-2020-06-20",
 	"transformer-base_test-no-dropout-2020-06-19",
@@ -25,7 +28,6 @@ model_names_list = [
 	"universal_transformer-ut-lowerlr0-002-2020-06-23",
 	"combined_transformer-base-dropout01",
 	"combined_transformer-noam-dropout01",
-
 ]
 model_names_dict = dict([(model_names_list[i], i) for i in range(len(model_names_list))])
 
@@ -70,6 +72,12 @@ class dataHolder:
 		self.dataset_splits_dict = dataset_splits_dict
 
 def decide_model_colours(models):
+	unique_cols = list(set(models))
+	col_gap = 1.0/len(unique_cols)
+	col_map = dict([(unique_cols[i], hsv_to_rgb([i*col_gap, 1.0, .6])) for i in range(len(unique_cols))])
+	return col_map
+
+def decide_model_width(models):
 	unique_cols = list(set(models))
 	col_gap = 1.0/len(unique_cols)
 	col_map = dict([(unique_cols[i], hsv_to_rgb([i*col_gap, 1.0, .6])) for i in range(len(unique_cols))])
@@ -129,8 +137,6 @@ def plot_against_steps(models_and_dataset_splits,
 					xlim=None,
 					ylim=None,
 					save_name="Latest_plot.png",
-					col_model=False,
-					col_split=False,
 					include_model_name=False,
 					ylabel="Accuracy",
 					flip=False):

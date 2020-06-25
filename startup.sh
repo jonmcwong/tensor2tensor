@@ -7,8 +7,13 @@ cd tensor2tensor
 git config --global user.name jonmcwong
 git config --global user.email jonmwong@gmail.com
 ./setup.sh
+./single_smart_evaluate.sh Q12 transformer base-relu-dp-01-2020-06-25 0
+./single_smart_evaluate.sh Q12 transformer base-relu-dp-00-2020-06-25 0
+
 ./single_smart_evaluate.sh Q8 transformer data-easy-2020-06-24 8
 
+c
+c
 
 
 ./specific_datagen.sh t2t-data-emheam
@@ -17,7 +22,6 @@ git config --global user.email jonmwong@gmail.com
 git checkout .
 git pull
 ./setup.sh
-./single_smart_evaluate.sh Q12 transformer base-relu-dp-03-2020-06-25 0
 
 
 
@@ -77,5 +81,19 @@ save_name="Latest_plot.png",
 font_size=20, col_model=False, include_model_name=False)
 
 
-
 plot_against_difficulty(holder8, title="Transformer Accuracy Against Question Difficulty")
+
+
+plt.clf()
+plot_against_steps(make_md([
+	"transformer-base-relu-dp-02-2020-06-25",
+	"transformer-base-relu-dp-03-2020-06-25",
+    ], [
+ "all",
+    ]),
+xlim=(-10000, 905000),
+ylim=(-0.05, 1.05),
+title="Accuracies By Question Type During Universal Transformer Training",
+save_name="Latest_plot.png", 
+font_size=20, col_model=False, include_model_name=True)
+
