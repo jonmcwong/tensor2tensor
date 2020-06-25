@@ -216,9 +216,9 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
       elif self.task_direction == problem.TaskDirections.Q8:
         files = [d]
       elif self.task_direction == problem.TaskDirections.INTERPOLATE:
-        files = [d]
+        files = files = tf.gfile.Glob(d + "/*.txt")
       elif self.task_direction == problem.TaskDirections.EXTRAPOLATE:
-        files = [d]
+        files = files = tf.gfile.Glob(d + "/*.txt")
       else:
         raise ValueError("Found unknown task_direction which is ", self.task_direction)
 
