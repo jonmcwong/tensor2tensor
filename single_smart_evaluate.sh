@@ -14,7 +14,7 @@ if [[ $1 == "Q12" ]] ; then
         inter_mixed \
         inter_mul \
         inter_mul_div_multiple)
-elif [[ $1 == "8" ]] ; then
+elif [[ $1 == "Q8" ]] ; then
     export LIST=(\
         train_easy_add_or_sub \
         train_medium_add_or_sub \
