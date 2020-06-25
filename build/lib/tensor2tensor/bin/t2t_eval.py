@@ -34,8 +34,11 @@ FLAGS = flags.FLAGS
 
 flags.DEFINE_string("dataset_split", "",
   "The split used by the desired evaluation dataset")
-flags.DEFINE_string("results_dir", "",
-  "Where to write results")
+flags.DEFINE_string("results_dir", "", "Where to write results")
+flags.DEFINE_string("task_direction", "", "Any hacky stuff to do")
+print(FLAGS.results_dir)
+FLAGS.task_direction = FLAGS.task_direction.upper()
+
 
 def my_chkpt_iter(model_dir):
   with file_io.FileIO(os.path.join(model_dir, "checkpoint"), "r") as ckpt_file:
@@ -51,6 +54,9 @@ def my_chkpt_iter(model_dir):
   # return specific_checkpoints
 
 def main(_):
+  if FLAGS.results_dir:
+    print("\n\n\n\n\nresults_dir = {}\n\n\n\n\n".format(FLAGS.results_dir))
+    print(FLAGS.results_dir and FLAGS.results_dir[:5] == "gs://")
   tf.logging.set_verbosity(tf.logging.INFO)
   trainer_lib.set_random_seed(FLAGS.random_seed)
   usr_dir.import_usr_dir(FLAGS.t2t_usr_dir)
@@ -59,13 +65,16 @@ def main(_):
       FLAGS.hparams_set, FLAGS.hparams, data_dir=FLAGS.data_dir,
       problem_name=FLAGS.problem)
 
-  # set appropriate dataset-split, if flags.eval_use_test_set.
-  if FLAGS.dataset_split:
-    # if not FLAGS.eval_use_test_set: raise ValueError(
-      # "dataset_split flag was passed even though eval_use_test_set is False.")
+
+  if FLAGS.task_direction == problem.TaskDirections.NORMAL:
+    dataset_split = "test" if FLAGS.eval_use_test_set else None
+  elif FLAGS.task_direction == problem.TaskDirections.Q12:
+    dataset_split = FLAGS.dataset_split
+  elif FLAGS.task_direction == problem.TaskDirections.Q8:
     dataset_split = FLAGS.dataset_split
   else:
-    dataset_split = "test" if FLAGS.eval_use_test_set else None
+    raise ValueError("Found unknown task_direction which is ", FLAGS.task_direction)
+
   dataset_kwargs = {"dataset_split": dataset_split}
   eval_input_fn = hparams.problem.make_estimator_input_fn(
       tf.estimator.ModeKeys.EVAL, hparams, dataset_kwargs=dataset_kwargs)
@@ -77,13 +86,25 @@ def main(_):
 
   estimator = trainer_lib.create_estimator(
       FLAGS.model, hparams, config, use_tpu=FLAGS.use_tpu)
-  ckpt_iter1 = trainer_lib.next_checkpoint(
+
+
+  if FLAGS.task_direction == problem.TaskDirections.NORMAL:
+    ckpt_iter = trainer_lib.next_checkpoint(
       hparams.model_dir, FLAGS.eval_timeout_mins
       )
-  ckpt_iter2 = my_chkpt_iter(hparams.model_dir)
+  elif FLAGS.task_direction == problem.TaskDirections.Q12:
+    ckpt_iter = my_chkpt_iter(hparams.model_dir)
+  elif FLAGS.task_direction == problem.TaskDirections.Q8:
+    ckpt_iter = my_chkpt_iter(hparams.model_dir)
+  else:
+    raise ValueError("Found unknown task_direction which is ", FLAGS.task_direction)
+
 
   # Chose a specific set of checkpoints if dataset_split provided
-  ckpt_iter = ckpt_iter1 if not FLAGS.dataset_split else ckpt_iter2
+  if FLAGS.results_dir:
+    results_dir = FLAGS.results_dir
+  else:
+    raise ValueError("results_dir not defined")
   results_all_ckpts = []
   for ckpt_path in ckpt_iter:
     results = estimator.evaluate(
@@ -99,17 +120,20 @@ def main(_):
     else:
       return "\t".join(items) + "\n"
 
-  # pdb.set_trace()
+  pdb.set_trace()
+  
   # get the category_names
   category_names = results_all_ckpts[0].keys()
-  results_dir = FLAGS.results_dir
-  results_dir += "/eval-results-" + hparams.model_dir.split("/")[-1][len(FLAGS.model)+1:]
-  with open(results_dir + "/eval_" + FLAGS.dataset_split + "_results.txt", "w") as results_file:
+  # Write to bucket
+  with file_io.FileIO(
+    results_dir + "/eval_" + FLAGS.dataset_split + "_results.txt", "w"
+  ) as results_file:
     results_file.write(build_line(category_names, labels=True))
     for r in results_all_ckpts:
       results_file.write(build_line([r[k] for k in category_names]))
-  with open(results_dir + "/checklist", "a") as checklist_file:
+  with file_io.FileIO(results_dir + "/checklist", "w") as checklist_file:
     checklist_file.write(FLAGS.dataset_split + "\n")
+
 
 if __name__ == "__main__":
   tf.logging.set_verbosity(tf.logging.INFO)
