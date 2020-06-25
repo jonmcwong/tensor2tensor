@@ -28,7 +28,7 @@ its docstring.
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
-
+import pdb
 import os
 import re
 
@@ -386,7 +386,7 @@ class Text2TextProblem(problem.Problem):
         data_dir, split["shards"], shuffled=self.already_shuffled))
                    for split in chosen_splits
                    if not specific_split or split["split"] == specific_split]
-
+    pdb.set_trace()
     all_paths = []
     for _, paths in split_paths:
       all_paths.extend(paths)
