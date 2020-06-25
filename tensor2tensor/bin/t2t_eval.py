@@ -65,7 +65,6 @@ def main(_):
       FLAGS.hparams_set, FLAGS.hparams, data_dir=FLAGS.data_dir,
       problem_name=FLAGS.problem)
 
-
   if FLAGS.task_direction == problem.TaskDirections.NORMAL:
     dataset_split = "test" if FLAGS.eval_use_test_set else None
   elif FLAGS.task_direction == problem.TaskDirections.Q12:
@@ -74,7 +73,7 @@ def main(_):
     dataset_split = FLAGS.dataset_split
   else:
     raise ValueError("Found unknown task_direction which is ", FLAGS.task_direction)
-
+  pdb.set_trace()
   dataset_kwargs = {"dataset_split": dataset_split}
   eval_input_fn = hparams.problem.make_estimator_input_fn(
       tf.estimator.ModeKeys.EVAL, hparams, dataset_kwargs=dataset_kwargs)

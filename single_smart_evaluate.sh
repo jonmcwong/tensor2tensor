@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [[ $1 == "Q8" ]] ; then
+if [[ $1 == "Q12" ]] ; then
     export LIST=(\
         extra_add_or_sub_big \
         extra_add_sub_multiple_longer \
@@ -14,7 +14,7 @@ if [[ $1 == "Q8" ]] ; then
         inter_mixed \
         inter_mul \
         inter_mul_div_multiple)
-elif [[ $1 == "Q12" ]] ; then
+elif [[ $1 == "8" ]] ; then
     export LIST=(\
         train_easy_add_or_sub \
         train_medium_add_or_sub \
