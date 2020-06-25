@@ -47,7 +47,7 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
     return text_problems.VocabType.CHARACTER
 
   @property
-  def td(self):
+  def task_direction(self):
     return problem.TaskDirections.Q8
   
   @property
