@@ -1,6 +1,6 @@
 #!/bin/bash
-if [[ $# -eq 2 ]] ; then
-    if [[ $2 == "--dry-run" ]]; then
+if [[ $# -eq 3 ]] ; then
+    if [[ ${!#} == "--dry-run" ]]; then
         printf "Invalid arguments provided. Signature is:\n\
      ./$(basename "$0")  <DATA_DIR>  <SPECIFIC_SPLIT>  (--dry-run)\n\
 E.g. ./$(basename "$0")  t2t-data    True\n"
@@ -31,7 +31,8 @@ E.g. ./$(basename "$0")  t2t-data    True\n"
         # datagen will recognise the "easy part and select only the train-easy data"
         export DATA_DIR=${STORAGE_BUCKET}/$1 # where the dataset goes
         export TMP_DIR=${STORAGE_BUCKET} # /mathematics_dataset-v1.0 -   where the data comes from
-        export SPECIFIC_SPLIT=$2
+        export SPECIFIC_SPLIT=$3
+        export TASK_DIRECTION=$2
 
         echo
         echo "Running..."
@@ -39,7 +40,8 @@ E.g. ./$(basename "$0")  t2t-data    True\n"
         echo "  --problem=$PROBLEM \\"
         echo "  --data_dir=$DATA_DIR \\"
         echo "  --tmp_dir=$TMP_DIR    (/mathematics_dataset-v1.0) \\"
-        echo "  --specific_splits=$SPECIFIC_SPLIT"
+        echo "  --specific_splits=$SPECIFIC_SPLIT \\"
+        echo "  --task_direction=$TASK_DIRECTION"
         echo
 
 
@@ -47,10 +49,11 @@ E.g. ./$(basename "$0")  t2t-data    True\n"
           --problem=$PROBLEM \
           --data_dir=$DATA_DIR \
           --tmp_dir=$TMP_DIR \
-          --specific_split=$SPECIFIC_SPLIT
+          --specific_split=$SPECIFIC_SPLIT \
+          --task_direction=$TASK_DIRECTION
     fi
 
-elif [[ $# -eq 3 && $3 == "--dry-run" ]]; then
+elif [[ $# -eq 4 && ${!#} == "--dry-run" ]]; then
     export VM_IP=$(echo $SSH_CONNECTION | sed "s/^.* \([0-9|\.]*\) [0-9]*$/\1/")
     export VM_INFO=$(gcloud compute instances list | grep $VM_IP)
     export VM_NAME=$(echo $VM_INFO | cut -d' ' -f1)
@@ -77,7 +80,8 @@ elif [[ $# -eq 3 && $3 == "--dry-run" ]]; then
     # datagen will recognise the "easy part and select only the train-easy data"
     export DATA_DIR=${STORAGE_BUCKET}/$1
     export TMP_DIR=${STORAGE_BUCKET}
-    export SPECIFIC_SPLIT=$2
+    export SPECIFIC_SPLIT=$3
+    export TASK_DIRECTION=$2
 
     echo
     echo "Process will run the following:"
@@ -85,10 +89,12 @@ elif [[ $# -eq 3 && $3 == "--dry-run" ]]; then
     echo "  --problem=$PROBLEM \\"
     echo "  --data_dir=$DATA_DIR \\"
     echo "  --tmp_dir=$TMP_DIR    (/mathematics_dataset-v1.0) \\"
-    echo "  --specific_splits=$SPECIFIC_SPLIT"
+    echo "  --specific_splits=$SPECIFIC_SPLIT \\"
+    echo "  --task_direction=$TASK_DIRECTION"
     echo
+
 else
     printf "Invalid arguments provided. Signature is:\n\
-     ./$(basename "$0")  <DATA_DIR>  <SPECIFIC_SPLIT>  (--dry-run)\n\
-E.g. ./$(basename "$0")  t2t-data    True\n"
+     ./$(basename "$0")  <DATA_DIR>  <task>  <SPECIFIC_SPLIT>  (--dry-run)\n\
+E.g. ./$(basename "$0")  t2t-data    Q12\n"  True\n"
 fi

@@ -6,8 +6,8 @@ from  matplotlib.colors import hsv_to_rgb as hsv_to_rgb
 # read_as_bytestring = bool(argv[2]) if argn > 2 else None
 
 model_names_list = [
-	# "transformer-base-relu-dp-00-2020-06-25",
-	# "transformer-base-relu-dp-01-2020-06-25",
+	"transformer-base-relu-dp-00-2020-06-25",
+	"transformer-base-relu-dp-01-2020-06-25",
 	"transformer-base-relu-dp-02-2020-06-25",
 	"transformer-base-relu-dp-03-2020-06-25",
 	"transformer-base_test-dropout01-2020-06-24",
@@ -31,39 +31,23 @@ model_names_list = [
 ]
 model_names_dict = dict([(model_names_list[i], i) for i in range(len(model_names_list))])
 
+dataset_split_style = ['-', '--', '-.', ':']
 dataset_splits_list = [
-	"extra_add_sub_multiple_longer",
-	"inter_add_sub_multiple",
-	"extra_mixed_longer",
-	"inter_mixed",
-	"extra_mul_big",
-	"inter_mul",
-	"extra_add_or_sub_big",
-	"inter_add_or_sub",
-	"extra_mul_div_multiple_longer",
-	"inter_mul_div_multiple",
-	"extra_div_big",
-	"inter_div",
-]
-dataset_splits_dict = dict([(dataset_splits_list[i], i) for i in range(len(dataset_splits_list))])
-
-split_list = [
-	"train_easy_mul",
-	"train_medium_mul",
-	"train_hard_mul",
-	"extra_mul_big",
-	"train_easy_add_sub_multiple",
-	"train_medium_add_sub_multiple",
-	"train_hard_add_sub_multiple",
-	"extra_add_sub_multiple_longer",
-	"train_easy_add_or_sub",
-	"train_medium_add_or_sub",
-	"train_hard_add_or_sub",
-	"extra_add_or_sub_big",
+	["inter_add_or_sub",		"extra_add_or_sub_big",			]
+	["inter_add_sub_multiple",	"extra_add_sub_multiple_longer",]
+	["inter_mul",				"extra_mul_big",				]
+	["inter_div",				"extra_div_big",				]
+	["inter_mixed",				"extra_mixed_longer",			]
+	["inter_mul_div_multiple",	"extra_mul_div_multiple_longer",]
 ]
 
-all_results_list = []
-# print(results_dir, read_as_bytestring)
+dataset_splits_dict = dict([(dataset_splits_list[i][j], (i, dataset_split_style[j])) for i in range(len(dataset_splits_list))] for j in range(2))
+
+dataset_splits8_list = [
+	["train_easy_add_sub_multiple",	"train_medium_add_sub_multiple","train_hard_add_sub_multiple",	"extra_add_sub_multiple_longer",],
+	["train_easy_add_or_sub",		"train_medium_add_or_sub",		"train_hard_add_or_sub",		"extra_add_or_sub_big",			],
+	["train_easy_mul",				"train_medium_mul",				"train_hard_mul",				"extra_mul_big",				],
+]
 
 class dataHolder:
 	def __init__(self, all_results_list, labels_dict, dataset_splits_dict):
@@ -71,17 +55,17 @@ class dataHolder:
 		self.labels_dict = labels_dict
 		self.dataset_splits_dict = dataset_splits_dict
 
-def decide_model_colours(models):
-	unique_cols = list(set(models))
+def decide_colours(items):
+	unique_cols = list(set(items))
 	col_gap = 1.0/len(unique_cols)
 	col_map = dict([(unique_cols[i], hsv_to_rgb([i*col_gap, 1.0, .6])) for i in range(len(unique_cols))])
-	return col_map
+	return [col_map[i] for i in items]
 
-def decide_model_width(models):
-	unique_cols = list(set(models))
-	col_gap = 1.0/len(unique_cols)
-	col_map = dict([(unique_cols[i], hsv_to_rgb([i*col_gap, 1.0, .6])) for i in range(len(unique_cols))])
-	return col_map
+def decide_width(items):
+	unique_cols = list(set(items))
+	width_gap = 1.0
+	width_map = dict([(unique_cols[i], 1.0+i*width_gap) for i in range(len(unique_cols))])
+	return [width_map[i]  for i in items]
 
 def decide_split_colours(split):
 	return hsv_to_rgb((float(dataset_splits_dict[split]//2)/6, 1.0, 1.0))
@@ -134,6 +118,7 @@ def plot_against_difficulty(holder8,
 def plot_against_steps(models_and_dataset_splits,
 						title="asdfjdb",
 					font_size=15,
+					multi_model=None,
 					xlim=None,
 					ylim=None,
 					save_name="Latest_plot.png",
@@ -143,18 +128,25 @@ def plot_against_steps(models_and_dataset_splits,
 	mdis = index(models_and_dataset_splits)
 	model_indicies = mdis[:, 0]
 	dataset_split_indicies = mdis[:, 1]
-	col_dict = decide_model_colours(model_indicies)
 	data_to_plot = database[:, model_indicies, dataset_split_indicies]
+	if multi_model == None:
+		if len(set(model_indicies)) > len(set(dataset_split_indicies)):
+			multi_model = True
+		else:
+			multi_model = False
+	if multi_model:
+		linecolor_list = decide_colours(model_indicies)
+		linewidth_list = decide_width(dataset_split_indicies)
+	else:
+		linecolor_list = decide_colours(dataset_split_indicies)
+		linewidth_list = decide_width(model_indicies)
 	for i in range(data_to_plot.shape[-1]):
-		print(models_and_dataset_splits[i][1].startswith("extra"))
 		if models_and_dataset_splits[i][1].startswith("extra"):
 			linestyle = "--"
 		else:
 			linestyle = "-"
-		if col_model:
-			linecolor = col_dict[model_indicies[i]]
-		else:
-			linecolor = decide_split_colours(models_and_dataset_splits[i][1])
+		linecolor = linecolor_list[i]
+		linewidth = linewidth_list[i]
 		label = " with ".join(models_and_dataset_splits[i]) if include_model_name else models_and_dataset_splits[i][1]
 		x, y = data_to_plot[0, i], data_to_plot[1, i]
 		if flip:
@@ -162,6 +154,7 @@ def plot_against_steps(models_and_dataset_splits,
 		plt.plot(x, y,
 			label=label,
 			linestyle=linestyle,
+			linewidth=linewidth,
 			color=linecolor
 			)
 	# plt.plot(label="base_tset, dropout01, extrapolate"
@@ -184,16 +177,19 @@ def plot_against_steps(models_and_dataset_splits,
 def get_i(x):
 	if x in model_names_list:
 		return model_names_dict[x]
-	if x in dataset_splits_list:
+	if x in [j for in in dataset_splits_list for j in i]:
 		return dataset_splits_dict[x]
-
 index = np.vectorize(get_i)
+
 
 def inconsistent_cols():
 	raise BaseException(
 						"number of columns is inconsistent with category labels"
 						)
 
+
+all_results_list = []
+# print(results_dir, read_as_bytestring)
 holders = []
 
 for results_dir in model_names_list:
@@ -226,7 +222,6 @@ for results_dir in model_names_list:
 				array = array[:, reorder]
 			all_results_list.append(array)
 		labels_dict = dict([(labels[i], i) for i in range(len(labels))])
-		dataset_splits_dict = dict([(dataset_splits_list[i], i) for i in range(len(dataset_splits_list))])
 		holders.append(dataHolder(all_results_list[:], labels_dict, dataset_splits_dict))
 	else:
 		raise BaseException(
@@ -306,8 +301,7 @@ for dataset_split in split_list:
 		array = array[:, reorder]
 	all_results_list.append(array)
 labels8_dict = dict([(labels[i], i) for i in range(len(labels))])
-dataset_splits8_dict = dict([(split_list[i], i) for i in range(len(split_list))])
-holder8 = dataHolder(all_results_list[:], labels_dict, dataset_splits_dict)
+holder8 = dataHolder(all_results_list[:], labels_dict, dataset_splits8_dict)
 
 
 

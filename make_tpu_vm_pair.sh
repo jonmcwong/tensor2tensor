@@ -25,7 +25,7 @@ gcloud config set project mathsreasoning
 
 # Make v2-8 TPUs in us
 export PREFIX=smart-eval-frag
-for FRAG_NUM in 005 006 007 008 009 010 011 012
+for FRAG_NUM in 000
 do
     export BIG_NAME=$PREFIX$FRAG_NUM
     echo "Generating VM and TPU "$BIG_NAME"..."
@@ -44,24 +44,24 @@ done
 
 
 
-# export PREFIX=smart-eval-frag
+export PREFIX=smart-eval-frag
 
-# for FRAG_NUM in 009 010 011 012 013 014 015
-# do
-#     export BIG_NAME=$PREFIX$FRAG_NUM
-#     echo "Generating VM and TPU "$BIG_NAME"..."
+for FRAG_NUM in 013 014 015
+do
+    export BIG_NAME=$PREFIX$FRAG_NUM
+    echo "Generating VM and TPU "$BIG_NAME"..."
 
-#     gcloud compute instances create $BIG_NAME \
-#     --source-instance-template=train-t2t \
-#     --zone=us-central1-a
+    gcloud compute instances create $BIG_NAME \
+    --source-instance-template=train-t2t \
+    --zone=europe-west4-a
 
-#     gcloud compute tpus create $BIG_NAME \
-#           --accelerator-type=v2-8 \
-#           --version=1.15.3 \
-#           --preemptible \
-#           --zone=us-central1-f
+    gcloud compute tpus create $BIG_NAME \
+          --accelerator-type=v2-8 \
+          --version=1.15.3 \
+          --preemptible \
+          --zone=europe-west4-a
 
-# done
+done
 
 
 

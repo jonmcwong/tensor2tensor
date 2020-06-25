@@ -86,14 +86,24 @@ plot_against_difficulty(holder8, title="Transformer Accuracy Against Question Di
 
 plt.clf()
 plot_against_steps(make_md([
+	"transformer-base-relu-dp-00-2020-06-25",
+	"transformer-base-relu-dp-01-2020-06-25",
 	"transformer-base-relu-dp-02-2020-06-25",
 	"transformer-base-relu-dp-03-2020-06-25",
     ], [
- "all",
+	"extra_add_sub_multiple_longer",
+	"extra_mul_div_multiple_longer",
+	"extra_mixed_longer",
+	# "inter_add_sub_multiple",
+	# "inter_mul_div_multiple",
+	# "inter_mixed",
     ]),
-xlim=(-10000, 905000),
+xlim=(-10000, 1305000),
 ylim=(-0.05, 1.05),
 title="Accuracies By Question Type During Universal Transformer Training",
 save_name="Latest_plot.png", 
-font_size=20, col_model=False, include_model_name=True)
+font_size=20,
+include_model_name=True,
+multi_model=False
+)
 

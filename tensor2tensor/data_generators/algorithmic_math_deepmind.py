@@ -46,9 +46,9 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
   def vocab_type(self):
     return text_problems.VocabType.CHARACTER
 
-  @property
-  def task_direction(self):
-    return problem.TaskDirections.Q12
+  # @property
+  # def task_direction(self):
+  #   return problem.TaskDirections.Q12
   
   @property
   def dataset_splits(self):
@@ -66,6 +66,16 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
           "shards": 64,
       }]
     elif self.task_direction == problem.TaskDirections.EASY_MEDIUM:
+      return [{
+          "split": "train_easy_medium",
+          "shards": 64,
+      }]
+    elif self.task_direction == problem.TaskDirections.INTERPOLATE:
+      return [{
+          "split": "train_easy_medium",
+          "shards": 64,
+      }]
+    elif self.task_direction == problem.TaskDirections.EXTRAPOLATE:
       return [{
           "split": "train_easy_medium",
           "shards": 64,
@@ -183,6 +193,10 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
       dirs = train_dirs[0:1]
     elif self.task_direction == problem.TaskDirections.EASY_MEDIUM:
       dirs = train_dirs[0:2]
+    elif self.task_direction == problem.TaskDirections.INTERPOLATE:
+      dirs = eval_dirs[0:1]
+    elif self.task_direction == problem.TaskDirections.EXTRAPOLATE:
+      dirs = eval_dirs[1:2]
     elif self.task_direction == problem.TaskDirections.Q12:
         dirs = ["mathematics_dataset-v1.0/" + expand_split(dataset_split)]
     elif self.task_direction == problem.TaskDirections.Q8:

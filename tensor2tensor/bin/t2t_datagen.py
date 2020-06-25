@@ -94,6 +94,7 @@ flags.DEFINE_string(
     "available to t2t-datagen.")
 flags.DEFINE_bool("specific_splits", False,
     "Whether or not to build the 12 specific datasets.")
+flags.DEFINE_string("task_direction", "", "Any hacky stuff to do")
 # Mapping from problems that we can generate data for to their generators.
 # pylint: disable=g-long-lambda
 _SUPPORTED_PROBLEM_GENERATORS = {
@@ -287,6 +288,8 @@ def generate_data_for_registered_problem(problem_name):
   tmp_dir = os.path.expanduser(FLAGS.tmp_dir)
   # Code to preprocess the 12 specific files separately for later evaluation
   pdb.set_trace()
+  if FLAGS.task_direction in problem.TaskDirections:
+    problem.task_direction = FLAGS.task_direction 
   if FLAGS.specific_splits:
     def generate_data_decorator(func, dataset_splits):
       # repeat generate_data for each of the 12 specific_splits
