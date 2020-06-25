@@ -382,6 +382,7 @@ class Text2TextProblem(problem.Problem):
     #   shuff = True
     # else:
     #   shuff = self.already_shuffled
+    shuff = self.already_shuffled
 
     # exceute the filepath_fns to get [(dataset_split, list of paths)]
     split_paths = [(split["split"], filepath_fns[split["split"]](
