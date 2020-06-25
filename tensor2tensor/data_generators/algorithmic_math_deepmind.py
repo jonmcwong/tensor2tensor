@@ -182,11 +182,11 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
     split_names = [p["split"] for p in self.dataset_splits]
 
 
+    train_dirs = ["mathematics_dataset-v1.0/train-easy", "mathematics_dataset-v1.0/train-medium", "mathematics_dataset-v1.0/train-hard"]
+    eval_dirs = ["mathematics_dataset-v1.0/interpolate", "mathematics_dataset-v1.0/extrapolate"]
     if self.task_direction == problem.TaskDirections.NORMAL:
-      # Create the list of directories with data files.
-      train_dirs = ["mathematics_dataset-v1.0/train-easy", "mathematics_dataset-v1.0/train-medium", "mathematics_dataset-v1.0/train-hard"]
-      eval_dirs = ["mathematics_dataset-v1.0/interpolate", "mathematics_dataset-v1.0/extrapolate"]
       dirs = eval_dirs
+      # Create the list of directories with data files.
       if dataset_split == problem.DatasetSplit.TRAIN:
         dirs = train_dirs
     elif self.task_direction == problem.TaskDirections.EASY:
