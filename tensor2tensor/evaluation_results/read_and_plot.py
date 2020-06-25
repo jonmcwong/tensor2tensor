@@ -45,6 +45,21 @@ dataset_splits_list = [
 ]
 dataset_splits_dict = dict([(dataset_splits_list[i], i) for i in range(len(dataset_splits_list))])
 
+split_list = [
+	"extra_add_sub_multiple_longer",
+	"extra_mul_big",
+	"extra_add_or_sub_big",
+	"train_easy_mul",
+	"train_medium_mul",
+	"train_hard_mul",
+	"train_easy_add_sub_multiple",
+	"train_medium_add_sub_multiple",
+	"train_hard_add_sub_multiple",
+	"train_easy_add_or_sub",
+	"train_medium_add_or_sub",
+	"train_hard_add_or_sub",
+]
+
 all_results_list = []
 # print(results_dir, read_as_bytestring)
 
@@ -78,6 +93,15 @@ def make_md(models, dataset_splits):
 			D_list = dataset_splits
 			M_list = models
 	return [(j, i) for i in D_list for j in M_list]
+
+
+
+def plot_against_difficulty():
+	difficulties = ["easy", "medium", "hard", "extrapolate"]
+
+	plt.xticks(range(5), ["some", "words", "as", "x", "ticks"], rotation=45)
+
+
 
 def plot_against_steps(models_and_dataset_splits,
 						title="asdfjdb",
@@ -229,6 +253,34 @@ for k in range(database.shape[2]):
 
 
 
+all_results_list = []
+# read as text
+# get dataset_splits from dataset_splits_list
+for dataset_split in dataset_splits_list:
+	print("found {:^30}in {:^60}".format(dataset_split, results_dir))
+	# read results
+	with open(os.path.join(
+		results_dir,
+		"eval_"+dataset_split+"_results.txt"), "r") as data_file:
+		# split by line as remove empty lines
+		data = data_file.read().split("\n")
+		data = [i for i in data if i != ""]
+		# split lines by data item
+		data = [row.split("\t") for row in data]
+		# pick out the first row (category labels)
+		labels = np.array(data.pop(0))
+		reorder = labels.argsort()
+		labels = np.sort(labels)
+		num_categories = len(labels)
+		# raise error if inconsistent columns per row
+		[inconsistent_cols() for i in data if len(i) != num_categories ]
+		array = np.array(data, dtype = np.float64)
+		# reorder the columns
+		array = array[:, reorder]
+	all_results_list.append(array)
+labels_dict = dict([(labels[i], i) for i in range(len(labels))])
+dataset_splits_dict = dict([(dataset_splits_list[i], i) for i in range(len(dataset_splits_list))])
+holders.append(dataHolder(all_results_list[:], labels_dict, dataset_splits_dict))
 
 
 

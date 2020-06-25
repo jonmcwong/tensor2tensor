@@ -162,10 +162,10 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
 
     def expand_split(dataset_split):
       if dataset_split[:5] == "inter" or dataset_split[:5] == "extra":
-        return dataset_split[:5] + "polate/arithmetic__" + dataset_split[6:]
+        return dataset_split[:5] + "polate/arithmetic__" + dataset_split[6:] + ".txt"
       elif dataset_split[:5] == "train":
         items = dataset_split.split("_")
-        return  items[0] + "-" + items[1] + "/arithmetic__" + "_".join(items[2:])
+        return  items[0] + "-" + items[1] + "/arithmetic__" + "_".join(items[2:]) + ".txt"
       else:
         raise ValueError(dataset_split)
 
