@@ -71,9 +71,9 @@ def main(_):
     dataset_split = FLAGS.dataset_split
   elif FLAGS.task_direction == problem.TaskDirections.Q8:
     dataset_split = FLAGS.dataset_split
-  elif self.task_direction == problem.TaskDirections.INTERPOLATE:
+  elif FLAGS.task_direction == problem.TaskDirections.INTERPOLATE:
     dataset_split = FLAGS.dataset_split
-  elif self.task_direction == problem.TaskDirections.EXTRAPOLATE:
+  elif FLAGS.task_direction == problem.TaskDirections.EXTRAPOLATE:
     dataset_split = FLAGS.dataset_split
   else:
     raise ValueError("Found unknown task_direction which is ", FLAGS.task_direction)
@@ -99,9 +99,9 @@ def main(_):
     ckpt_iter = my_chkpt_iter(hparams.model_dir)
   elif FLAGS.task_direction == problem.TaskDirections.Q8:
     ckpt_iter = my_chkpt_iter(hparams.model_dir)
-  elif self.task_direction == problem.TaskDirections.INTERPOLATE:
+  elif FLAGS.task_direction == problem.TaskDirections.INTERPOLATE:
     ckpt_iter = my_chkpt_iter(hparams.model_dir)
-  elif self.task_direction == problem.TaskDirections.EXTRAPOLATE:
+  elif FLAGS.task_direction == problem.TaskDirections.EXTRAPOLATE:
     ckpt_iter = my_chkpt_iter(hparams.model_dir)
   else:
     raise ValueError("Found unknown task_direction which is ", FLAGS.task_direction)
