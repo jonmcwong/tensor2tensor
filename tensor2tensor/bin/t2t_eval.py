@@ -36,9 +36,20 @@ flags.DEFINE_string("dataset_split", "",
   "The split used by the desired evaluation dataset")
 flags.DEFINE_string("results_dir", "", "Where to write results")
 flags.DEFINE_string("task_direction", "", "Any hacky stuff to do")
+flags.DEFINE_string("which_checkpoints", "all", "all, last or NUM")
 print(FLAGS.results_dir)
 FLAGS.task_direction = FLAGS.task_direction.upper()
 # pdb.set_trace()
+
+def chkpt_condition(f, contents):
+  if FLAGS.which_checkpoints == "all":
+    return True
+  elif FLAGS.which_checkpoints == "last":
+    return f.split("-")[:-1] == contents.split("\n")[0].split("-")[:-1]
+  elif FLAGS.which_checkpoints.isnumeric():
+    return FLAGS.which_checkpoints == f.split("-")[:-1]
+  else:
+    raise ValueError("which_checkpoints must be 'all', 'last' or a number. It is currently", FLAGS.which_checkpoints)
 
 def my_chkpt_iter(model_dir):
   with file_io.FileIO(os.path.join(model_dir, "checkpoint"), "r") as ckpt_file:
@@ -47,7 +58,7 @@ def my_chkpt_iter(model_dir):
     f.split(" ")[1][1:-1]
     for f in contents.split("\n")
     if f.startswith('all_model_checkpoint_paths: "') and
-      f.split("-")[-1][:-1] != "0"
+      chkpt_condition(f, contents)
   ]
   for ckpt in specific_checkpoints:
     yield os.path.join(model_dir, ckpt)
