@@ -38,6 +38,7 @@ fi
 
 # set the group of dataset splits and where to 
 # find them, depending on the task
+export SPLIT_NUM=$4
 if [[ $1 == "Q12" ]] ; then
     export DATA_DIR=${STORAGE_BUCKET}/t2t-data-emheam
     export LIST=(\
@@ -52,7 +53,11 @@ if [[ $1 == "Q12" ]] ; then
         inter_div \
         inter_mixed \
         inter_mul \
-        inter_mul_div_multiple)
+        inter_mul_div_multiple
+        )
+    if [[ SPLIT_NUM -lt 0 || SPLIT_NUM -gt 11 ]] ; then
+        echo "Invalid SPLIT_NUM"
+        exit 1
 elif [[ $1 == "Q8" ]] ; then
     export DATA_DIR=${STORAGE_BUCKET}/t2t-specific-data
     export LIST=(\
@@ -69,16 +74,25 @@ elif [[ $1 == "Q8" ]] ; then
         train_hard_add_sub_multiple \
         extra_add_sub_multiple_longer \
         )
+    if [[ SPLIT_NUM -lt 0 || SPLIT_NUM -gt 11 ]] ; then
+        echo "Invalid SPLIT_NUM"
+        exit 1
 elif [[ $1 == "INTERPOLATE" ]] ; then
     export DATA_DIR=${STORAGE_BUCKET}/t2t-data-inter
     export LIST=(\
         single_inter \
         )
+    if [[ SPLIT_NUM -lt 0 || SPLIT_NUM -gt 0 ]] ; then
+        echo "Invalid SPLIT_NUM"
+        exit 1
 elif [[ $1 == "EXTRAPOLATE" ]] ; then
     export DATA_DIR=${STORAGE_BUCKET}/t2t-data-extra
     export LIST=(\
         single_extra \
         )
+    if [[ SPLIT_NUM -lt 0 || SPLIT_NUM -gt 0 ]] ; then
+        echo "Invalid SPLIT_NUM"
+        exit 1
 else
     echo
     echo task direcition unknown, is $1
@@ -115,7 +129,6 @@ fi
 export TRAIN_DIR=${STORAGE_BUCKET}/t2t_train/$PROBLEM/$MODEL-$MODEL_TAG
 export RESULTS_DIR=${STORAGE_BUCKET}/results-$MODEL-$MODEL_TAG
 export EVAL_USE_TEST_SET=True
-export SPLIT_NUM=$4
 export DATASET_SPLIT=${LIST[$SPLIT_NUM]}
 export TASK_DIRECTION=$1
 
