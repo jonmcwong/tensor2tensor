@@ -56,7 +56,7 @@ if [[ $1 == "Q12" ]] ; then
         inter_mul_div_multiple
         )
     if [[ SPLIT_NUM -lt 0 || SPLIT_NUM -gt 11 ]] ; then
-        echo "Invalid SPLIT_NUM"
+        echo "SPLIT_NUM out of range"
         exit 1
     fi
 elif [[ $1 == "Q8" ]] ; then
@@ -77,6 +77,7 @@ elif [[ $1 == "Q8" ]] ; then
         )
     if [[ SPLIT_NUM -lt 0 || SPLIT_NUM -gt 11 ]] ; then
         echo "Invalid SPLIT_NUM"
+        echo "Invalid SPLIT_NUM" >&2
         exit 1
     fi
 elif [[ $1 == "INTERPOLATE" ]] ; then

@@ -45,6 +45,8 @@ dataset_splits_list = [
 	"extra_mixed_longer",			
 	"inter_mul_div_multiple",	
 	"extra_mul_div_multiple_longer",
+	# "single_inter",
+	# "single_extra",
 ]
 
 dataset_splits_dict = dict([(dataset_splits_list[i], i) for i in range(len(dataset_splits_list))])
@@ -71,11 +73,18 @@ class dataHolder:
 		self.labels_dict = labels_dict
 		self.dataset_splits_dict = dataset_splits_dict
 
-def decide_colours(items):
-	unique_cols = list(set(items))
-	col_gap = 1.0/len(unique_cols)
-	col_map = dict([(unique_cols[i], hsv_to_rgb([i*col_gap, 1.0, .6])) for i in range(len(unique_cols))])
-	return [col_map[i] for i in items]
+def decide_colours(items, doubleup=False):
+	if not doubleup:
+		unique_cols = list(set(items))
+		col_gap = 1.0/len(unique_cols)
+		col_map = dict([(unique_cols[i], hsv_to_rgb([i*col_gap, 1.0, .8])) for i in range(len(unique_cols))])
+		return [col_map[i] for i in items]
+	else:
+		unique_cols = list(set([i//2 for i in items]))
+		col_gap = 1.0/len(unique_cols)
+		col_map = dict([(unique_cols[i]*2, hsv_to_rgb([i*col_gap, 1.0, .8])) for i in range(len(unique_cols))])
+		col_map.update([(unique_cols[i]*2+1, hsv_to_rgb([i*col_gap, 1.0, .8])) for i in range(len(unique_cols))])
+		return [col_map[i] for i in items]
 
 def decide_width(items):
 	unique_cols = list(set(items))
@@ -119,9 +128,9 @@ def plot_against_difficulty(holder8,
 	arr5 = arr[:, -5, ia]
 	arr6 = arr[:, -6, ia]
 	# plt.plot(range(4), arr_bit[8:121
-	plt.plot(range(4), arr1[8:12], label="add_or_sub")
-	plt.plot(range(4), arr1[4:8], label="add_sub_multiple")
 	plt.plot(range(4), arr1[0:4], label="mul")
+	plt.plot(range(4), arr1[4:8], label="add_sub_multiple")
+	plt.plot(range(4), arr1[8:12], label="add_or_sub")
 	# # plt.plot(range(4), arr2[8:12], label="add_or_sub")
 	# plt.plot(range(4), arr2[4:8], label="add_su2b_multiple")
 	# # plt.plot(range(4), arr2[0:4], label="mul")
@@ -143,7 +152,7 @@ def plot_against_difficulty(holder8,
 	plt.rcParams["font.size"] = 12
 	plt.grid(which="major", axis="both")
 	plt.title(title)
-	plt.xlabel("difficulty", fontsize=font_size)
+	plt.xlabel("Difficulty", fontsize=font_size)
 	plt.ylabel(ylabel, fontsize=font_size)
 	plt.xticks(range(4), difficulties, rotation=0)
 	if ylim:
@@ -177,7 +186,7 @@ def plot_against_steps(models_and_dataset_splits,
 		linecolor_list = decide_colours(model_indicies)
 		linewidth_list = decide_width(dataset_split_indicies)
 	else:
-		linecolor_list = decide_colours(dataset_split_indicies)
+		linecolor_list = decide_colours(dataset_split_indicies, doubleup=True)
 		linewidth_list = decide_width(model_indicies)
 	for i in range(data_to_plot.shape[-1]):
 		if models_and_dataset_splits[i][1].startswith("extra"):
@@ -190,7 +199,7 @@ def plot_against_steps(models_and_dataset_splits,
 		x, y = data_to_plot[0, i], data_to_plot[1, i]
 		if flip:
 			x = np.flip(x)
-		plt.plot(x, y,
+		plt.plot([0]+x, [0]+y,
 			label=label,
 			linestyle=linestyle,
 			linewidth=linewidth,
@@ -216,8 +225,9 @@ def plot_against_steps(models_and_dataset_splits,
 def get_i(x):
 	if x in model_names_list:
 		return model_names_dict[x]
-	if x in [j for i in dataset_splits_list for j in i]:
+	if x in dataset_splits_list:
 		return dataset_splits_dict[x]
+	raise ValueError("No match for", x)
 index = np.vectorize(get_i)
 
 
