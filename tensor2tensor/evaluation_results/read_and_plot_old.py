@@ -163,7 +163,7 @@ def plot_against_difficulty(holder8,
 	plt.show(block=False)
 
 
-def plot_against_steps(models_and_dataset_splits,
+def plot_against_steps(ax, models_and_dataset_splits,
 						title="asdfjdb",
 					font_size=15,
 					multi_model=None,
@@ -172,7 +172,10 @@ def plot_against_steps(models_and_dataset_splits,
 					save_name="Latest_plot.png",
 					include_model_name=False,
 					ylabel="Accuracy",
-					flip=False):
+					flip=False,
+					hold=False,
+					legend=True,
+					linewidth=None):
 	mdis = index(models_and_dataset_splits)
 	model_indicies = mdis[:, 0]
 	dataset_split_indicies = mdis[:, 1]
@@ -188,6 +191,8 @@ def plot_against_steps(models_and_dataset_splits,
 	else:
 		linecolor_list = decide_colours(dataset_split_indicies, doubleup=True)
 		linewidth_list = decide_width(model_indicies)
+	if linewidth != None:
+		linewidth_list = [linewidth for _ in range(data_to_plot.shape[-1])]
 	for i in range(data_to_plot.shape[-1]):
 		if models_and_dataset_splits[i][1].startswith("extra"):
 			linestyle = "--"
@@ -195,32 +200,39 @@ def plot_against_steps(models_and_dataset_splits,
 			linestyle = "-"
 		linecolor = linecolor_list[i]
 		linewidth = linewidth_list[i]
-		label = " with ".join(models_and_dataset_splits[i]) if include_model_name else models_and_dataset_splits[i][1]
+		if include_model_name == "only":
+			label = str(models_and_dataset_splits[i][1])[0:5]+"polate, dropout 0."+str(models_and_dataset_splits[i][0]).split("-")[4][-1]
+		elif include_model_name:
+			label = str(" with ".join(models_and_dataset_splits[i]))
+		else:
+			label = str(models_and_dataset_splits[i][1])
 		x, y = data_to_plot[0, i], data_to_plot[1, i]
 		if flip:
 			x = np.flip(x)
-		plt.plot([0]+x, [0]+y,
+		ax.plot([0]+x, [0]+y,
 			label=label,
 			linestyle=linestyle,
 			linewidth=linewidth,
 			color=linecolor
 			)
-	# plt.plot(label="base_tset, dropout01, extrapolate"
-	# 	)
 	plt.rcParams["font.size"] = 12
-	plt.grid(which="major", axis="both")
-	plt.title(title)
-	plt.xlabel("steps", fontsize=font_size)
-	plt.ylabel(ylabel, fontsize=font_size)
+	ax.grid(which="major", axis="both")
+	ax.title.set_text(title)
+	ax.set_xlabel("steps", fontsize=font_size)
+	ax.set_ylabel(ylabel, fontsize=font_size)
 	if xlim:
-		plt.xlim(xlim[0], xlim[1])
-		plt.ticklabel_format(style='plain', axis='x')
+		ax.set_xlim(xlim[0], xlim[1])
+		# ax.ticklabel_format(style='plain', axis='x')
 	if ylim:
-		plt.ylim(ylim[0], ylim[1])
-		plt.ticklabel_format(style='plain', axis='y')
-	plt.legend()
-	plt.show()
-	plt.savefig(save_name)
+		ax.set_ylim(ylim[0], ylim[1])
+		# ax.ticklabel_format(style='plain', axis='y')
+	if legend:
+		# handles, labels = plt.gca().get_legend_handles_labels()
+		# by_label = dict(zip(labels, handles))
+		# ax.legend(by_label.values(), by_label.keys())
+		ax.legend()
+	if not hold:
+		plt.show()
 	
 def get_i(x):
 	if x in model_names_list:
@@ -354,8 +366,33 @@ holder8 = dataHolder(all_results_list[:], labels_dict, dataset_splits8_dict)
 
 
 
+fig, axs = plt.subplots(3, 2)
+fig.suptitle('Accuracy On Each Question Type on Transformer Base With Dropout Levels: 0.0, 0.1, 0.2, 0.3', fontsize=16)
+for i in range(3):
+	for j in range(2):
+		plot_against_steps(
+			axs[i, j],
+			make_md([
+				"transformer-base-relu-dp-00-2020-06-25",
+				"transformer-base-relu-dp-01-2020-06-25",
+				"transformer-base-relu-dp-02-2020-06-25",
+				"transformer-base-relu-dp-03-2020-06-25",
+			    ], dataset_splits_list[2*(3*j+i):2*(3*j+i+1)]),
+			xlim=(-10000, 905000),
+			ylim=(-0.05, 1.05),
+			title=" and ".join(dataset_splits_list[2*(3*j+i):2*(3*j+i+1)]),
+			# save_name="Latest_plot.png", 
+			# font_size=20,
+			include_model_name="only",
+			multi_model=True,
+			hold=True,
+			legend=not(i+j),
+			linewidth=1
+		)
+plt.show()
 
-
+# axs[0,0].plot((1,2,3,4), (2,4,3,5))
+# plt.show()
 # def decide_model_colours(models, dataset_splits):
 # 	if len(unique_cols) != 1:
 # 		tmp_m = list(set(models))
