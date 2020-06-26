@@ -1,5 +1,27 @@
 #!/bin/bash
 
+export VM_IP=$(echo $SSH_CONNECTION | sed "s/^.* \([0-9|\.]*\) [0-9]*$/\1/")
+export VM_INFO=$(gcloud compute instances list | grep $VM_IP)
+export VM_NAME=$(echo $VM_INFO | cut -d' ' -f1)
+export VM_ZONE=$(echo $VM_INFO | cut -d' ' -f2)
+export TPU_INFO=$(gcloud compute tpus list --zone=$VM_ZONE | grep $VM_NAME)
+export TPU_IP=$(echo $TPU_INFO | sed "s/^.*v[0-9].*\s\([0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\):[0-9]*\s.*$/\1/")
+export TPU_NAME=$(echo $TPU_INFO | cut -d' ' -f1)
+
+if [[ $VM_ZONE == "us-central1-a" || $VM_ZONE == "us-central1-b" || $VM_ZONE == "us-central1-c" || $VM_ZONE == "us-central1-f" ]] ; then
+    export STORAGE_BUCKET=gs://us_bucketbucket
+elif [[ $VM_ZONE == "europe-west4-a" ]] ; then
+    export STORAGE_BUCKET=gs://mathsreasoning
+else
+    echo
+    echo
+    echo
+    echo "ZONE variable is weird... ZONE = "$VM_ZONE
+    echo
+    echo
+    echo
+fi
+
 if [[ $1 == "Q12" ]] ; then
     export DATA_DIR=${STORAGE_BUCKET}/t2t-data-emheam
     export LIST=(\
@@ -48,28 +70,6 @@ else
     echo
 fi
 if [[ $# -eq 4 ]] ; then
-    export VM_IP=$(echo $SSH_CONNECTION | sed "s/^.* \([0-9|\.]*\) [0-9]*$/\1/")
-    export VM_INFO=$(gcloud compute instances list | grep $VM_IP)
-    export VM_NAME=$(echo $VM_INFO | cut -d' ' -f1)
-    export VM_ZONE=$(echo $VM_INFO | cut -d' ' -f2)
-    export TPU_INFO=$(gcloud compute tpus list --zone=$VM_ZONE | grep $VM_NAME)
-    export TPU_IP=$(echo $TPU_INFO | sed "s/^.*v[0-9].*\s\([0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\):[0-9]*\s.*$/\1/")
-    export TPU_NAME=$(echo $TPU_INFO | cut -d' ' -f1)
-
-    if [[ $VM_ZONE == "us-central1-a" || $VM_ZONE == "us-central1-b" || $VM_ZONE == "us-central1-c" || $VM_ZONE == "us-central1-f" ]] ; then
-        export STORAGE_BUCKET=gs://us_bucketbucket
-    elif [[ $VM_ZONE == "europe-west4-a" ]] ; then
-        export STORAGE_BUCKET=gs://mathsreasoning
-    else
-        echo
-        echo
-        echo
-        echo "ZONE variable is weird... ZONE = "$VM_ZONE
-        echo
-        echo
-        echo
-    fi
-
     # Assumed the VM has a tpu already configured
     export TPU_IP_ADDRESS=$TPU_IP
     export XRT_TPU_CONFIG="tpu_worker;0;$TPU_IP_ADDRESS:8470"
@@ -157,27 +157,6 @@ if [[ $# -eq 4 ]] ; then
     echo
 
 elif [[ $# -eq 5 && $5 == "--dry-run" ]]; then
-    export VM_IP=$(echo $SSH_CONNECTION | sed "s/^.* \([0-9|\.]*\) [0-9]*$/\1/")
-    export VM_INFO=$(gcloud compute instances list | grep $VM_IP)
-    export VM_NAME=$(echo $VM_INFO | cut -d' ' -f1)
-    export VM_ZONE=$(echo $VM_INFO | cut -d' ' -f2)
-    export TPU_INFO=$(gcloud compute tpus list --zone=$VM_ZONE | grep $VM_NAME)
-    export TPU_IP=$(echo $TPU_INFO | sed "s/^.*v[0-9].*\s\([0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\):[0-9]*\s.*$/\1/")
-    export TPU_NAME=$(echo $TPU_INFO | cut -d' ' -f1)
-
-    if [[ $VM_ZONE == "us-central1-a" || $VM_ZONE == "us-central1-b" || $VM_ZONE == "us-central1-c" || $VM_ZONE == "us-central1-f" ]] ; then
-        export STORAGE_BUCKET=gs://us_bucketbucket
-    elif [[ $VM_ZONE == "europe-west4-a" ]] ; then
-        export STORAGE_BUCKET=gs://mathsreasoning
-    else
-        echo
-        echo
-        echo
-        echo "ZONE variable is weird... ZONE = "$VM_ZONE
-        echo
-        echo
-        echo
-    fi
 
     # Assumed the VM has a tpu already configured
     export TPU_IP_ADDRESS=$TPU_IP
