@@ -58,6 +58,7 @@ if [[ $1 == "Q12" ]] ; then
     if [[ SPLIT_NUM -lt 0 || SPLIT_NUM -gt 11 ]] ; then
         echo "Invalid SPLIT_NUM"
         exit 1
+    fi
 elif [[ $1 == "Q8" ]] ; then
     export DATA_DIR=${STORAGE_BUCKET}/t2t-specific-data
     export LIST=(\
@@ -77,6 +78,7 @@ elif [[ $1 == "Q8" ]] ; then
     if [[ SPLIT_NUM -lt 0 || SPLIT_NUM -gt 11 ]] ; then
         echo "Invalid SPLIT_NUM"
         exit 1
+    fi
 elif [[ $1 == "INTERPOLATE" ]] ; then
     export DATA_DIR=${STORAGE_BUCKET}/t2t-data-inter
     export LIST=(\
@@ -85,6 +87,7 @@ elif [[ $1 == "INTERPOLATE" ]] ; then
     if [[ SPLIT_NUM -lt 0 || SPLIT_NUM -gt 0 ]] ; then
         echo "Invalid SPLIT_NUM"
         exit 1
+    fi
 elif [[ $1 == "EXTRAPOLATE" ]] ; then
     export DATA_DIR=${STORAGE_BUCKET}/t2t-data-extra
     export LIST=(\
@@ -93,6 +96,7 @@ elif [[ $1 == "EXTRAPOLATE" ]] ; then
     if [[ SPLIT_NUM -lt 0 || SPLIT_NUM -gt 0 ]] ; then
         echo "Invalid SPLIT_NUM"
         exit 1
+    fi
 else
     echo
     echo task direcition unknown, is $1
