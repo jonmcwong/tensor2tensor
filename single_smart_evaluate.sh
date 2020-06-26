@@ -1,6 +1,7 @@
 #!/bin/bash
 
 if [[ $1 == "Q12" ]] ; then
+    export DATA_DIR=${STORAGE_BUCKET}/t2t-data-emheam
     export LIST=(\
         extra_add_or_sub_big \
         extra_add_sub_multiple_longer \
@@ -15,6 +16,7 @@ if [[ $1 == "Q12" ]] ; then
         inter_mul \
         inter_mul_div_multiple)
 elif [[ $1 == "Q8" ]] ; then
+    export DATA_DIR=${STORAGE_BUCKET}/t2t-specific-data
     export LIST=(\
         train_easy_add_or_sub \
         train_medium_add_or_sub \
@@ -29,9 +31,20 @@ elif [[ $1 == "Q8" ]] ; then
         train_hard_add_sub_multiple \
         extra_add_sub_multiple_longer \
         )
+elif [[ $1 == "INTERPOLATE" ]] ; then
+    export DATA_DIR=${STORAGE_BUCKET}/t2t-data-inter
+    export LIST=(\
+        single_inter \
+        )
+elif [[ $1 == "EXTRAPOLATE" ]] ; then
+    export DATA_DIR=${STORAGE_BUCKET}/t2t-data-extra
+    export LIST=(\
+        single_extra \
+        )
 else
     echo
-    echo task direcition unknown
+    echo task direcition unknown, is $1
+    echo DATA_DIR not defined
     echo
 fi
 if [[ $# -eq 4 ]] ; then
@@ -81,13 +94,6 @@ if [[ $# -eq 4 ]] ; then
         echo "not sure what HPARAMS_SET to assign for this MODEL"
         echo
         echo
-    fi
-    if [[ $1 == "Q8" ]] ; then
-        export DATA_DIR=${STORAGE_BUCKET}/t2t-data-emheam
-    elif [[ $1 == "Q12" ]] ; then
-        export DATA_DIR=${STORAGE_BUCKET}/t2t-specific-data
-    else
-        echo "Task direction not understood"
     fi
     export TRAIN_DIR=${STORAGE_BUCKET}/t2t_train/$PROBLEM/$MODEL-$MODEL_TAG
     export RESULTS_DIR=${STORAGE_BUCKET}/results-$MODEL-$MODEL_TAG
@@ -193,7 +199,7 @@ elif [[ $# -eq 5 && $5 == "--dry-run" ]]; then
         echo
         echo
     fi
-    export DATA_DIR=${STORAGE_BUCKET}/t2t-data-emheam
+
     export TRAIN_DIR=${STORAGE_BUCKET}/t2t_train/$PROBLEM/$MODEL-$MODEL_TAG
     export RESULTS_DIR=${STORAGE_BUCKET}/results-$MODEL-$MODEL_TAG
     export EVAL_USE_TEST_SET=True

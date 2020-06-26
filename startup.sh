@@ -7,10 +7,13 @@ cd tensor2tensor
 git config --global user.name jonmcwong
 git config --global user.email jonmwong@gmail.com
 ./setup.sh
+./single_smart_evaluate.sh Q8 transformer data-easy-2020-06-24 8
 ./single_smart_evaluate.sh Q12 transformer base-relu-dp-01-2020-06-25 0
 ./single_smart_evaluate.sh Q12 transformer base-relu-dp-00-2020-06-25 0
 
-./single_smart_evaluate.sh Q8 transformer data-easy-2020-06-24 8
+
+
+
 
 c
 c
@@ -47,8 +50,10 @@ git pull
 chmod +x single_smart_evaluate.sh
 
 gsutil -m cp -r \
+gs://us_bucketbucket/results-transformer-data-easy-2020-06-24 \
+$PWD
+
 gs://mathsreasoning/t2t_train/algorithmic_math_deepmind_all/transformer-data-easy-2020-06-24 \
-gs://us_bucketbucket/t2t_train/algorithmic_math_deepmind_all/transformer-data-easy-2020-06-24
 
 git clone https://github.com/jonmcwong/FYP_code.git
 git clone https://github.com/jonmcwong/PyTorch-Beam-Search-Decoding.git
@@ -76,12 +81,14 @@ plot_against_steps(make_md([
     ]),
 xlim=(-10000, 905000),
 ylim=(-0.05, 1.05),
-title="Accuracies By Question Type During Universal Transformer Training",
+title="Accuracies By Question Type During Transformer Base Training",
 save_name="Latest_plot.png", 
 font_size=20, col_model=False, include_model_name=False)
 
 
-plot_against_difficulty(holder8, title="Transformer Accuracy Against Question Difficulty")
+plot_against_difficulty(holder8,
+	title="Transformer Accuracy Against Question Difficulty",
+	ckpt_num=-2)
 
 
 plt.clf()

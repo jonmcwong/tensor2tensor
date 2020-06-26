@@ -184,7 +184,7 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
 
     train_dirs = ["mathematics_dataset-v1.0/train-easy", "mathematics_dataset-v1.0/train-medium", "mathematics_dataset-v1.0/train-hard"]
     eval_dirs = ["mathematics_dataset-v1.0/interpolate", "mathematics_dataset-v1.0/extrapolate"]
-    pdb.set_trace()
+    # pdb.set_trace()
     if self.task_direction == problem.TaskDirections.NORMAL:
       dirs = eval_dirs
       # Create the list of directories with data files.
@@ -206,7 +206,7 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
       raise ValueError("Found unknown task_direction which is ", self.task_direction)
 
     dirs = [os.path.join(tmp_dir, d) for d in dirs]
-    pdb.set_trace()
+    # pdb.set_trace()
     # Iterate over directories and files generating examples.
     for d in dirs:
       if self.task_direction == problem.TaskDirections.NORMAL:

@@ -38,7 +38,7 @@ flags.DEFINE_string("results_dir", "", "Where to write results")
 flags.DEFINE_string("task_direction", "", "Any hacky stuff to do")
 print(FLAGS.results_dir)
 FLAGS.task_direction = FLAGS.task_direction.upper()
-pdb.set_trace()
+# pdb.set_trace()
 
 def my_chkpt_iter(model_dir):
   with file_io.FileIO(os.path.join(model_dir, "checkpoint"), "r") as ckpt_file:
@@ -73,7 +73,7 @@ def main(_):
     dataset_split = FLAGS.dataset_split
   else:
     raise ValueError("Found unknown task_direction which is ", FLAGS.task_direction)
-  pdb.set_trace()
+  # pdb.set_trace()
   dataset_kwargs = {"dataset_split": dataset_split}
   eval_input_fn = hparams.problem.make_estimator_input_fn(
       tf.estimator.ModeKeys.EVAL, hparams, dataset_kwargs=dataset_kwargs)
@@ -119,7 +119,7 @@ def main(_):
     else:
       return "\t".join(items) + "\n"
 
-  pdb.set_trace()
+  # pdb.set_trace()
   
   # get the category_names
   category_names = results_all_ckpts[0].keys()

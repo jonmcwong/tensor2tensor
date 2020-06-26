@@ -50,6 +50,10 @@ dataset_splits_list = [
 dataset_splits_dict = dict([(dataset_splits_list[i], i) for i in range(len(dataset_splits_list))])
 
 dataset_splits8_list = [
+	"train_easy_mul",				
+	"train_medium_mul",				
+	"train_hard_mul",				
+	"extra_mul_big",				
 	"train_easy_add_sub_multiple",	
 	"train_medium_add_sub_multiple",
 	"train_hard_add_sub_multiple",	
@@ -58,10 +62,6 @@ dataset_splits8_list = [
 	"train_medium_add_or_sub",		
 	"train_hard_add_or_sub",		
 	"extra_add_or_sub_big",			
-	"train_easy_mul",				
-	"train_medium_mul",				
-	"train_hard_mul",				
-	"extra_mul_big",				
 ]
 dataset_splits8_dict = dict([(dataset_splits8_list[i], i) for i in range(len(dataset_splits8_list))])
 
@@ -119,7 +119,7 @@ def plot_against_difficulty(holder8,
 	arr5 = arr[:, -5, ia]
 	arr6 = arr[:, -6, ia]
 	# plt.plot(range(4), arr_bit[8:121
-	plt.plot(range(4), arr1[8:12], label="add_o1r_sub")
+	plt.plot(range(4), arr1[8:12], label="add_or_sub")
 	plt.plot(range(4), arr1[4:8], label="add_sub_multiple")
 	plt.plot(range(4), arr1[0:4], label="mul")
 	# # plt.plot(range(4), arr2[8:12], label="add_or_sub")
@@ -143,7 +143,7 @@ def plot_against_difficulty(holder8,
 	plt.rcParams["font.size"] = 12
 	plt.grid(which="major", axis="both")
 	plt.title(title)
-	plt.xlabel("dificulty", fontsize=font_size)
+	plt.xlabel("difficulty", fontsize=font_size)
 	plt.ylabel(ylabel, fontsize=font_size)
 	plt.xticks(range(4), difficulties, rotation=0)
 	if ylim:

@@ -287,10 +287,10 @@ def generate_data_for_registered_problem(problem_name):
   data_dir = os.path.expanduser(FLAGS.data_dir)
   tmp_dir = os.path.expanduser(FLAGS.tmp_dir)
   # Code to preprocess the 12 specific files separately for later evaluation
-  pdb.set_trace()
+  # pdb.set_trace()
   if FLAGS.task_direction in problemTaskDirections:
     problem.task_direction = FLAGS.task_direction
-  pdb.set_trace()
+  # pdb.set_trace()
   if FLAGS.specific_splits:
     def generate_data_decorator(func, dataset_splits):
       # repeat generate_data for each of the 12 specific_splits
