@@ -33,21 +33,37 @@ model_names_dict = dict([(model_names_list[i], i) for i in range(len(model_names
 
 dataset_split_style = ['-', '--', '-.', ':']
 dataset_splits_list = [
-	["inter_add_or_sub",		"extra_add_or_sub_big",			]
-	["inter_add_sub_multiple",	"extra_add_sub_multiple_longer",]
-	["inter_mul",				"extra_mul_big",				]
-	["inter_div",				"extra_div_big",				]
-	["inter_mixed",				"extra_mixed_longer",			]
-	["inter_mul_div_multiple",	"extra_mul_div_multiple_longer",]
+	"inter_add_or_sub",		
+	"extra_add_or_sub_big",			
+	"inter_add_sub_multiple",	
+	"extra_add_sub_multiple_longer",
+	"inter_mul",				
+	"extra_mul_big",				
+	"inter_div",				
+	"extra_div_big",				
+	"inter_mixed",				
+	"extra_mixed_longer",			
+	"inter_mul_div_multiple",	
+	"extra_mul_div_multiple_longer",
 ]
 
-dataset_splits_dict = dict([(dataset_splits_list[i][j], (i, dataset_split_style[j])) for i in range(len(dataset_splits_list))] for j in range(2))
+dataset_splits_dict = dict([(dataset_splits_list[i], i) for i in range(len(dataset_splits_list))])
 
 dataset_splits8_list = [
-	["train_easy_add_sub_multiple",	"train_medium_add_sub_multiple","train_hard_add_sub_multiple",	"extra_add_sub_multiple_longer",],
-	["train_easy_add_or_sub",		"train_medium_add_or_sub",		"train_hard_add_or_sub",		"extra_add_or_sub_big",			],
-	["train_easy_mul",				"train_medium_mul",				"train_hard_mul",				"extra_mul_big",				],
+	"train_easy_mul",				
+	"train_medium_mul",				
+	"train_hard_mul",				
+	"extra_mul_big",				
+	"train_easy_add_sub_multiple",	
+	"train_medium_add_sub_multiple",
+	"train_hard_add_sub_multiple",	
+	"extra_add_sub_multiple_longer",
+	"train_easy_add_or_sub",		
+	"train_medium_add_or_sub",		
+	"train_hard_add_or_sub",		
+	"extra_add_or_sub_big",			
 ]
+dataset_splits8_dict = dict([(dataset_splits8_list[i], i) for i in range(len(dataset_splits8_list))])
 
 class dataHolder:
 	def __init__(self, all_results_list, labels_dict, dataset_splits_dict):
@@ -87,7 +103,6 @@ def make_md(models, dataset_splits):
 	return [(j, i) for i in D_list for j in M_list]
 
 
-
 def plot_against_difficulty(holder8,
 							title="???",
 						ylabel="Accuracy",
@@ -96,24 +111,47 @@ def plot_against_difficulty(holder8,
 						ckpt_num=-1):
 	arr = np.array(holder8.all_results_list)
 	ia = holder8.labels_dict["accuracy_per_sequence"]
-	arr = arr[:, ckpt_num, ia]
-	plt.plot(range(4), arr[8:12], label="add_or_sub")
-	plt.plot(range(4), arr[4:8], label="add_sub_multiple")
-	plt.plot(range(4), arr[0:4], label="mul")
+	arr_bit = arr[:, ckpt_num, ia]
+	arr1 = arr[:, -1, ia]
+	arr2 = arr[:, -2, ia]
+	arr3 = arr[:, -3, ia]
+	arr4 = arr[:, -4, ia]
+	arr5 = arr[:, -5, ia]
+	arr6 = arr[:, -6, ia]
+	# plt.plot(range(4), arr_bit[8:121
+	plt.plot(range(4), arr1[8:12], label="add_or_sub")
+	plt.plot(range(4), arr1[4:8], label="add_sub_multiple")
+	plt.plot(range(4), arr1[0:4], label="mul")
+	# # plt.plot(range(4), arr2[8:12], label="add_or_sub")
+	# plt.plot(range(4), arr2[4:8], label="add_su2b_multiple")
+	# # plt.plot(range(4), arr2[0:4], label="mul")
+	# # plt.plot(range(4), arr3[8:12], label="add_o3r_sub")
+	# plt.plot(range(4), arr3[4:8], label="add_sub_multiple")
+	# # plt.plot(range(4), arr3[0:4], label="mul")
+	# # plt.plot(range(4), arr4[8:12], label="add_o4r_sub")
+	# plt.plot(range(4), arr4[4:8], label="add_sub_multiple")
+	# # plt.plot(range(4), arr4[0:4], label="mul")
+	# # plt.plot(range(4), arr5[8:12], label="add_o5r_sub")
+	# plt.plot(range(4), arr5[4:8], label="add_sub_multiple")
+	# # plt.plot(range(4), arr5[0:4], label="mul")
+	# # plt.plot(range(4), arr6[8:12], label="add_o6r_sub")
+	# plt.plot(range(4), arr6[4:8], label="add_sub_multiple")
+	# # plt.plot(range(4), arr6[0:4], label="mul")
 	difficulties = ["easy", "medium", "hard", "extrapolate"]
 
 
 	plt.rcParams["font.size"] = 12
 	plt.grid(which="major", axis="both")
 	plt.title(title)
-	plt.xlabel("dificulty", fontsize=font_size)
+	plt.xlabel("difficulty", fontsize=font_size)
 	plt.ylabel(ylabel, fontsize=font_size)
 	plt.xticks(range(4), difficulties, rotation=0)
 	if ylim:
 		plt.ylim(ylim[0], ylim[1])
 		plt.ticklabel_format(style='plain', axis='y')
 	plt.legend()
-	plt.show()
+	plt.ion
+	plt.show(block=False)
 
 
 def plot_against_steps(models_and_dataset_splits,
@@ -278,8 +316,8 @@ for k in range(database.shape[2]):
 all_results_list = []
 # read as text
 results_dir = "transformer-data-easy-2020-06-24"
-# get dataset_splits from split_list
-for dataset_split in split_list:
+# get dataset_splits from dataset_splits8_list
+for dataset_split in dataset_splits8_list:
 	print("found {:^30} in {:^60}".format(dataset_split, results_dir))
 	# read results
 	with open(os.path.join(

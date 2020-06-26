@@ -367,7 +367,7 @@ class Text2TextProblem(problem.Problem):
       data_dir, pair["shards"], shuffled=self.already_shuffled)
       ) for pair in self.dataset_splits
         if not specific_split or pair["split"] == specific_split]
-    pdb.set_trace()
+    # pdb.set_trace()
     all_paths = []
     for _, paths in split_paths:
       all_paths.extend(paths)

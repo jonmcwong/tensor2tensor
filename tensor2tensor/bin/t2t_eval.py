@@ -36,9 +36,20 @@ flags.DEFINE_string("dataset_split", "",
   "The split used by the desired evaluation dataset")
 flags.DEFINE_string("results_dir", "", "Where to write results")
 flags.DEFINE_string("task_direction", "", "Any hacky stuff to do")
+flags.DEFINE_string("which_checkpoints", "all", "all, last or NUM")
 print(FLAGS.results_dir)
 FLAGS.task_direction = FLAGS.task_direction.upper()
-pdb.set_trace()
+# pdb.set_trace()
+
+def chkpt_condition(f, contents):
+  if FLAGS.which_checkpoints == "all":
+    return True
+  elif FLAGS.which_checkpoints == "last":
+    return f.split("-")[:-1] == contents.split("\n")[0].split("-")[:-1]
+  elif FLAGS.which_checkpoints.isnumeric():
+    return FLAGS.which_checkpoints == f.split("-")[:-1]
+  else:
+    raise ValueError("which_checkpoints must be 'all', 'last' or a number. It is currently", FLAGS.which_checkpoints)
 
 def my_chkpt_iter(model_dir):
   with file_io.FileIO(os.path.join(model_dir, "checkpoint"), "r") as ckpt_file:
@@ -47,7 +58,7 @@ def my_chkpt_iter(model_dir):
     f.split(" ")[1][1:-1]
     for f in contents.split("\n")
     if f.startswith('all_model_checkpoint_paths: "') and
-      f.split("-")[-1][:-1] != "0"
+      chkpt_condition(f, contents)
   ]
   for ckpt in specific_checkpoints:
     yield os.path.join(model_dir, ckpt)
@@ -71,9 +82,13 @@ def main(_):
     dataset_split = FLAGS.dataset_split
   elif FLAGS.task_direction == problem.TaskDirections.Q8:
     dataset_split = FLAGS.dataset_split
+  elif FLAGS.task_direction == problem.TaskDirections.INTERPOLATE:
+    dataset_split = FLAGS.dataset_split
+  elif FLAGS.task_direction == problem.TaskDirections.EXTRAPOLATE:
+    dataset_split = FLAGS.dataset_split
   else:
     raise ValueError("Found unknown task_direction which is ", FLAGS.task_direction)
-  pdb.set_trace()
+  # pdb.set_trace()
   dataset_kwargs = {"dataset_split": dataset_split}
   eval_input_fn = hparams.problem.make_estimator_input_fn(
       tf.estimator.ModeKeys.EVAL, hparams, dataset_kwargs=dataset_kwargs)
@@ -94,6 +109,10 @@ def main(_):
   elif FLAGS.task_direction == problem.TaskDirections.Q12:
     ckpt_iter = my_chkpt_iter(hparams.model_dir)
   elif FLAGS.task_direction == problem.TaskDirections.Q8:
+    ckpt_iter = my_chkpt_iter(hparams.model_dir)
+  elif FLAGS.task_direction == problem.TaskDirections.INTERPOLATE:
+    ckpt_iter = my_chkpt_iter(hparams.model_dir)
+  elif FLAGS.task_direction == problem.TaskDirections.EXTRAPOLATE:
     ckpt_iter = my_chkpt_iter(hparams.model_dir)
   else:
     raise ValueError("Found unknown task_direction which is ", FLAGS.task_direction)
@@ -119,7 +138,7 @@ def main(_):
     else:
       return "\t".join(items) + "\n"
 
-  pdb.set_trace()
+  # pdb.set_trace()
   
   # get the category_names
   category_names = results_all_ckpts[0].keys()
