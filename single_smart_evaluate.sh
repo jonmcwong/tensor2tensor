@@ -190,7 +190,12 @@ elif [[ $# -eq 5 && $5 == "--dry-run" ]]; then
     if [[ $MODEL == "transformer" ]] ; then
         export HPARAMS_SET=transformer_tpu
     elif [[ $MODEL == "universal_transformer" ]] ; then
-        export HPARAMS_SET=adaptive_universal_transformer_base_tpu
+        # check if global is in MODEL_TAG
+        if [[ $(echo $MODEL_TAG | grep "global") == "" ]] ; then
+            export HPARAMS_SET=adaptive_universal_transformer_base_tpu
+        else
+            export HPARAMS_SET=adaptive_universal_transformer_global_base_tpu
+        fi
     else
         export HPARAMS_SET"???????"
         echo
