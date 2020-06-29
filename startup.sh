@@ -12,7 +12,7 @@ git config --global user.email jonmwong@gmail.com
 ./single_smart_evaluate.sh Q12 transformer base-relu-dp-00-2020-06-25 0
 
 
-
+./single_smart_evaluate.sh Q12 universal_transformer ut-pres2-2020-06-29 6
 
 
 c
@@ -95,25 +95,30 @@ plot_against_difficulty(holder8,
 	)
 
 
+
+
+
+
+
+
 plt.clf()
-
-
+fig, axs = plt.subplots(1, 1, squeeze=False)
 plot_against_steps(
-axs[0, 0],
+axs[0][0],
 make_md([
-	"transformer-base-relu-dp-00-2020-06-25",
-	"transformer-base-relu-dp-01-2020-06-25",
-	"transformer-base-relu-dp-02-2020-06-25",
-	"transformer-base-relu-dp-03-2020-06-25",
+	"universal_transformer-ut-pres-2020-06-28",
+	"universal_transformer-ut-pres2-2020-06-29",
     ], [
 "all"
     ]),
-xlim=(-10000, 1305000),
+xlim=(20000, 225000),
 ylim=(-0.05, 1.05),
 title="Accuracies By Question Type During Universal Transformer Training",
 save_name="Latest_plot.png", 
 font_size=20,
 include_model_name=True,
-multi_model=False
+multi_model=False,
+include_transformer_type=False,
+zeroed=False,
 )
 

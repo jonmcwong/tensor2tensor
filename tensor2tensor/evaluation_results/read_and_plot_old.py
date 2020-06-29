@@ -2,6 +2,7 @@ import sys
 import matplotlib.pyplot as plt
 import numpy as np
 import os
+import pdb
 from  matplotlib.colors import hsv_to_rgb as hsv_to_rgb
 # read_as_bytestring = bool(argv[2]) if argn > 2 else None
 
@@ -26,6 +27,10 @@ model_names_list = [
 	"universal_transformer-global-lowerlr0-02-2020-06-23",
 	"universal_transformer-lowerlr0-02-2020-06-23",
 	"universal_transformer-ut-lowerlr0-002-2020-06-23",
+	"universal_transformer-ut-pres-2020-06-28",
+	"universal_transformer-ut-pres2-2020-06-29",
+]
+model_names_list += [ # goes on the end
 	"combined_transformer-base-dropout01",
 	"combined_transformer-noam-dropout01",
 ]
@@ -171,11 +176,14 @@ def plot_against_steps(ax, models_and_dataset_splits,
 					ylim=None,
 					save_name="Latest_plot.png",
 					include_model_name=False,
+					include_transformer_type=False,
 					ylabel="Accuracy",
 					flip=False,
 					hold=False,
 					legend=True,
-					linewidth=None):
+					linewidth=None,
+					zeroed=False):
+	# pdb.set_trace()
 	mdis = index(models_and_dataset_splits)
 	model_indicies = mdis[:, 0]
 	dataset_split_indicies = mdis[:, 1]
@@ -202,14 +210,17 @@ def plot_against_steps(ax, models_and_dataset_splits,
 		linewidth = linewidth_list[i]
 		if include_model_name == "only":
 			label = str(models_and_dataset_splits[i][1])[0:5]+"polate, dropout 0."+str(models_and_dataset_splits[i][0]).split("-")[4][-1]
+		elif include_transformer_type:
+						label = str(" with ".join(models_and_dataset_splits[i]))
 		elif include_model_name:
-			label = str(" with ".join(models_and_dataset_splits[i]))
+			label = str(" with ".join(["-".join(models_and_dataset_splits[i][0].split("-")[1:]), models_and_dataset_splits[i][1]]))
 		else:
 			label = str(models_and_dataset_splits[i][1])
 		x, y = data_to_plot[0, i], data_to_plot[1, i]
+		front = [0] if zeroed else []
 		if flip:
 			x = np.flip(x)
-		ax.plot([0]+x, [0]+y,
+		ax.plot(front+x, front+y,
 			label=label,
 			linestyle=linestyle,
 			linewidth=linewidth,
@@ -283,6 +294,7 @@ for results_dir in model_names_list:
 				array = array[:, reorder]
 			all_results_list.append(array)
 		labels_dict = dict([(labels[i], i) for i in range(len(labels))])
+		print("got data for", results_dir)
 		holders.append(dataHolder(all_results_list[:], labels_dict, dataset_splits_dict))
 	else:
 		raise BaseException(
@@ -366,30 +378,30 @@ holder8 = dataHolder(all_results_list[:], labels_dict, dataset_splits8_dict)
 
 
 
-fig, axs = plt.subplots(3, 2)
-fig.suptitle('Accuracy On Each Question Type on Transformer Base With Dropout Levels: 0.0, 0.1, 0.2, 0.3', fontsize=16)
-for i in range(3):
-	for j in range(2):
-		plot_against_steps(
-			axs[i, j],
-			make_md([
-				"transformer-base-relu-dp-00-2020-06-25",
-				"transformer-base-relu-dp-01-2020-06-25",
-				"transformer-base-relu-dp-02-2020-06-25",
-				"transformer-base-relu-dp-03-2020-06-25",
-			    ], dataset_splits_list[2*(3*j+i):2*(3*j+i+1)]),
-			xlim=(-10000, 905000),
-			ylim=(-0.05, 1.05),
-			title=" and ".join(dataset_splits_list[2*(3*j+i):2*(3*j+i+1)]),
-			# save_name="Latest_plot.png", 
-			# font_size=20,
-			include_model_name="only",
-			multi_model=True,
-			hold=True,
-			legend=not(i+j),
-			linewidth=1
-		)
-plt.show()
+# fig, axs = plt.subplots(3, 2)
+# fig.suptitle('Accuracy On Each Question Type on Transformer Base With Dropout Levels: 0.0, 0.1, 0.2, 0.3', fontsize=16)
+# for i in range(3):
+# 	for j in range(2):
+# 		plot_against_steps(
+# 			axs[i, j],
+# 			make_md([
+# 				"transformer-base-relu-dp-00-2020-06-25",
+# 				"transformer-base-relu-dp-01-2020-06-25",
+# 				"transformer-base-relu-dp-02-2020-06-25",
+# 				"transformer-base-relu-dp-03-2020-06-25",
+# 			    ], dataset_splits_list[2*(3*j+i):2*(3*j+i+1)]),
+# 			xlim=(-10000, 905000),
+# 			ylim=(-0.05, 1.05),
+# 			title=" and ".join(dataset_splits_list[2*(3*j+i):2*(3*j+i+1)]),
+# 			# save_name="Latest_plot.png", 
+# 			# font_size=20,
+# 			include_model_name="only",
+# 			multi_model=True,
+# 			hold=True,
+# 			legend=not(i+j),
+# 			linewidth=1
+# 		)
+# plt.show()
 
 # axs[0,0].plot((1,2,3,4), (2,4,3,5))
 # plt.show()
