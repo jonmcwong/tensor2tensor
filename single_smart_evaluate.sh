@@ -7,7 +7,7 @@ export VM_IP=$(echo $SSH_CONNECTION | sed "s/^.* \([0-9|\.]*\) [0-9]*$/\1/")
 export VM_INFO=$(gcloud compute instances list | grep $VM_IP)
 export VM_NAME=$(echo $VM_INFO | cut -d' ' -f1)
 export VM_ZONE=$(echo $VM_INFO | cut -d' ' -f2)
-export TPU_INFO=$(gcloud compute tpus list --zone=$VM_ZONE | grep $VM_NAME)
+export TPU_INFO=$(gcloud compute tpus list --zone=$VM_ZONE | grep "^$VM_NAME\s")
 export TPU_IP=$(echo $TPU_INFO | sed "s/^.*v[0-9].*\s\([0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\):[0-9]*\s.*$/\1/")
 export TPU_NAME=$(echo $TPU_INFO | cut -d' ' -f1)
 # Assumes the VM has a tpu already configured
