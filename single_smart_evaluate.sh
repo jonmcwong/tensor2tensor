@@ -40,7 +40,7 @@ fi
 # find them, depending on the task
 export SPLIT_NUM=$4
 if [[ $1 == "Q12" ]] ; then
-    export DATA_DIR=${STORAGE_BUCKET}/t2t-data-emheam
+    export DATA_DIR=${STORAGE_BUCKET}/t2t-specific-data
     export LIST=(\
         extra_add_or_sub_big \
         extra_add_sub_multiple_longer \
@@ -60,7 +60,7 @@ if [[ $1 == "Q12" ]] ; then
         exit 1
     fi
 elif [[ $1 == "Q8" ]] ; then
-    export DATA_DIR=${STORAGE_BUCKET}/t2t-specific-data
+    export DATA_DIR=${STORAGE_BUCKET}/t2t-data-emheam
     export LIST=(\
         train_easy_add_or_sub \
         train_medium_add_or_sub \
