@@ -118,7 +118,7 @@ if [[ $MODEL == "transformer" ]] ; then
     export HPARAMS_SET=transformer_tpu
 elif [[ $MODEL == "universal_transformer" ]] ; then
     # check if global is in MODEL_TAG
-    if [[ $(echo $MODEL_TAG | grep "global") == "" ]] ; then
+    if [[ $(echo $MODEL_TAG | grep "global") == "" && $(echo $MODEL_TAG | grep "pres") == "" ]] ; then
         export HPARAMS_SET=adaptive_universal_transformer_base_tpu
     else
         export HPARAMS_SET=adaptive_universal_transformer_global_base_tpu
