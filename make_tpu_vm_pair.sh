@@ -4,22 +4,22 @@
 
 # Make v3-8 TPUs in Europe
 export PREFIX=smart-eval-frag
-for FRAG_NUM in 000 001 002 003 004
+for FRAG_NUM in 007
+
 do
     export BIG_NAME=$PREFIX$FRAG_NUM
-    echo "Generating VM and TPU "$BIG_NAME"..."
-
+    
     gcloud compute instances create $BIG_NAME \
     --source-instance-template=train-t2t \
     --zone=europe-west4-a
+
+
+done
 
     gcloud compute tpus create $BIG_NAME \
           --accelerator-type=v3-8 \
           --version=1.15.3 \
           --zone=europe-west4-a
-
-done
-
 gcloud config set project mathsreasoning
 
 

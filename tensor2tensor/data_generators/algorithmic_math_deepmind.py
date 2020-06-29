@@ -33,7 +33,7 @@ from tensor2tensor.utils import metrics
 
 
 import tensorflow.compat.v1 as tf
-
+FLAGS = tf.flags.FLAGS
 
 _URL = "https://storage.cloud.google.com/mathematics-dataset/mathematics_dataset-v1.0.tar.gz"
 
@@ -41,6 +41,11 @@ _URL = "https://storage.cloud.google.com/mathematics-dataset/mathematics_dataset
 @registry.register_problem
 class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
   """DeepMind Mathematics Problem, v1.0, all data."""
+  def __init__(self, *args, **kwargs):
+    super().__init__(*args, **kwargs)
+    pdb.set_trace()
+    self.task_direction = FLAGS.task_direction
+
 
   @property
   def vocab_type(self):

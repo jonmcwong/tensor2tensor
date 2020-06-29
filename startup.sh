@@ -96,7 +96,11 @@ plot_against_difficulty(holder8,
 
 
 plt.clf()
-plot_against_steps(make_md([
+
+
+plot_against_steps(
+axs[0, 0],
+make_md([
 	"transformer-base-relu-dp-00-2020-06-25",
 	"transformer-base-relu-dp-01-2020-06-25",
 	"transformer-base-relu-dp-02-2020-06-25",
