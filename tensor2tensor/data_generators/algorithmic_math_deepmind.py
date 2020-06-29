@@ -43,7 +43,6 @@ class AlgorithmicMathDeepmindAll(text_problems.Text2TextProblem):
   """DeepMind Mathematics Problem, v1.0, all data."""
   def __init__(self, *args, **kwargs):
     super().__init__(*args, **kwargs)
-    pdb.set_trace()
     self.task_direction = FLAGS.task_direction
 
 
