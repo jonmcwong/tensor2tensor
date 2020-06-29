@@ -143,7 +143,7 @@ flags.DEFINE_integer("log_step_count_steps", 100,
 flags.DEFINE_bool("gpu_automatic_mixed_precision", False,
                   "Whether to employ GPU automatic mixed precision training "
                   "(via graph rewrite and dynamic loss scaling).")
-
+flags.DEFINE_string("task_direction", "NORMAL", "Any hacky stuff to do")
 
 def set_hparams_from_args(args):
   """Set hparams overrides from unparsed args list."""
