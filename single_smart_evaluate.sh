@@ -124,13 +124,13 @@ elif [[ $MODEL == "universal_transformer" ]] ; then
         export HPARAMS_SET=adaptive_universal_transformer_global_base_tpu
     fi
 else
-    export HPARAMS_SET"???????"
-    echo
-    echo
-    echo "not sure what HPARAMS_SET to assign for this MODEL"
-    echo
-    echo
+    export HPARAMS_SET="???????"
 fi
+echo
+echo
+echo "Using HPARAMS_SET = "$HPARAMS_SET
+echo
+echo
 export TRAIN_DIR=${STORAGE_BUCKET}/t2t_train/$PROBLEM/$MODEL-$MODEL_TAG
 export RESULTS_DIR=${STORAGE_BUCKET}/results-$MODEL-$MODEL_TAG
 export EVAL_USE_TEST_SET=True
