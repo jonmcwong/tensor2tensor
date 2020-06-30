@@ -107,11 +107,11 @@ plot_against_steps(
 axs[0][0],
 make_md([
 	"universal_transformer-ut-pres-2020-06-28",
-	"universal_transformer-ut-pres2-2020-06-29",
+	# "universal_transformer-ut-pres2-2020-06-29",
     ], [
 "all"
     ]),
-xlim=(20000, 225000),
+xlim=(45000, 225000),
 ylim=(-0.05, 1.05),
 title="Accuracies By Question Type During Universal Transformer Training",
 save_name="Latest_plot.png", 
