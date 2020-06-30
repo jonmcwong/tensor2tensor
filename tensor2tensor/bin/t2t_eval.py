@@ -35,7 +35,7 @@ FLAGS = flags.FLAGS
 flags.DEFINE_string("dataset_split", "",
   "The split used by the desired evaluation dataset")
 flags.DEFINE_string("results_dir", "", "Where to write results")
-# flags.DEFINE_string("which_checkpoints", "all", "all, last or NUM")
+flags.DEFINE_string("which_checkpoints", "all", "all, last or NUM")
 print(FLAGS.results_dir)
 FLAGS.task_direction = FLAGS.task_direction.upper()
 # pdb.set_trace()

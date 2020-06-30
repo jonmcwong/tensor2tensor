@@ -12,7 +12,8 @@ git config --global user.email jonmwong@gmail.com
 ./single_smart_evaluate.sh Q12 transformer base-relu-dp-00-2020-06-25 0
 
 
-./single_smart_evaluate.sh Q12 universal_transformer ut-pres2-2020-06-29 6
+./single_smart_evaluate.sh Q12 \
+universal_transformer ut-pres2-2020-06-29 11
 
 
 c
@@ -24,7 +25,7 @@ c
 
 git checkout .
 git pull
-./setup.sh
+./rebuild.sh
 
 
 
