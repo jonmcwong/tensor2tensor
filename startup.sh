@@ -16,11 +16,29 @@ git config --global user.email jonmwong@gmail.com
 universal_transformer ut-pres2-2020-06-29 11
 
 
-c
-c
+export file_name=results-universal_transformer-ut-pres2-2020-06-29
+gsutil -m cp -r \
+gs://mathsreasoning/${file_name} \
+$PWD
+gsutil -m cp gs://us_bucketbucket/${file_name}/* \
+$PWD/${file_name}
 
 
-./specific_datagen.sh t2t-data-emheam
+export file_name=universal_transformer-ut-pres2-2020-06-29
+gsutil -m cp -r \
+gs://mathsreasoning/t2t_train/algorithmic_math_deepmind_all/${file_name} \
+gs://us_bucketbucket/t2t_train/algorithmic_math_deepmind_all/
+
+
+
+
+
+
+
+
+
+
+
 
 
 git checkout .
@@ -50,14 +68,27 @@ git pull
 
 chmod +x single_smart_evaluate.sh
 
-gsutil -m cp -r \
-gs://us_bucketbucket/results-transformer-data-easy-2020-06-24 \
-$PWD
 
 gs://mathsreasoning/t2t_train/algorithmic_math_deepmind_all/transformer-data-easy-2020-06-24 \
 
 git clone https://github.com/jonmcwong/FYP_code.git
 git clone https://github.com/jonmcwong/PyTorch-Beam-Search-Decoding.git
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # UT global graph
 plt.clf()
@@ -107,12 +138,12 @@ fig, axs = plt.subplots(1, 1, squeeze=False)
 plot_against_steps(
 axs[0][0],
 make_md([
-	"universal_transformer-ut-pres-2020-06-28",
-	# "universal_transformer-ut-pres2-2020-06-29",
+	# "universal_transformer-ut-pres-2020-06-28",
+	"universal_transformer-ut-pres2-2020-06-29",
     ], [
 "all"
     ]),
-xlim=(45000, 225000),
+xlim=(200000, 400000),
 ylim=(-0.05, 1.05),
 title="Accuracies By Question Type During Universal Transformer Training",
 save_name="Latest_plot.png", 

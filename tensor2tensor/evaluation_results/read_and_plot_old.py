@@ -226,6 +226,7 @@ def plot_against_steps(ax, models_and_dataset_splits,
 			linewidth=linewidth,
 			color=linecolor
 			)
+		print("plotted", label)
 	plt.rcParams["font.size"] = 12
 	ax.grid(which="major", axis="both")
 	ax.title.set_text(title)
